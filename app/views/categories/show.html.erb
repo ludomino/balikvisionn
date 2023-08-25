@@ -11,16 +11,16 @@
 
 <div class="cards-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3))">
 
-  <% @subcategories.each do |subcategory| %>
-    <%# <%= cl_image_tag @category.cover.key, height: 300, width: 400, crop: :fill %>
-    <div class="car-category-text">
-      <h2><%= link_to subcategory.name, category_subcategories_path(@category), class: "link" %></h2>
-      <%= link_to 'Edit', edit_category_subcategory_path(@category, subcategory) %>
-      <%= link_to 'Delete', category_subcategories_path(@category), method: :delete, data: { confirm: 'Are you sure?' } %>
-    </div>
-
-    <div>
-    <%# <%=  cl_image_tag @subcategory.photos.key, height: 300, width: 400, crop: :fill%>
-    </div>
+<% @subcategories.each do |subcategory| %>
+  <h2><%= subcategory.name %></h2>
+  <h3><%= subcategory.description %></h3>
+  <div>
+    <%= link_to 'Edit', edit_category_subcategory_path(@category, subcategory) %>
+    <%= link_to 'Delete', category_subcategories_path(@category), method: :delete, data: { confirm: 'Are you sure?' } %>
+  </div>
+  <% subcategory.photos.each do |photo| %>
+    <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %>
   <% end %>
+<% end %>
+
 </div>

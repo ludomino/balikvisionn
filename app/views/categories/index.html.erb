@@ -1,12 +1,21 @@
-<link rel="stylesheet" href="_card.scss" />
+<link rel="stylesheet/components" href="_card.scss" />
 
 <div class="cards-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3))">
+
+
+
   <% @categories.each do |category| %>
-    <%# <%= cl_image_tag @category.cover.key, height: 300, width: 400, crop: :fill %>
-    <div class="car-category-text">
-      <h2><%= link_to category.name, category_path(category), class: "link" %></h2>
-    </div>
+  <% if category.cover.attached? %>
+    <%= cl_image_tag category.cover.key, height: 300, width: 400, crop: :fill %>
+  <% else %>
+    <!-- Handle case when cover image is not attached -->
+    <div>No Cover Image</div>
   <% end %>
+  <div class="car-category-text">
+    <h2><%= link_to category.name, category_path(category), class: "link" %></h2>
+  </div>
+<% end %>
+
 </div>
 
 

@@ -32,7 +32,6 @@ class CategoriesController < ApplicationController
   def show
     @category = Category.find(params[:id])
     @subcategories = @category.subcategories
-    # @subcategories = @category.subcategory.order(created_at: :DESC)
   end
 
   def update
