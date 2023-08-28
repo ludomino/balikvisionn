@@ -18,7 +18,7 @@ class CategoriesController < ApplicationController
   def destroy
     @category = Category.find(params[:id])
     @category.destroy
-    redirect_to root_path(@category), notice: 'Category was successfully destroyed.'
+    redirect_to root_path(@category), status: :see_other, notice: 'Category was successfully destroyed.'
   end
 
   def edit

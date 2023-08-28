@@ -9,16 +9,13 @@
 
 // Your CSS partials
 @import "components/index";
-@import "../stylesheets/categries/home";
-
-@import "../stylesheets/components/navbar";
-
+@import "pages/index";
 
 
 * {
   margin: 0;
-  /* max-width: 1400px;
-  position: center; */
+  max-width: 1400px;
+  position: center;
 }
 
 body {
@@ -53,6 +50,7 @@ li {
   color: #f9f8ff;
 }
 
+
 header,
 footer {
   background-color: black;
@@ -78,13 +76,13 @@ a:hover {
 
 .icone-contact {
   margin-bottom: 1%;
-}
-.lien-icone {
-  margin-left: 30px;
-}
-
-.lien-icone:hover {
-  opacity: 0.5;
+  .lien-icone {
+    margin-left: 30px;
+    text-decoration: none;
+    &:hover {
+      opacity: 0.5;
+    }
+  }
 }
 
 section {
@@ -92,16 +90,14 @@ section {
 }
 
 @media screen and (max-width: 996px) {
-  header,
-  footer {
-    padding: 20px 20px;
-  }
-
-  h1 {
-    font-size: 2em;
-  }
-
-  section {
-    padding: 50px 20px 50px 20px;
-  }
+    header,
+    footer {
+      padding: 20px 20px;
+    }
+    h1 {
+      font-size: 2em;
+    }
+    section {
+      padding: 50px 20px 50px 20px;
+    }
 }

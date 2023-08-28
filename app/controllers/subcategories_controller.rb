@@ -4,7 +4,7 @@ class SubcategoriesController < ApplicationController
     @category = Category.find(params[:category_id])
     @subcategory = @category.subcategories.find(params[:id])
     @subcategory.destroy
-    redirect_to category_subcategories_path(@category), notice: 'Subcategory was successfully destroyed.'
+    redirect_to category_path(@category), notice: 'Subcategory was successfully destroyed.'
   end
 
   def edit

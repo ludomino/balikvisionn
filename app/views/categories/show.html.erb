@@ -1,8 +1,6 @@
 <div class="d-flex mt-5">
       <h2><%= link_to "<",  root_path, class:"link" %></h2>
       <h1><%= @category.name %></h1>
-      <%= link_to 'Edit', edit_category_path(@category) %>
-      <%= link_to 'Delete', root_path, method: :delete, data: { confirm: 'Are you sure?' } %>
 
 </div>
 <h2 class="mb-4"><%= link_to "Create subcategory", new_category_subcategory_path(@category), class: "btn btn-dark ms-3 " %></h2>
