@@ -1,24 +1,37 @@
-<div class="d-flex mt-5">
-      <h2><%= link_to "<",  root_path, class:"link" %></h2>
+<section class="subcategories-header">
+  <div class="subhead">
+    <div class="left-content">
+      <%= link_to raw('<i class="fa-solid fa-arrow-left"></i>'), root_path, class: "btn" %>
+    </div>
+    <div class="center-content">
       <h1><%= @category.name %></h1>
-
-</div>
-<h2 class="mb-4"><%= link_to "Create subcategory", new_category_subcategory_path(@category), class: "btn btn-dark ms-3 " %></h2>
-
-
-
-<div class="cards-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3))">
-
-<% @subcategories.each do |subcategory| %>
-  <h2><%= subcategory.name %></h2>
-  <h3><%= subcategory.description %></h3>
-  <div>
-    <%= link_to 'Edit', edit_category_subcategory_path(@category, subcategory) %>
-    <%= link_to 'Delete', category_subcategories_path(@category), method: :delete, data: { confirm: 'Are you sure?' } %>
+    </div>
   </div>
-  <% subcategory.photos.each do |photo| %>
-    <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %>
-  <% end %>
-<% end %>
+    <div class="right-content">
+      <%= link_to "Create subcategory", new_category_subcategory_path(@category), class: "btn btn-dark" %>
+    </div>
+</section>
 
+<section class="subcategories-photos">
+  <% @subcategories.each do |subcategory| %>
+    <div class="subcategory">
+      <div class="subinfos">
+        <h2><%= subcategory.name %></h2>
+        <h3><%= subcategory.description %></h3>
+      </div>
+      <div class="subparams">
+        <%= link_to raw('<i class="fa-regular fa-pen-to-square"></i>'), edit_category_subcategory_path(@category, subcategory), class: 'btn btn-icon' %>
+        <%= link_to raw('<i class="fa-solid fa-trash"></i>'), category_subcategories_path(@category), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-icon' %>
+      </div>
+     <div class="subphotosgrid">
+  <div class="row">
+    <% subcategory.photos.each do |photo| %>
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <%= cl_image_tag photo.key, height: 400, width: 300, crop: :fill %>
+      </div>
+    <% end %>
+  </div>
 </div>
+    </div>
+  <% end %>
+</section>

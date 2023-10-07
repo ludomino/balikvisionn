@@ -1,0 +1,47 @@
+.subcategories-header {
+  padding: 30px;
+}
+
+
+.subcategories-photos {
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  display: flex;
+}
+
+  .subcategory{
+    background-color: pink;
+    width: 100%;
+    margin-bottom: 2%;
+    position: relative; /* Add this */
+
+    .btn-icon {
+      background-color: white;
+      color: #333;
+      border-radius: 50px;
+      border-color: #333;
+    }
+
+    a {
+      color: #ffffff;
+      text-decoration: none;
+    }
+  }
+
+  .subinfos{
+    color: #242424;
+    text-align: center;
+    margin-bottom: 5%;
+    margin-top: 1%;
+  }
+
+  .subparams {
+    position: absolute; /* Add this */
+    top: 2%; /* Adjust as needed */
+    right: 2%; /* Adjust as needed */
+  }
+
+  .subphotosgrid{
+    margin-bottom: 1%;
+  }

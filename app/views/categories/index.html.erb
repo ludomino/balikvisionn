@@ -3,9 +3,9 @@
 <link rel="stylesheet/components" href="_card.scss" />
 
 <section class="accueil-photos">
-  <%# <div> %>
     <% @categories.each do |category| %>
       <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3))">
+        <div class="card-image">
         <a href="<%= category_path(category) %>">
           <% if category.cover.attached? %>
             <%= cl_image_tag category.cover.key, height: 300, width: 400, crop: :fill %>
@@ -13,17 +13,22 @@
             <!-- Handle case when cover image is not attached -->
             <div>No Cover Image</div>
           <% end %>
-          <div class="card-category-text"><%= link_to category.name.capitalize, category_path(category)%></div>
-        </a>
         <div class="card-category-params">
-          <%= link_to 'Edit', edit_category_path(category) %>
+          <%= link_to raw('<i class="fa-regular fa-pen-to-square"></i>'), edit_category_path(category), class: 'btn btn-icon' %>
+
           <%= form_with(model: category, method: :delete, url: category_path(category), data: { confirm: 'Are you sure?' }) do |form| %>
-            <%= form.submit 'Delete' %>
+            <%= form.button type: :submit, class: 'btn btn-icon' do %>
+              <i class="fa-solid fa-trash"></i>
+            <% end %>
           <% end %>
         </div>
+        </div>
+          <div class="card-category-text"><%= link_to category.name.capitalize, category_path(category)%></div>
+        </a>
       </div>
     <% end %>
-  <%# </div> %>
 </section>
 
-<h2 class="mb-4"><%= link_to "Create", new_category_path, class: "btn btn-dark ms-3 " %></h2>
+<div class="create">
+  <%= link_to "Create", new_category_path, class: "btn btn-dark" %></h2>
+</div>

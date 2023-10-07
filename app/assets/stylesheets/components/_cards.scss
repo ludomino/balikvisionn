@@ -4,18 +4,21 @@
   display: flex;
   background-size: cover;
   background-position: center;
-  height: 500px;
+  height: 350px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   width: 30%;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   flex-direction: column;
+  position: relative; /* Add this */
 
-  // a {
-  //   color: #ffffff;
-  //   text-decoration: none;
-  // }
+  .card-image {
+    flex: 1; /* Allow the image to take up remaining vertical space */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   .card-category-text {
     color: white;
@@ -25,6 +28,8 @@
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
     text-decoration: none;
+    display: flex;
+    position: absolute;
   }
 
   &:hover .card-category-text {
@@ -34,8 +39,22 @@
 
   .card-category-params{
     display: flex;
+    position: absolute;
+    top: 30px;
+    right: 5px;
   }
 
+  .btn-icon {
+    background-color: white;
+    color: #333;
+    border-radius: 50px;
+    border-color: #333;
+  }
+
+  a {
+    color: #ffffff;
+    text-decoration: none;
+  }
   @media screen and (max-width: 996px) {
     height: 350px;
     width: 100%;

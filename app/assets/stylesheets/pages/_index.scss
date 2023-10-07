@@ -1,5 +1,12 @@
 // _index.scss
 
+.create{
+  display: flex;
+  justify-content: center;
+  padding: 1%;
+  background-color: black;
+}
+
 .accueil-photos {
   background-color: black;
   padding: 2%;
@@ -7,7 +14,6 @@
   flex-direction: row;
   gap: 1%;
   justify-content: center;
-  margin-bottom: 10px;
   flex-wrap: wrap;
 
   h2 {
@@ -15,10 +21,4 @@
     text-align: center;
     margin-bottom: 80px;
   }
-
-  // div {
-
-  // }
 }
-
-// ... other index page styles

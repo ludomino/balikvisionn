@@ -12,11 +12,25 @@ class SubcategoriesController < ApplicationController
     @subcategory = @category.subcategories.find(params[:id])
   end
 
+  # def update
+  #   @category = Category.find(params[:category_id])
+  #   @subcategory = @category.subcategories.find(params[:id])
+
+  #   if @subcategory.update(subcategory_params)
+  #     redirect_to category_path(@category), notice: 'Subcategory was successfully updated.'
+  #   else
+  #     render :edit
+  #   end
+  # end
+
   def update
     @category = Category.find(params[:category_id])
     @subcategory = @category.subcategories.find(params[:id])
 
     if @subcategory.update(subcategory_params)
+      # Apply Cloudinary image compression when updating
+      compress_images(@subcategory.photos)
+
       redirect_to category_path(@category), notice: 'Subcategory was successfully updated.'
     else
       render :edit
@@ -41,7 +55,14 @@ class SubcategoriesController < ApplicationController
     end
   end
 
-  # private
+   private
+
+  def compress_images(photos)
+    # Iterate through each photo and apply Cloudinary image compression
+    photos.each do |photo|
+      Cloudinary::Uploader.upload(photo.path, public_id: photo.filename_without_extension, quality: 'auto:low')
+    end
+  end
 
   def subcategory_params
     params.require(:subcategory).permit(:name, :description, photos: [])
