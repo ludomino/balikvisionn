@@ -1,0 +1,114 @@
+// Define variables for reusable colors
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+
+// General styles
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+}
+
+.container {
+  margin-top: 50px;
+}
+
+.bg-white {
+  background-color: #fff;
+}
+
+.rounded {
+  border-radius: 5px;
+}
+
+.p-3 {
+  padding: 1rem !important;
+}
+
+.shadow {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-flat {
+  background-color: $primary-color;
+  color: #fff;
+  border: none;
+}
+
+.btn-flat:hover {
+  background-color: darken($primary-color, 10%);
+}
+
+// Form styles
+.simple_form {
+  label {
+    font-weight: bold;
+  }
+
+  input[type="text"],
+  textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    transition: border-color 0.2s ease-in-out;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+    }
+  }
+
+  .btn {
+    margin-top: 1rem;
+  }
+
+  .radio-container {
+    margin-top: 0.5rem;
+    label {
+      margin-right: 1rem;
+      input[type="radio"] {
+        margin-right: 0.3rem;
+      }
+    }
+  }
+
+  #image-preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 10px;
+
+    .image-container {
+      position: relative;
+      // width: 100px;
+      img {
+        width: 128px; /* Set the width of your thumbnails */
+        height: 128px; /* Set the height of your thumbnails */
+        cursor: move;
+        border-radius: 5px;
+      }
+      .radio-container {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 0.3rem;
+        border-radius: 0 0 5px 5px;
+        display: flex;
+        justify-content: center;
+        label {
+          margin-right: 1rem;
+        }
+      }
+    }
+  }
+}
