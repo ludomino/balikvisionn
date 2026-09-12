@@ -57,6 +57,15 @@ gem "sassc-rails"
 gem "cloudinary"
 gem "dotenv-rails"
 
+# cloudinary
+gem "cloudinary"
+gem "dotenv-rails"
+
+# Pin json < 3.0: la refonte de signature de JSON.parse dans json 3.x (kwargs-only)
+# est incompatible avec ActiveSupport::JSON.decode (Rails 8.1.3.1), qui lui passe
+# encore les options comme un Hash positionnel classique -> ArgumentError.
+gem "json", "~> 2.9"
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
