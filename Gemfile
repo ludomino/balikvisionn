@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.4.10"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.0.4"
+gem "rails", "~> 8.1.0"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -13,7 +13,7 @@ gem "sprockets-rails"
 gem "pg", "~> 1.1"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 5.0"
+gem "puma", "~> 8.0"
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
@@ -56,6 +56,15 @@ gem "sassc-rails"
 # cloudinary
 gem "cloudinary"
 gem "dotenv-rails"
+
+# cloudinary
+gem "cloudinary"
+gem "dotenv-rails"
+
+# Pin json < 3.0: la refonte de signature de JSON.parse dans json 3.x (kwargs-only)
+# est incompatible avec ActiveSupport::JSON.decode (Rails 8.1.3.1), qui lui passe
+# encore les options comme un Hash positionnel classique -> ArgumentError.
+gem "json", "~> 2.9"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
