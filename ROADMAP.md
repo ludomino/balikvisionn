@@ -22,11 +22,11 @@
 
 **Fonctionnalités**
 - [x] Corriger le bug update/delete des sous-catégories
-- [ ] Authentification admin (générateur natif Rails 8 : `bin/rails generate authentication`)
+- [x] Authentification admin (générateur natif Rails 8 : `bin/rails generate authentication`)
 
 **Tests**
 - [ ] Test reproduisant le bug update/delete (rouge avant correctif)
-- [ ] Tests d'authentification (accès refusé sans connexion / accordé après / échec sur identifiants invalides)
+- [x] Tests d'authentification (accès refusé sans connexion / accordé après / échec sur identifiants invalides)
 
 **Accessibilité**
 - [ ] Formulaire de connexion : labels associés, focus visible, erreurs annoncées (`aria-live`)
