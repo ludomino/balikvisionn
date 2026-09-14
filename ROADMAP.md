@@ -21,7 +21,7 @@
 ## Axe 1 — Stabilisation du Back-Office (fondations)
 
 **Fonctionnalités**
-- [ ] Corriger le bug update/delete des sous-catégories
+- [x] Corriger le bug update/delete des sous-catégories
 - [ ] Authentification admin (générateur natif Rails 8 : `bin/rails generate authentication`)
 
 **Tests**
