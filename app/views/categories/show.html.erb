@@ -7,9 +7,6 @@
       <h1><%= @category.name %></h1>
     </div>
   </div>
-    <div class="right-content">
-      <%= link_to "Create subcategory", new_category_subcategory_path(@category), class: "btn btn-dark" %>
-    </div>
 </section>
 
 <section class="subcategories-photos">
@@ -19,19 +16,15 @@
         <h2><%= subcategory.name %></h2>
         <h3><%= subcategory.description %></h3>
       </div>
-      <div class="subparams">
-        <%= link_to raw('<i class="fa-regular fa-pen-to-square"></i>'), edit_category_subcategory_path(@category, subcategory), class: 'btn btn-icon' %>
-        <%= link_to raw('<i class="fa-solid fa-trash"></i>'), category_subcategory_path(@category, subcategory), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn-icon' %>      </div>
-     </div>
-     <div class="subphotosgrid">
-  <div class="row">
-    <% subcategory.photos.each do |photo| %>
-      <div class="col-lg-4 col-md-6 col-sm-12">
-        <%= cl_image_tag photo.key, height: 400, width: 300, crop: :fill %>
+      <div class="subphotosgrid">
+        <div class="row">
+          <% subcategory.photos.each do |photo| %>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+              <%= cl_image_tag photo.key, height: 400, width: 300, crop: :fill %>
+            </div>
+          <% end %>
+        </div>
       </div>
-    <% end %>
-  </div>
-</div>
     </div>
   <% end %>
 </section>
