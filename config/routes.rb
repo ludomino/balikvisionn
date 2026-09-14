@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resource :session
+  resources :passwords, param: :token
 
-  # Defines the root path route ("/")
-  # root "articles#index"
   root to: "categories#index"
-  resources :categories, except: :index do
-    resources :subcategories
+  resources :categories, only: [:index, :show]
+
+  namespace :admin do
+    resources :categories do
+      resources :subcategories
+    end
   end
 end
