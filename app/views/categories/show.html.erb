@@ -21,8 +21,8 @@
       </div>
       <div class="subparams">
         <%= link_to raw('<i class="fa-regular fa-pen-to-square"></i>'), edit_category_subcategory_path(@category, subcategory), class: 'btn btn-icon' %>
-        <%= link_to raw('<i class="fa-solid fa-trash"></i>'), category_subcategories_path(@category), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-icon' %>
-      </div>
+        <%= link_to raw('<i class="fa-solid fa-trash"></i>'), category_subcategory_path(@category, subcategory), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn-icon' %>      </div>
+     </div>
      <div class="subphotosgrid">
   <div class="row">
     <% subcategory.photos.each do |photo| %>
