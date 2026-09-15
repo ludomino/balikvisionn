@@ -25,4 +25,26 @@ class Photo < ApplicationRecord
     file.rewind if file.respond_to?(:rewind)
     type
   end
+
+    # Échange de position avec le voisin précédent (remonte dans la liste)
+  def move_higher
+    neighbor = subcategory.photos.where("position < ?", position).order(position: :desc).first
+    swap_position_with(neighbor) if neighbor
+  end
+
+  # Échange de position avec le voisin suivant (descend dans la liste)
+  def move_lower
+    neighbor = subcategory.photos.where("position > ?", position).order(:position).first
+    swap_position_with(neighbor) if neighbor
+  end
+
+  private
+
+  def swap_position_with(other)
+    transaction do
+      my_position = position
+      update!(position: other.position)
+      other.update!(position: my_position)
+    end
+  end
 end
