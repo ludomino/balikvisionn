@@ -20,4 +20,18 @@ class SubcategoryTest < ActiveSupport::TestCase
       @subcategory.destroy
     end
   end
+
+    test "updates alt_text on an existing photo via nested attributes" do
+    photo = Photo.create!(subcategory: @subcategory, colspan: 1, position: 0)
+
+    @subcategory.update!(photos_attributes: [{ id: photo.id, alt_text: "Concert de jazz" }])
+
+    assert_equal "Concert de jazz", photo.reload.alt_text
+  end
+
+  test "nested photos_attributes without an id never creates a new photo" do
+    assert_no_difference "Photo.count" do
+      @subcategory.update!(photos_attributes: [{ alt_text: "Sans id, doit être ignoré" }])
+    end
+  end
 end
