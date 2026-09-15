@@ -11,9 +11,10 @@
             <hr>
             <p class="text-muted small mb-2">Photos existantes</p>
             <%= f.simple_fields_for :photos, @subcategory.photos do |photo_f| %>
-              <div class="d-flex align-items-center mb-2" style="gap: 0.5rem;">
+                            <div class="d-flex align-items-center mb-2" style="gap: 0.5rem;">
                 <%= cloudinary_image_tag photo_f.object.image, alt: photo_f.object.alt_text.presence || @subcategory.name, width: 80, height: 60, crop: :fill %>
                 <%= photo_f.input :alt_text, label: false, placeholder: "Texte alternatif..." %>
+                <%= photo_f.input :colspan, label: false, collection: [1, 2, 3], include_blank: false %>
                 <%= link_to "↑", move_higher_admin_category_subcategory_photo_path(@category, @subcategory, photo_f.object), data: { turbo_method: :patch }, class: "btn btn-sm btn-outline-secondary" %>
                 <%= link_to "↓", move_lower_admin_category_subcategory_photo_path(@category, @subcategory, photo_f.object), data: { turbo_method: :patch }, class: "btn btn-sm btn-outline-secondary" %>
               </div>
