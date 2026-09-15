@@ -10,5 +10,6 @@ class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
 
-  # Add more helper methods to be used by all tests here...
+  # fixture_file_upload dispo dans tous les tests de modèle (pas que les contrôleurs)
+  include ActionDispatch::TestProcess::FixtureFile
 end

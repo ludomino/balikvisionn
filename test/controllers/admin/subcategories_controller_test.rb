@@ -54,4 +54,39 @@ class Admin::SubcategoriesControllerTest < ActionDispatch::IntegrationTest
     subcategory = Subcategory.last
     assert subcategory.photos.first.image.attached?
   end
+
+    # Un fichier invalide ne doit pas empêcher l'upload des autres
+  test "create ignores an invalid file but still attaches the valid ones" do
+    sign_in_as @user
+
+    assert_difference "Photo.count", 1 do
+      post admin_category_subcategories_path(@category), params: {
+        subcategory: {
+          name: "Sous-catégorie mixte",
+          description: "Une description",
+          photos: [
+            fixture_file_upload("fake.txt", "text/plain"),
+            fixture_file_upload("test_photo.png", "image/png")
+          ]
+        }
+      }
+    end
+
+    assert_match "fake.txt", flash[:alert]
+  end
+
+  # Reproduit l'entrée vide observée en prod dans photos[] : ne doit pas planter
+  test "create ignores a blank entry in the photos param without raising" do
+    sign_in_as @user
+
+    assert_difference "Photo.count", 1 do
+      post admin_category_subcategories_path(@category), params: {
+        subcategory: {
+          name: "Sous-catégorie avec entrée vide",
+          description: "Une description",
+          photos: ["", fixture_file_upload("test_photo.png", "image/png")]
+        }
+      }
+    end
+  end
 end
