@@ -47,10 +47,10 @@
 **Tests**
 - [x] Validations de `colspan` (1/2/3 acceptés, autres rejetés)
 - [x] Rendu du helper image (alt, lazy loading, cas non-attaché)
-- [ ] Upload rejeté si type de fichier invalide ou poids excessif
+- [x] Upload rejeté si type de fichier invalide ou poids excessif
 
 **Accessibilité**
-- [ ] Ajouter un champ `alt_text` (ou `description`) sur `Photo`, éditable depuis l'admin
+- [x] Ajouter un champ `alt_text` (ou `description`) sur `Photo`, éditable depuis l'admin
 
 **Sécurité images**
 - [ ] Évaluer l'ajout d'un filigrane via transformation d'URL Cloudinary (optionnel, à trancher)
