@@ -9,6 +9,12 @@ local:
 cloudinary:
   service: Cloudinary
   folder: <%= Rails.env %>
+  # Redimensionne/compresse le fichier stocké lui-même (pas juste l'affichage)
+  transformation:
+    width: 2500
+    height: 2500
+    crop: limit
+    quality: auto
 
 # Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:
