@@ -60,19 +60,17 @@
 ## Axe 3 — Éditeur mosaïque en Back-Office
 
 **Fonctionnalités**
-- [ ] Glisser-déposer pour réordonner les photos
-- [ ] Redimensionnement de case (1/2/3)
-- [ ] Suppression de photo
-- [ ] Décision technique : Stimulus + SortableJS vs composant React (dnd-kit)
+- [x] Glisser-déposer pour réordonner les photos (Stimulus + SortableJS, forceFallback pour fiabilité)
+- [x] Redimensionnement de case (1/2/3)
+- [x] Suppression de photo
+- [x] Décision technique : Stimulus + SortableJS (cohérent avec l'architecture existante, pas de build step)
 
 **Tests**
-- [ ] Test système (Capybara) du drag-and-drop : position persistée en base
-- [ ] Test de suppression : DB + blob Cloudinary bien supprimés
+- [x] Test système (Capybara) du drag-and-drop : position persistée en base
+- [x] Test de suppression : DB + blob Cloudinary bien supprimés
 
 **Accessibilité**
-- [ ] Alternative clavier au drag-and-drop (boutons monter/descendre, `<select>` pour la taille)
-
----
+- [x] Alternative clavier au drag-and-drop (boutons monter/descendre, `<select>` pour la taille)
 
 ## Axe 4 — Pages Front-Office manquantes
 
