@@ -6,7 +6,7 @@
         <div class="card-image">
         <a href="<%= admin_category_path(category) %>">
           <% if category.cover.attached? %>
-            <%= cl_image_tag category.cover.key, height: 300, width: 400, crop: :fill %>
+            <%= cloudinary_image_tag category.cover, alt: category.name, height: 300, width: 400, crop: :fill %>
           <% else %>
             <div>No Cover Image</div>
           <% end %>

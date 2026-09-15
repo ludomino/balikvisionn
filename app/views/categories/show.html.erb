@@ -20,10 +20,7 @@
         <div class="row">
           <% subcategory.photos.each do |photo| %>
             <div class="col-lg-4 col-md-6 col-sm-12">
-              <%# photo.key → photo.image.key %>
-              <% if photo.image.attached? %>
-                <%= cl_image_tag photo.image.key, height: 400, width: 300, crop: :fill %>
-              <% end %>
+              <%= cloudinary_image_tag photo.image, alt: photo.alt_text.presence || subcategory.name, height: 400, width: 300, crop: :fill %>
             </div>
           <% end %>
         </div>
