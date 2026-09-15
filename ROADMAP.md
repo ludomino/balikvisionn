@@ -53,7 +53,7 @@
 - [x] Ajouter un champ `alt_text` (ou `description`) sur `Photo`, éditable depuis l'admin
 
 **Sécurité images**
-- [ ] Évaluer l'ajout d'un filigrane via transformation d'URL Cloudinary (optionnel, à trancher)
+- [x] Filigrane évalué : écarté pour l'instant — le plafond 2500px à l'upload sert déjà de protection, priorité donnée à la présentation visuelle du portfolio. Réévaluable si besoin exprimé par le client (overlay Cloudinary, ajout rapide le cas échéant).
 
 ---
 
