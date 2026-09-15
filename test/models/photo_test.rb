@@ -76,4 +76,20 @@ class PhotoTest < ActiveSupport::TestCase
 
     assert_equal 1, photo_b.reload.position
   end
+
+  test "destroying a photo purges its attached blob" do
+    photo = Photo.create!(subcategory: @subcategory, colspan: 1, position: 0)
+    photo.image.attach(
+      io: File.open(Rails.root.join("test/fixtures/files/test_photo.png")),
+      filename: "test_photo.png",
+      content_type: "image/png"
+    )
+    blob = photo.image.blob
+
+    perform_enqueued_jobs do
+      photo.destroy
+    end
+
+    assert_not ActiveStorage::Blob.exists?(blob.id)
+  end
 end

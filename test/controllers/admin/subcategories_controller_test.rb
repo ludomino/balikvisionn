@@ -140,11 +140,11 @@ class Admin::SubcategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_equal 3, @photo.reload.colspan
   end
 
-  test "edit form displays a colspan select for each existing photo" do
+    test "edit form displays a delete link for each existing photo" do
     sign_in_as @user
 
     get edit_admin_category_subcategory_path(@category, @subcategory)
 
-    assert_select "select[name='subcategory[photos_attributes][0][colspan]']"
+    assert_select "a[href='#{admin_category_subcategory_photo_path(@category, @subcategory, @photo)}'][data-turbo-method='delete']"
   end
 end

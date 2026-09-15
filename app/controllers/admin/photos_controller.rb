@@ -12,6 +12,11 @@ module Admin
       redirect_to edit_admin_category_subcategory_path(@subcategory.category, @subcategory)
     end
 
+    def destroy
+      @photo.destroy
+      redirect_to edit_admin_category_subcategory_path(@subcategory.category, @subcategory), notice: "Photo supprimée."
+    end
+
     private
 
     # Scope par sous-catégorie : cohérent avec le pattern des autres contrôleurs admin
