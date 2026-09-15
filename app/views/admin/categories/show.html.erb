@@ -28,7 +28,10 @@
        <div class="row">
          <% subcategory.photos.each do |photo| %>
            <div class="col-lg-4 col-md-6 col-sm-12">
-             <%= cl_image_tag photo.key, height: 400, width: 300, crop: :fill %>
+             <%# photo.key → photo.image.key (Photo a sa propre pièce jointe) %>
+             <% if photo.image.attached? %>
+               <%= cl_image_tag photo.image.key, height: 400, width: 300, crop: :fill %>
+             <% end %>
            </div>
          <% end %>
        </div>
