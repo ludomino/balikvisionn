@@ -37,12 +37,12 @@
 
 **Fonctionnalités**
 - [ ] Remplacer `cl_image_tag`/`cl_picture_tag` par l'API native ActiveStorage (`variant`/`representation`)
-- [ ] Étendre `colspan` sur `Photo` pour accepter 1/2/3 (migration + validations)
+- [x] Étendre `colspan` sur `Photo` pour accepter 1/2/3 (migration + validations)
 - [ ] Validation sécurité des uploads : type de fichier réel, poids/dimensions max
 - [ ] Performance : lazy loading (`loading="lazy"`), format auto Cloudinary (`f_auto,q_auto`)
 
 **Tests**
-- [ ] Validations de `colspan` (1/2/3 acceptés, autres rejetés)
+- [x] Validations de `colspan` (1/2/3 acceptés, autres rejetés)
 - [ ] Dimensions correctes des variants générés
 - [ ] Upload rejeté si type de fichier invalide ou poids excessif
 
