@@ -12,4 +12,7 @@ class ActiveSupport::TestCase
 
   # fixture_file_upload dispo dans tous les tests de modèle (pas que les contrôleurs)
   include ActionDispatch::TestProcess::FixtureFile
+
+  # perform_enqueued_jobs : nécessaire pour tester la purge Active Storage (async par défaut)
+  include ActiveJob::TestHelper
 end

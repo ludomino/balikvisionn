@@ -33,4 +33,17 @@ class Admin::PhotosControllerTest < ActionDispatch::IntegrationTest
     assert_equal 1, @photo_a.reload.position
     assert_equal 0, @photo_b.reload.position
   end
+
+  test "destroy removes the photo and purges its blob" do
+    sign_in_as @user
+    blob = @photo_a.image.blob rescue nil
+
+    perform_enqueued_jobs do
+      assert_difference "Photo.count", -1 do
+        delete admin_category_subcategory_photo_path(@category, @subcategory, @photo_a)
+      end
+    end
+
+    assert_redirected_to edit_admin_category_subcategory_path(@category, @subcategory)
+  end
 end
