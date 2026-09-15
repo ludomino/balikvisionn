@@ -9,6 +9,9 @@ Rails.application.routes.draw do
     resources :categories do
       resources :subcategories do
         resources :photos, only: [:destroy] do
+          collection do
+            patch :reorder
+          end
           member do
             patch :move_higher
             patch :move_lower
