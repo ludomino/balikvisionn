@@ -7,7 +7,14 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :categories do
-      resources :subcategories
+      resources :subcategories do
+        resources :photos, only: [:destroy] do
+          member do
+            patch :move_higher
+            patch :move_lower
+          end
+        end
+      end
     end
   end
 end

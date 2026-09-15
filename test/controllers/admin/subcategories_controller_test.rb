@@ -115,4 +115,13 @@ class Admin::SubcategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_select "input[name='subcategory[photos_attributes][0][id]']", value: @photo.id.to_s
     assert_select "input[name='subcategory[photos_attributes][0][alt_text]']"
   end
+
+    test "edit form displays move up/down links for each existing photo" do
+    sign_in_as @user
+
+    get edit_admin_category_subcategory_path(@category, @subcategory)
+
+    assert_select "a[href='#{move_higher_admin_category_subcategory_photo_path(@category, @subcategory, @photo)}']"
+    assert_select "a[href='#{move_lower_admin_category_subcategory_photo_path(@category, @subcategory, @photo)}']"
+  end
 end

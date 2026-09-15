@@ -40,4 +40,40 @@ class PhotoTest < ActiveSupport::TestCase
     oversized = Struct.new(:size).new(21.megabytes)
     assert_not Photo.acceptable_upload?(oversized)
   end
+
+    test "move_higher swaps position with the previous photo" do
+    photo_a = Photo.create!(subcategory: @subcategory, colspan: 1, position: 0)
+    photo_b = Photo.create!(subcategory: @subcategory, colspan: 1, position: 1)
+
+    photo_b.move_higher
+
+    assert_equal 0, photo_b.reload.position
+    assert_equal 1, photo_a.reload.position
+  end
+
+  test "move_higher does nothing when already first" do
+    photo_a = Photo.create!(subcategory: @subcategory, colspan: 1, position: 0)
+
+    photo_a.move_higher
+
+    assert_equal 0, photo_a.reload.position
+  end
+
+  test "move_lower swaps position with the next photo" do
+    photo_a = Photo.create!(subcategory: @subcategory, colspan: 1, position: 0)
+    photo_b = Photo.create!(subcategory: @subcategory, colspan: 1, position: 1)
+
+    photo_a.move_lower
+
+    assert_equal 1, photo_a.reload.position
+    assert_equal 0, photo_b.reload.position
+  end
+
+  test "move_lower does nothing when already last" do
+    photo_b = Photo.create!(subcategory: @subcategory, colspan: 1, position: 1)
+
+    photo_b.move_lower
+
+    assert_equal 1, photo_b.reload.position
+  end
 end
