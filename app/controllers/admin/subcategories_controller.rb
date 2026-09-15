@@ -42,25 +42,33 @@ module Admin
       end
     end
 
-    private
+          private
 
-    def subcategory_params
-      # photos: [] retiré, géré à part (attach_photos)
-      params.require(:subcategory).permit(:name, :description)
-    end
-
-    def uploaded_photo_files
-      params.dig(:subcategory, :photos) || []
-    end
-
-    # Un Photo par fichier, position croissante, colspan 1 par défaut
-    def attach_photos(subcategory)
-      next_position = subcategory.photos.maximum(:position).to_i + 1
-
-      uploaded_photo_files.each_with_index do |file, index|
-        photo = subcategory.photos.create!(colspan: 1, position: next_position + index)
-        photo.image.attach(file)
+      def subcategory_params
+        # photos: [] retiré, géré à part (attach_photos)
+        params.require(:subcategory).permit(:name, :description)
       end
-    end
+
+      def uploaded_photo_files
+        # .reject(&:blank?) : filtre l'entrée "" observée dans photos[] en prod
+        (params.dig(:subcategory, :photos) || []).reject(&:blank?)
+      end
+
+      # Un Photo par fichier valide, position croissante, colspan 1 par défaut
+      def attach_photos(subcategory)
+        next_position = subcategory.photos.maximum(:position).to_i + 1
+        rejected = []
+
+        uploaded_photo_files.each_with_index do |file, index|
+          if Photo.acceptable_upload?(file)
+            photo = subcategory.photos.create!(colspan: 1, position: next_position + index)
+            photo.image.attach(file)
+          else
+            rejected << file.original_filename
+          end
+        end
+
+        flash[:alert] = "Fichier(s) ignoré(s) (type ou poids invalide) : #{rejected.join(', ')}" if rejected.any?
+      end
   end
 end

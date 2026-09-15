@@ -25,4 +25,19 @@ class PhotoTest < ActiveSupport::TestCase
     photo = Photo.new(colspan: 1, position: 0)
     assert_not photo.valid?
   end
+
+    test "acceptable_upload? rejects a non-image file" do
+    file = fixture_file_upload("fake.txt", "text/plain")
+    assert_not Photo.acceptable_upload?(file)
+  end
+
+  test "acceptable_upload? accepts a real image within size limit" do
+    file = fixture_file_upload("test_photo.png", "image/png")
+    assert Photo.acceptable_upload?(file)
+  end
+
+  test "acceptable_upload? rejects a file larger than the max size" do
+    oversized = Struct.new(:size).new(21.megabytes)
+    assert_not Photo.acceptable_upload?(oversized)
+  end
 end
