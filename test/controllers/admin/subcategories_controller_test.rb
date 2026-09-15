@@ -124,4 +124,27 @@ class Admin::SubcategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_select "a[href='#{move_higher_admin_category_subcategory_photo_path(@category, @subcategory, @photo)}']"
     assert_select "a[href='#{move_lower_admin_category_subcategory_photo_path(@category, @subcategory, @photo)}']"
   end
+
+  test "update saves colspan for an existing photo via nested attributes" do
+    sign_in_as @user
+
+    patch admin_category_subcategory_path(@category, @subcategory), params: {
+      subcategory: {
+        name: @subcategory.name,
+        description: @subcategory.description,
+        photos_attributes: { "0" => { id: @photo.id, colspan: 3 } }
+      }
+    }
+
+    assert_redirected_to admin_category_path(@category)
+    assert_equal 3, @photo.reload.colspan
+  end
+
+  test "edit form displays a colspan select for each existing photo" do
+    sign_in_as @user
+
+    get edit_admin_category_subcategory_path(@category, @subcategory)
+
+    assert_select "select[name='subcategory[photos_attributes][0][colspan]']"
+  end
 end
