@@ -36,14 +36,17 @@
 ## Axe 2 — Modernisation stockage & images
 
 **Fonctionnalités**
-- [ ] Remplacer `cl_image_tag`/`cl_picture_tag` par l'API native ActiveStorage (`variant`/`representation`)
+- [x] Remplacer `cl_image_tag`/`cl_picture_tag` par un helper natif (`attachment.url()` + transformations Cloudinary passthrough)
 - [x] Étendre `colspan` sur `Photo` pour accepter 1/2/3 (migration + validations)
-- [ ] Validation sécurité des uploads : type de fichier réel, poids/dimensions max
-- [ ] Performance : lazy loading (`loading="lazy"`), format auto Cloudinary (`f_auto,q_auto`)
+- [ ] Validation sécurité des uploads :
+  - [ ] Type de fichier réel (via `Marcel`) : JPEG/PNG/WebP/HEIC uniquement, reste rejeté
+  - [ ] Poids max en garde-fou (20 Mo) — validation modèle + pré-check contrôleur avant `.attach`
+  - [ ] Redimensionnement/compression auto à l'upload (config Cloudinary : max 2500px de long côté, `quality: auto`)
+- [x] Performance : lazy loading (`loading="lazy"`), format auto Cloudinary (`f_auto,q_auto`)
 
 **Tests**
 - [x] Validations de `colspan` (1/2/3 acceptés, autres rejetés)
-- [ ] Dimensions correctes des variants générés
+- [x] Rendu du helper image (alt, lazy loading, cas non-attaché)
 - [ ] Upload rejeté si type de fichier invalide ou poids excessif
 
 **Accessibilité**
