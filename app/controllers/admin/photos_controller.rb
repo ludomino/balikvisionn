@@ -1,6 +1,7 @@
 module Admin
   class PhotosController < Admin::BaseController
-    before_action :set_photo
+    before_action :set_subcategory
+    before_action :set_photo, only: [:move_higher, :move_lower, :destroy]
 
     def move_higher
       @photo.move_higher
@@ -17,11 +18,21 @@ module Admin
       redirect_to edit_admin_category_subcategory_path(@subcategory.category, @subcategory), notice: "Photo supprimée."
     end
 
+    # Persiste le nouvel ordre après un glisser-déposer (liste complète d'ids, pas un swap)
+    def reorder
+      params[:photo_ids].each_with_index do |photo_id, index|
+        @subcategory.photos.where(id: photo_id).update_all(position: index)
+      end
+      head :ok
+    end
+
     private
 
-    # Scope par sous-catégorie : cohérent avec le pattern des autres contrôleurs admin
-    def set_photo
+    def set_subcategory
       @subcategory = Subcategory.find(params[:subcategory_id])
+    end
+
+    def set_photo
       @photo = @subcategory.photos.find(params[:id])
     end
   end

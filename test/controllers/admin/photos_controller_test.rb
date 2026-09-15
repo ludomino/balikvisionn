@@ -46,4 +46,16 @@ class Admin::PhotosControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to edit_admin_category_subcategory_path(@category, @subcategory)
   end
+
+  test "reorder updates position for each photo according to submitted order" do
+    sign_in_as @user
+
+    patch reorder_admin_category_subcategory_photos_path(@category, @subcategory), params: {
+      photo_ids: [@photo_b.id, @photo_a.id]
+    }
+
+    assert_response :success
+    assert_equal 0, @photo_b.reload.position
+    assert_equal 1, @photo_a.reload.position
+  end
 end
