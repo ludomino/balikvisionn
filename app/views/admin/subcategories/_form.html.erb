@@ -6,6 +6,18 @@
           <%= f.input :name, placeholder: 'Name...' %>
           <%= f.input :description %>
           <%= f.input :photos, as: :file, input_html: { multiple: true } %>
+
+          <% if @subcategory.persisted? && @subcategory.photos.any? %>
+            <hr>
+            <p class="text-muted small mb-2">Texte alternatif des photos existantes</p>
+            <%= f.simple_fields_for :photos, @subcategory.photos do |photo_f| %>
+              <div class="d-flex align-items-center mb-2" style="gap: 0.5rem;">
+                <%= cloudinary_image_tag photo_f.object.image, alt: photo_f.object.alt_text.presence || @subcategory.name, width: 80, height: 60, crop: :fill %>
+                <%= photo_f.input :alt_text, label: false, placeholder: "Texte alternatif..." %>
+              </div>
+            <% end %>
+          <% end %>
+
           <%= f.submit class: 'btn btn-flat' %>
         <% end %>
       </div>

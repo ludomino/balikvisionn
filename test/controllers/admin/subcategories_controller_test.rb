@@ -4,6 +4,7 @@ class Admin::SubcategoriesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:one)
     @category = Category.create!(name: "Concerts")
+    # ... reste du setup inchangé
     @subcategory = Subcategory.create!(
       name: "Jimmy Set",
       description: "Concert du 12 mars",
@@ -88,5 +89,30 @@ class Admin::SubcategoriesControllerTest < ActionDispatch::IntegrationTest
         }
       }
     end
+  end
+
+    # Édition d'alt_text depuis le formulaire d'édition de sous-catégorie
+  test "update saves alt_text for an existing photo via nested attributes" do
+    sign_in_as @user
+
+    patch admin_category_subcategory_path(@category, @subcategory), params: {
+      subcategory: {
+        name: @subcategory.name,
+        description: @subcategory.description,
+        photos_attributes: { "0" => { id: @photo.id, alt_text: "Vue de la scène" } }
+      }
+    }
+
+    assert_redirected_to admin_category_path(@category)
+    assert_equal "Vue de la scène", @photo.reload.alt_text
+  end
+
+  test "edit form displays an alt_text field for each existing photo" do
+    sign_in_as @user
+
+    get edit_admin_category_subcategory_path(@category, @subcategory)
+
+    assert_select "input[name='subcategory[photos_attributes][0][id]']", value: @photo.id.to_s
+    assert_select "input[name='subcategory[photos_attributes][0][alt_text]']"
   end
 end
