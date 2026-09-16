@@ -44,4 +44,12 @@ class Admin::CategoriesControllerTest < ActionDispatch::IntegrationTest
       delete admin_category_path(@category)
     end
   end
+
+  test "index displays a link to edit the about page" do
+    sign_in_as @user
+
+    get admin_categories_path
+
+    assert_select "a[href='#{edit_admin_about_page_path}']"
+  end
 end

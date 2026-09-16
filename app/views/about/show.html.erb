@@ -1,0 +1,9 @@
+<article>
+  <h1>À propos</h1>
+
+  <% if @about_page.photo.attached? %>
+    <%= cloudinary_image_tag @about_page.photo, alt: "Portrait du photographe", width: 400, height: 400, crop: :fill %>
+  <% end %>
+
+  <p><%= simple_format(@about_page.biography) %></p>
+</article>
