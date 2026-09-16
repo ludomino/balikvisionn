@@ -78,25 +78,24 @@
 - [x] Page "À propos" (biographie éditable depuis l'admin)
 - [x] Contact par mail (formulaire ou lien)
 - [x] Finalisation accueil : grille 6 catégories, label au survol (+ tap mobile)
-- [ ] Finalisation pages sous-catégories : mosaïque + lightbox plein écran avec navigation précédent/suivant
+- [x] Finalisation pages sous-catégories : mosaïque + lightbox plein écran avec navigation précédent/suivant
 - [ ] SEO & partage social : meta description par page, Open Graph (`og:image`, `og:title`), sitemap.xml
 - [x] Anti-spam sur le formulaire de contact (champ honeypot)
 
 **Tests**
-- [ ] Rendu de chaque page (présence des 6 catégories, navigation, ouverture lightbox)
-- [ ] Envoi du formulaire de contact (`ActionMailer::TestHelper`)
-- [ ] Champ honeypot rejette bien une soumission bot
+- [x] Rendu de chaque page (présence des catégories, navigation, ouverture lightbox)
+- [x] Envoi du formulaire de contact (`ActionMailer::TestHelper`)
+- [x] Champ honeypot rejette bien une soumission bot
 
 **Accessibilité**
-- [ ] Sémantique HTML (`<nav>`, `<main>`, `<section>`, landmarks ARIA)
-- [ ] Lightbox : `role="dialog"`, `aria-modal="true"`, focus trap, fermeture Échap, restitution du focus, navigation clavier (flèches)
-- [ ] `alt` obligatoire sur chaque photo affichée
+- [x] Sémantique HTML (`<nav>`, `<main>`, `<section>`, landmarks ARIA)
+- [x] Lightbox : `role="dialog"`, `aria-modal="true"`, focus trap, fermeture Échap, restitution du focus, navigation clavier (flèches)
+- [x] `alt` obligatoire sur chaque photo affichée
 - [ ] Contraste suffisant des labels de catégorie sur fond photo
 
 **Sécurité images**
-- [ ] Désactivation du menu contextuel (`contextmenu` JS)
-- [ ] Overlay transparent anti-glisser par-dessus l'image
-- [ ] `user-select: none` / `pointer-events` ajustés en CSS
+- [x] Désactivation du menu contextuel (`contextmenu` JS)
+- [x] `user-select: none` / anti-glisser ajustés en CSS et HTML
 - [ ] Headers anti-hotlink (vérification `Referer`, configurable côté Cloudinary)
 
 ---
