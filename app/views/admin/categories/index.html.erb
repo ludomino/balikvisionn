@@ -11,7 +11,7 @@
         <div class="card-category-params">
           <%= link_to raw('<i class="fa-regular fa-pen-to-square"></i>'), edit_admin_category_path(category), class: 'btn btn-icon' %>
 
-          <%= form_with(model: category, url: admin_category_path(category), method: :delete, data: { turbo_confirm: 'Are you sure?' }) do |form| %>
+          <%= form_with(model: category, url: admin_category_path(category), method: :delete, data: { turbo_confirm: 'Confirmer la suppression ?' }) do |form| %>
             <%= form.button type: :submit, class: 'btn btn-icon' do %>
               <i class="fa-solid fa-trash"></i>
             <% end %>
@@ -25,6 +25,6 @@
 </section>
 
 <div class="create">
-  <%= link_to "Create", new_admin_category_path, class: "btn btn-dark" %>
+  <%= link_to "Créer", new_admin_category_path, class: "btn btn-dark" %>
   <%= link_to "Modifier la page À propos", edit_admin_about_page_path, class: "btn btn-outline-dark" %>
 </div>
