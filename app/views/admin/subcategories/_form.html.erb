@@ -3,7 +3,7 @@
     <div class="col-12 col-md-6 offset-lg-3">
       <div class="bg-white rounded p-3 shadow">
         <%= simple_form_for [:admin, @category, @subcategory], html: { multipart: true } do |f| %>
-          <%= f.input :name, placeholder: 'Name...' %>
+          <%= f.input :name, placeholder: 'Nom...' %>
           <%= f.input :description %>
           <%= f.input :photos, as: :file, input_html: { multiple: true } %>
 

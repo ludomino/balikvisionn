@@ -1,0 +1,27 @@
+fr:
+  activerecord:
+    models:
+      category: "Catégorie"
+      subcategory: "Sous-catégorie"
+      photo: "Photo"
+      about_page: "Page à propos"
+    attributes:
+      category:
+        name: "Nom"
+        cover: "Image de couverture"
+      subcategory:
+        name: "Nom"
+        description: "Description"
+        photos: "Photos"
+      photo:
+        alt_text: "Texte alternatif"
+        colspan: "Taille"
+      about_page:
+        biography: "Biographie"
+        photo: "Photo"
+  activemodel:
+    attributes:
+      contact:
+        name: "Nom"
+        email: "Email"
+        message: "Message"

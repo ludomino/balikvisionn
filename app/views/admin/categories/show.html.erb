@@ -8,7 +8,7 @@
     </div>
   </div>
     <div class="right-content">
-      <%= link_to "Create subcategory", new_admin_category_subcategory_path(@category), class: "btn btn-dark" %>
+      <%= link_to "Créer une sous-catégorie", new_admin_category_subcategory_path(@category), class: "btn btn-dark" %>
     </div>
 </section>
 
@@ -21,7 +21,7 @@
       </div>
       <div class="subparams">
         <%= link_to raw('<i class="fa-regular fa-pen-to-square"></i>'), edit_admin_category_subcategory_path(@category, subcategory), class: 'btn btn-icon' %>
-        <%= link_to raw('<i class="fa-solid fa-trash"></i>'), admin_category_subcategory_path(@category, subcategory), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn-icon' %>
+        <%= link_to raw('<i class="fa-solid fa-trash"></i>'), admin_category_subcategory_path(@category, subcategory), data: { turbo_method: :delete, turbo_confirm: 'Confirmer la suppression ?' }, class: 'btn btn-icon' %>
       </div>
      </div>
      <div class="subphotosgrid">

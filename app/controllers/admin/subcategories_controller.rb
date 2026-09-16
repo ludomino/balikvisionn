@@ -4,7 +4,7 @@ module Admin
       @category = Category.find(params[:category_id])
       @subcategory = @category.subcategories.find(params[:id])
       @subcategory.destroy
-      redirect_to admin_category_path(@category), notice: 'Subcategory was successfully destroyed.'
+      redirect_to admin_category_path(@category), notice: 'Sous-catégorie supprimée avec succès.'
     end
 
     def edit
@@ -18,7 +18,7 @@ module Admin
 
       if @subcategory.update(subcategory_params)
         attach_photos(@subcategory)
-        redirect_to admin_category_path(@category), notice: 'Subcategory was successfully updated.'
+        redirect_to admin_category_path(@category), notice: 'Sous-catégorie mise à jour avec succès.'
       else
         render :edit
       end
@@ -36,7 +36,7 @@ module Admin
 
       if @subcategory.save
         attach_photos(@subcategory)
-        redirect_to admin_category_path(@category), notice: 'Subcategory was successfully created.'
+        redirect_to admin_category_path(@category), notice: 'Sous-catégorie créée avec succès.'
       else
         render :new, status: :unprocessable_entity
       end
