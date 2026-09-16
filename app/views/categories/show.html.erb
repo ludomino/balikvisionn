@@ -11,20 +11,24 @@
 
 <section class="subcategories-photos">
   <% @subcategories.each do |subcategory| %>
-    <div class="subcategory">
-      <div class="subinfos">
-        <h2><%= subcategory.name %></h2>
-        <h3><%= subcategory.description %></h3>
+    <div class="subcategory"
+     data-controller="lightbox"
+     data-lightbox-photos-value="<%= subcategory.photos.map { |p| { url: photo_lightbox_url(p), alt: p.alt_text.presence || subcategory.name } }.to_json %>">
+  <div class="subinfos">
+    <h2><%= subcategory.name %></h2>
+    <h3><%= subcategory.description %></h3>
+  </div>
+  <div class="subphotosgrid">
+    <% subcategory.photos.each_with_index do |photo, index| %>
+      <% width, height = photo_mosaic_dimensions(photo.colspan) %>
+      <div class="mosaic-photo mosaic-photo--span-<%= photo.colspan %>"
+           data-action="click->lightbox#open"
+           data-lightbox-index-param="<%= index %>">
+        <%= cloudinary_image_tag photo.image, alt: photo.alt_text.presence || subcategory.name, width: width, height: height, crop: :fill, gravity: :auto %>
       </div>
-      <div class="subphotosgrid">
-        <div class="row">
-          <% subcategory.photos.each do |photo| %>
-            <div class="col-lg-4 col-md-6 col-sm-12">
-              <%= cloudinary_image_tag photo.image, alt: photo.alt_text.presence || subcategory.name, height: 400, width: 300, crop: :fill %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
+    <% end %>
+  </div>
+  <%= render "lightbox" %>
+</div></div>
   <% end %>
 </section>
