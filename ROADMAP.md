@@ -76,11 +76,11 @@
 
 **Fonctionnalités**
 - [x] Page "À propos" (biographie éditable depuis l'admin)
-- [ ] Contact par mail (formulaire ou lien)
+- [x] Contact par mail (formulaire ou lien)
 - [ ] Finalisation accueil : grille 6 catégories, label au survol (+ tap mobile)
 - [ ] Finalisation pages sous-catégories : mosaïque + lightbox plein écran avec navigation précédent/suivant
 - [ ] SEO & partage social : meta description par page, Open Graph (`og:image`, `og:title`), sitemap.xml
-- [ ] Anti-spam sur le formulaire de contact (champ honeypot)
+- [x] Anti-spam sur le formulaire de contact (champ honeypot)
 
 **Tests**
 - [ ] Rendu de chaque page (présence des 6 catégories, navigation, ouverture lightbox)
