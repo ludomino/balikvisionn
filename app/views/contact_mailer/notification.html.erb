@@ -1,0 +1,9 @@
+<p>
+  Nouveau message depuis le formulaire de contact du site.
+</p>
+<p>
+  <strong>De :</strong> <%= @contact.name %> (<%= @contact.email %>)
+</p>
+<p>
+  <%= simple_format(@contact.message) %>
+</p>
