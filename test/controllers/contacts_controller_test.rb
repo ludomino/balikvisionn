@@ -26,4 +26,9 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to about_path
   end
+
+  test "GET /contact redirects to the about page" do
+    get "/contact"
+    assert_redirected_to about_path
+  end
 end

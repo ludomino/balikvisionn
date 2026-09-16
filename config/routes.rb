@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get "about", to: "about#show"
 
   resource :contact, only: [:create]
+  get "contact", to: redirect("/about"), as: nil # filet de sécurité si l'utilisateur rafraîchit après une erreur 422
 
   namespace :admin do
     resource :about_page, only: [:edit, :update]
