@@ -9,7 +9,13 @@
 
   &.is-open { display: flex; }
 
-  img { max-width: 90vw; max-height: 90vh; object-fit: contain; }
+  img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
 
   button {
     position: absolute;

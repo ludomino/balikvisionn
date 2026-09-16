@@ -24,8 +24,7 @@
       <div class="mosaic-photo mosaic-photo--span-<%= photo.colspan %>"
            data-action="click->lightbox#open"
            data-lightbox-index-param="<%= index %>">
-        <%= cloudinary_image_tag photo.image, alt: photo.alt_text.presence || subcategory.name, width: width, height: height, crop: :fill, gravity: :auto %>
-      </div>
+          <%= cloudinary_image_tag photo.image, alt: photo.alt_text.presence || subcategory.name, width: width, height: height, crop: :fill, gravity: :auto, protected: true %>      </div>
     <% end %>
   </div>
   <%= render "lightbox" %>
