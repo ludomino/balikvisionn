@@ -14,6 +14,6 @@ class ContactMailerTest < ActionMailer::TestCase
     assert_equal [ContactMailer::CONTACT_ADDRESS], email.to
     assert_equal [contact.email], email.reply_to
     assert_match contact.name, email.subject
-    assert_match contact.message, email.body.encoded
+    assert_match contact.message, email.text_part.decoded
   end
 end
