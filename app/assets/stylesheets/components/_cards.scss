@@ -32,6 +32,12 @@
     position: absolute;
   }
 
+    @media (hover: none) {
+    .card-category-text {
+      opacity: 1;
+    }
+  }
+
   &:hover .card-category-text {
     transform: scale(1.1);
     opacity: 1;
