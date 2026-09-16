@@ -37,11 +37,22 @@ class PhotoTest < ActiveSupport::TestCase
   end
 
   test "acceptable_upload? rejects a file larger than the max size" do
-    oversized = Struct.new(:size).new(21.megabytes)
+    # fichier réel (type valide) dont on force la taille déclarée au-delà du seuil, pour isoler le check de taille
+    oversized = fixture_file_upload("test_photo.png", "image/png")
+    oversized.define_singleton_method(:size) { 21.megabytes }
+
     assert_not Photo.acceptable_upload?(oversized)
   end
 
-    test "move_higher swaps position with the previous photo" do
+  test "acceptable_upload? rejects a file larger than Cloudinary's own 10MB limit" do
+    # Cloudinary refuse tout fichier > 10 Mo (confirmé par l'erreur réelle) ; notre check doit refléter cette vraie limite
+    oversized = fixture_file_upload("test_photo.png", "image/png")
+    oversized.define_singleton_method(:size) { 15.megabytes }
+
+    assert_not Photo.acceptable_upload?(oversized)
+  end
+
+  test "move_higher swaps position with the previous photo" do
     photo_a = Photo.create!(subcategory: @subcategory, colspan: 1, position: 0)
     photo_b = Photo.create!(subcategory: @subcategory, colspan: 1, position: 1)
 
