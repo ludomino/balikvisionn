@@ -1,4 +1,4 @@
-// app/assets/stylesheets/_cards.scss
+// app/assets/stylesheets/components/_cards.scss
 
 .card-category {
   display: flex;
@@ -11,15 +11,29 @@
   justify-content: center;
   flex-wrap: wrap;
   flex-direction: column;
-  position: relative; /* Add this */
+  position: relative;
+
+  // Avant : lien <a> sans layout propre / Après : le lien occupe toute la carte et devient lui-même le conteneur flex
+  a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #ffffff;
+    text-decoration: none;
+  }
 
   .card-image {
-    flex: 1; /* Allow the image to take up remaining vertical space */
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
   }
 
+  // Avant : centrage qui dépendait d'être enfant direct de .card-category (flex) / Après : calque plein cadre centré, indépendant de la profondeur du DOM
   .card-category-text {
     color: white;
     font-size: 24px;
@@ -27,12 +41,14 @@
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
-    text-decoration: none;
-    display: flex;
     position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-    @media (hover: none) {
+  @media (hover: none) {
     .card-category-text {
       opacity: 1;
     }
@@ -43,7 +59,7 @@
     opacity: 1;
   }
 
-  .card-category-params{
+  .card-category-params {
     display: flex;
     position: absolute;
     top: 30px;
@@ -57,10 +73,6 @@
     border-color: #333;
   }
 
-  a {
-    color: #ffffff;
-    text-decoration: none;
-  }
   @media screen and (max-width: 996px) {
     height: 350px;
     width: 100%;
