@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   get "about", to: "about#show"
 
+  resource :contact, only: [:create]
+
   namespace :admin do
     resource :about_page, only: [:edit, :update]
     resources :categories do
