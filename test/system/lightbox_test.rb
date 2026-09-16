@@ -43,4 +43,17 @@ class LightboxTest < ApplicationSystemTestCase
     find("[data-lightbox-target='overlay']").send_keys(:escape)
     assert_no_selector "[data-lightbox-target='overlay'].is-open"
   end
+
+  test "le focus est piégé dans la lightbox (Tab boucle du dernier au premier bouton)" do
+    visit category_path(@category)
+    first(".mosaic-photo").click
+
+    buttons = all("[data-lightbox-target='overlay'] button")
+    last_button = buttons.last
+
+    assert_equal buttons.first.text, page.evaluate_script("document.activeElement.textContent").strip
+
+    last_button.send_keys(:tab)
+    assert_equal buttons.first.text, page.evaluate_script("document.activeElement.textContent").strip
+  end
 end
