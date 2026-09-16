@@ -75,7 +75,7 @@
 ## Axe 4 — Pages Front-Office manquantes
 
 **Fonctionnalités**
-- [ ] Page "À propos" (biographie éditable depuis l'admin)
+- [x] Page "À propos" (biographie éditable depuis l'admin)
 - [ ] Contact par mail (formulaire ou lien)
 - [ ] Finalisation accueil : grille 6 catégories, label au survol (+ tap mobile)
 - [ ] Finalisation pages sous-catégories : mosaïque + lightbox plein écran avec navigation précédent/suivant
