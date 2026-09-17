@@ -1,10 +1,17 @@
-// Define variables for your color scheme
+// Palette Balikvision — alignée sur le vert kaki du logo
 
-// For example:
-$red: #FD1015;
-$blue: #0D6EFD;
-$yellow: #FFC65A;
-$orange: #E67E22;
-$green: #1EDD88;
-$gray: #0E0000;
-$light-gray: #F4F4F4;
+$bg-dark: #000000;       // fond principal du site
+$bg-card: #111111;       // fond des blocs surélevés (ex. carte de connexion)
+$bg-input: #1a1a1a;      // fond des champs de formulaire
+
+$accent: #8c8f5e;        // vert kaki — couleur de marque (issue du logo)
+$accent-hover: #757843;  // variante foncée, pour les états de survol
+
+$text-light: #ffffff;    // texte principal sur fond sombre
+$text-muted: #f4f4f4;    // texte secondaire (labels, légendes)
+$border: #333333;        // bordures discrètes
+
+$danger: #ff8080;        // messages d'erreur
+
+// Repères de mise en page partagés
+$header-height: 70px;

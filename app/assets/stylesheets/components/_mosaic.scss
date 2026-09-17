@@ -1,0 +1,25 @@
+.subphotosgrid {
+  display: grid;
+  // grid-template-columns: repeat(3, 1fr);
+  grid-auto-flow: dense;
+  gap: 10px;
+
+  .mosaic-photo {
+    overflow: hidden;
+    border-radius: 4px;
+    cursor: pointer;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      user-select: none;
+      -webkit-touch-callout: none; // bloque "Enregistrer l'image" en appui long (iOS Safari)
+    }
+  }
+
+  .mosaic-photo--span-1 { grid-column: span 1; aspect-ratio: 1 / 1; }
+  .mosaic-photo--span-2 { grid-column: span 2; aspect-ratio: 2 / 1; }
+  .mosaic-photo--span-3 { grid-column: span 3; aspect-ratio: 3 / 1; }
+}

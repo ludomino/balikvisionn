@@ -25,7 +25,7 @@
 - [x] Authentification admin (générateur natif Rails 8 : `bin/rails generate authentication`)
 
 **Tests**
-- [ ] Test reproduisant le bug update/delete (rouge avant correctif)
+- [x] Test reproduisant le bug update/delete (couverture confirmée le 2026-09-17 : `admin/subcategories_controller_test.rb` + `system/subcategories_test.rb`, 11 runs / 0 failures)
 - [x] Tests d'authentification (accès refusé sans connexion / accordé après / échec sur identifiants invalides)
 
 **Accessibilité**
@@ -78,30 +78,56 @@
 - [x] Page "À propos" (biographie éditable depuis l'admin)
 - [x] Contact par mail (formulaire ou lien)
 - [x] Finalisation accueil : grille 6 catégories, label au survol (+ tap mobile)
-- [ ] Finalisation pages sous-catégories : mosaïque + lightbox plein écran avec navigation précédent/suivant
+- [x] Finalisation pages sous-catégories : mosaïque + lightbox plein écran avec navigation précédent/suivant
 - [ ] SEO & partage social : meta description par page, Open Graph (`og:image`, `og:title`), sitemap.xml
 - [x] Anti-spam sur le formulaire de contact (champ honeypot)
 
 **Tests**
-- [ ] Rendu de chaque page (présence des 6 catégories, navigation, ouverture lightbox)
-- [ ] Envoi du formulaire de contact (`ActionMailer::TestHelper`)
-- [ ] Champ honeypot rejette bien une soumission bot
+- [x] Rendu de chaque page (présence des catégories, navigation, ouverture lightbox)
+- [x] Envoi du formulaire de contact (`ActionMailer::TestHelper`)
+- [x] Champ honeypot rejette bien une soumission bot
 
 **Accessibilité**
-- [ ] Sémantique HTML (`<nav>`, `<main>`, `<section>`, landmarks ARIA)
-- [ ] Lightbox : `role="dialog"`, `aria-modal="true"`, focus trap, fermeture Échap, restitution du focus, navigation clavier (flèches)
-- [ ] `alt` obligatoire sur chaque photo affichée
+- [x] Sémantique HTML (`<nav>`, `<main>`, `<section>`, landmarks ARIA)
+- [x] Lightbox : `role="dialog"`, `aria-modal="true"`, focus trap, fermeture Échap, restitution du focus, navigation clavier (flèches)
+- [x] `alt` obligatoire sur chaque photo affichée
 - [ ] Contraste suffisant des labels de catégorie sur fond photo
 
 **Sécurité images**
-- [ ] Désactivation du menu contextuel (`contextmenu` JS)
-- [ ] Overlay transparent anti-glisser par-dessus l'image
-- [ ] `user-select: none` / `pointer-events` ajustés en CSS
+- [x] Désactivation du menu contextuel (`contextmenu` JS)
+- [x] `user-select: none` / anti-glisser ajustés en CSS et HTML
 - [ ] Headers anti-hotlink (vérification `Referer`, configurable côté Cloudinary)
 
 ---
 
-## Axe 5 — Responsive & audit transverse
+## Axe 5 — Interface Back-Office : tableau de bord & finitions admin
+
+*Ajouté suite à validation des maquettes le 2026-09-17 (thème sombre #0a0a0a, accent kaki, Archivo)*
+
+**Fonctionnalités**
+- [ ] Tableau de bord admin (nouvelle page d'accueil back-office)
+  - [ ] Indicateurs clés (nb catégories, sous-catégories, photos publiées)
+  - [ ] Alerte "catégories sans photo de couverture"
+  - [ ] Raccourcis (nouvelle catégorie / nouvelle sous-catégorie / modifier À propos)
+  - [ ] Grille de synthèse des catégories
+  - [ ] *(bloc "derniers messages" + badge non-lus de la maquette volontairement omis — dépend de la V2, cf. Roadmap V2 en fin de fichier)*
+- [ ] Refonte visuelle des formulaires existants (`CategoryForm`, `SubcategoryForm`, `AboutForm`) sur le thème admin validé
+- [ ] Refonte visuelle de la vue catégorie admin (fil d'ariane, actions modifier/supprimer, grille sous-catégories)
+- [ ] Refonte visuelle de l'éditeur mosaïque (poignée de drag, boutons de taille 1/2/3 et suppression en overlay)
+
+**Tests**
+- [ ] Rendu du tableau de bord (indicateurs, alerte conditionnelle)
+
+**Accessibilité**
+- [ ] Formulaires admin : labels associés, focus visible, erreurs annoncées (`aria-live`)
+- [ ] Contraste du texte secondaire (`#9a9a9a` sur `#0a0a0a`) vérifié au ratio WCAG AA
+
+**Responsive**
+- [ ] Adaptation mobile (maquettes déjà validées : `MainMobile`, `CategoryFormMobile`, `SubcategoryFormMobile`, `PhotoEditorMobile`, `AboutFormMobile`, `CategoryShowMobile`)
+
+---
+
+## Axe 6 — Responsive & audit transverse
 
 **Fonctionnalités**
 - [ ] Adaptation mobile (grille empilée, label affiché au tap)
@@ -120,7 +146,7 @@
 
 ---
 
-## Axe 6 — Qualité & couverture globale
+## Axe 7 — Qualité & couverture globale
 
 - [ ] Mesurer la couverture de tests réelle (SimpleCov), combler les trous identifiés
 - [ ] Vérifier qu'aucune route admin n'est accessible sans authentification
@@ -128,7 +154,7 @@
 
 ---
 
-## Axe 7 — Préparation au déploiement
+## Axe 8 — Préparation au déploiement
 
 - [ ] Choix définitif de l'hébergement (VPS + Kamal vs PaaS)
 - [ ] Configuration production réelle : domaine, `force_ssl`, `RAILS_MASTER_KEY`, clés Cloudinary
@@ -139,9 +165,23 @@
 
 ---
 
-## Axe 8 — Mise en production
+## Axe 9 — Mise en production
 
 - [ ] Premier déploiement
 - [ ] Smoke tests manuels en conditions réelles (incluant vérif a11y et protection images)
 - [ ] Sauvegardes de base de données automatiques et récurrentes (pas ponctuelles)
 - [ ] Monitoring d'erreurs en production (Sentry ou Honeybadger)
+
+
+---
+
+## Roadmap V2 — Améliorations futures
+
+- [ ] **Gestion des messages de contact**
+  - [ ] Persistance : migration + modèle `Contact` en ActiveRecord (`read_at`, `archived_at`) — actuellement un simple objet de formulaire, rien n'est stocké
+  - [ ] `ContactsController` : enregistrer le message en base en plus de l'envoi mail
+  - [ ] Page "Messages de contact" en admin (liste, non lus mis en évidence, répondre par mail, archiver) — maquette déjà validée (`ContactMessages.dc.html` + `ContactMessagesMobile.dc.html`)
+  - [ ] Réactiver, sur le tableau de bord (Axe 5), le bloc "derniers messages" et le badge non-lus, omis en V1
+  - [ ] Tests : modèle (persistance, statut), contrôleur (message enregistré + mail envoyé), marquer lu/archiver
+
+- [ ] **Orientation portrait pour la mosaïque** (tailles 1/2/3 en vertical, en plus de l'horizontal actuel) — nécessite une colonne `rowspan`, `grid-auto-rows` fixe côté CSS (remplace l'`aspect-ratio` actuel), et `photo_mosaic_dimensions` adapté aux deux dimensions. Décision prise (2026-09-17) : orientation exclusive (paysage OU portrait, pas les deux en même temps) plutôt que deux curseurs indépendants — plus simple et plus cohérent avec un vrai grain de photo.

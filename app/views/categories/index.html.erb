@@ -1,15 +1,16 @@
 <section class="accueil-photos">
+  <h1 class="visually-hidden">Portfolio photographies — catégories</h1>
     <% @categories.each do |category| %>
       <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3))">
-        <div class="card-image">
         <a href="<%= category_path(category) %>">
-          <% if category.cover.attached? %>
-            <%= cloudinary_image_tag category.cover, alt: category.name, height: 300, width: 400, crop: :fill %>
-          <% else %>
-            <div>No Cover Image</div>
-          <% end %>
-        </div>
-          <div class="card-category-text"><%= link_to category.name.capitalize, category_path(category)%></div>
+          <div class="card-image">
+            <% if category.cover.attached? %>
+              <%= cloudinary_image_tag category.cover, alt: category.name, height: 300, width: 400, crop: :fill, gravity: :auto %>
+            <% else %>
+              <div>No Cover Image</div>
+            <% end %>
+          </div>
+          <div class="card-category-text"><%= category.name.capitalize %></div>
         </a>
       </div>
     <% end %>

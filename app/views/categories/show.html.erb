@@ -1,30 +1,43 @@
 <section class="subcategories-header">
-  <div class="subhead">
-    <div class="left-content">
-      <%= link_to raw('<i class="fa-solid fa-arrow-left"></i>'), root_path, class: "btn" %>
-    </div>
-    <div class="center-content">
-      <h1><%= @category.name %></h1>
-    </div>
+  <div class="header-cover">
+    <% if @category.cover.attached? %>
+      <%= cloudinary_image_tag @category.cover, alt: "", width: 1600, height: 300, crop: :fill, gravity: :auto %>
+    <% end %>
   </div>
+  <div class="header-overlay"></div>
+  <%= link_to raw('<i class="fa-solid fa-arrow-left"></i>'), root_path, class: "btn header-back" %>
+  <h1><%= @category.name %></h1>
 </section>
+
+<% if @subcategories.size > 1 %>
+  <nav class="subcategories-nav">
+    <% @subcategories.each do |subcategory| %>
+      <%= link_to subcategory.name, "#subcategory-#{subcategory.id}" %>
+    <% end %>
+  </nav>
+<% end %>
 
 <section class="subcategories-photos">
   <% @subcategories.each do |subcategory| %>
-    <div class="subcategory">
+    <div class="subcategory"
+         id="subcategory-<%= subcategory.id %>"
+         data-controller="lightbox"
+         data-lightbox-photos-value="<%= subcategory.photos.map { |p| { url: photo_lightbox_url(p), alt: p.alt_text.presence || subcategory.name } }.to_json %>">
       <div class="subinfos">
         <h2><%= subcategory.name %></h2>
-        <h3><%= subcategory.description %></h3>
+        <p><%= subcategory.description %></p>
       </div>
       <div class="subphotosgrid">
-        <div class="row">
-          <% subcategory.photos.each do |photo| %>
-            <div class="col-lg-4 col-md-6 col-sm-12">
-              <%= cloudinary_image_tag photo.image, alt: photo.alt_text.presence || subcategory.name, height: 400, width: 300, crop: :fill %>
-            </div>
-          <% end %>
-        </div>
+        <% subcategory.photos.each_with_index do |photo, index| %>
+          <% width, height = photo_mosaic_dimensions(photo.colspan) %>
+          <div class="mosaic-photo mosaic-photo--span-<%= photo.colspan %>"
+               data-action="click->lightbox#open"
+               data-lightbox-index-param="<%= index %>">
+            <%= cloudinary_image_tag photo.image, alt: photo.alt_text.presence || subcategory.name, width: width, height: height, crop: :fill, gravity: :auto, protected: true %>
+          </div>
+        <% end %>
       </div>
+      <%= render "lightbox" %>
     </div>
   <% end %>
 </section>
