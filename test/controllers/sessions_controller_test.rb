@@ -22,6 +22,24 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_nil cookies[:session_id]
   end
 
+  # a11y : l'erreur de connexion doit être annoncée aux lecteurs d'écran
+  test "new displays a login error with an accessible alert role" do
+    post session_path, params: { email_address: @user.email_address, password: "wrong" }
+    follow_redirect!
+
+    assert_select "[role=alert]", text: /incorrect/i
+  end
+
+  # a11y : chaque champ du formulaire doit avoir un label associé (for/id)
+  test "new renders labels associated with their inputs" do
+    get new_session_path
+
+    assert_select "label[for=email_address]"
+    assert_select "input#email_address[type=email]"
+    assert_select "label[for=password]"
+    assert_select "input#password[type=password]"
+  end
+
   test "destroy" do
     sign_in_as(User.take)
 
