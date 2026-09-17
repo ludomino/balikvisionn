@@ -1,12 +1,12 @@
 <section class="subcategories-header">
-  <div class="subhead">
-    <div class="left-content">
-      <%= link_to raw('<i class="fa-solid fa-arrow-left"></i>'), root_path, class: "btn" %>
-    </div>
-    <div class="center-content">
-      <h1><%= @category.name %></h1>
-    </div>
+  <div class="header-cover">
+    <% if @category.cover.attached? %>
+      <%= cloudinary_image_tag @category.cover, alt: "", width: 1600, height: 300, crop: :fill, gravity: :auto %>
+    <% end %>
   </div>
+  <div class="header-overlay"></div>
+  <%= link_to raw('<i class="fa-solid fa-arrow-left"></i>'), root_path, class: "btn header-back" %>
+  <h1><%= @category.name %></h1>
 </section>
 
 <% if @subcategories.size > 1 %>

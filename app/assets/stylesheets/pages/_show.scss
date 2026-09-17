@@ -1,8 +1,44 @@
 .subcategories-header {
-  padding: 30px;
+  // Avant : simple padding, flèche + h1 en flux normal / Après : bandeau cover en fond, flèche + h1 superposés
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+  background-color: $bg-card; // repli si la catégorie n'a pas encore de cover
+  margin-bottom: 12px;
+  margin-top: 20px;
+
+.header-cover {
+  position: absolute;
+  inset: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+  .header-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85) 100%);
+  }
+
+  .header-back {
+    position: absolute;
+    top: 28px;
+    left: 40px;
+    z-index: 2;
+  }
 
   h1 {
-    text-transform: uppercase; // cohérence avec le système typo (accueil, nav)
+    position: absolute;
+    left: 40px;
+    bottom: 24px;
+    z-index: 2;
+    margin: 0;
+    text-transform: uppercase;
   }
 }
 
@@ -54,15 +90,16 @@
 }
 
 .subinfos {
-  text-align: center;
+  text-align: left;
+  padding-left: 30px; // la section n'a plus de padding (mosaïque plein cadre), on évite que le texte colle au bord
   margin-bottom: 20px;
 
   h2 {
+    font-size: 1.4em; // nouveau : réduit sans toucher au h2 global (utilisé aussi par "Me contacter" sur la page à propos)
     text-transform: uppercase;
     letter-spacing: 0.03em;
   }
 
-  // Avant : paragraphe neutre en gris foncé (#242424, illisible sur fond noir) / Après : accroche éditoriale en kaki
   p {
     color: $accent;
     text-transform: uppercase;
