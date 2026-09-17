@@ -65,6 +65,9 @@
 - [x] Suppression de photo
 - [x] Décision technique : Stimulus + SortableJS (cohérent avec l'architecture existante, pas de build step)
 
+**Pistes futures (non planifiées)**
+- [ ] Orientation portrait pour la mosaïque (tailles 1/2/3 en vertical, en plus de l'horizontal actuel) — nécessite une colonne `rowspan`, `grid-auto-rows` fixe côté CSS (remplace l'`aspect-ratio` actuel), et `photo_mosaic_dimensions` adapté aux deux dimensions. Décision prise (2026-09-17) : orientation exclusive (paysage OU portrait, pas les deux en même temps) plutôt que deux curseurs indépendants — plus simple et plus cohérent avec un vrai grain de photo.
+
 **Tests**
 - [x] Test système (Capybara) du drag-and-drop : position persistée en base
 - [x] Test de suppression : DB + blob Cloudinary bien supprimés
