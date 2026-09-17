@@ -103,7 +103,34 @@
 
 ---
 
-## Axe 5 — Responsive & audit transverse
+## Axe 5 — Interface Back-Office : tableau de bord & finitions admin
+
+*Ajouté suite à validation des maquettes le 2026-09-17 (thème sombre #0a0a0a, accent kaki, Archivo)*
+
+**Fonctionnalités**
+- [ ] Tableau de bord admin (nouvelle page d'accueil back-office)
+  - [ ] Indicateurs clés (nb catégories, sous-catégories, photos publiées)
+  - [ ] Alerte "catégories sans photo de couverture"
+  - [ ] Raccourcis (nouvelle catégorie / nouvelle sous-catégorie / modifier À propos)
+  - [ ] Grille de synthèse des catégories
+  - [ ] *(bloc "derniers messages" + badge non-lus de la maquette volontairement omis — dépend de la V2, cf. Roadmap V2 en fin de fichier)*
+- [ ] Refonte visuelle des formulaires existants (`CategoryForm`, `SubcategoryForm`, `AboutForm`) sur le thème admin validé
+- [ ] Refonte visuelle de la vue catégorie admin (fil d'ariane, actions modifier/supprimer, grille sous-catégories)
+- [ ] Refonte visuelle de l'éditeur mosaïque (poignée de drag, boutons de taille 1/2/3 et suppression en overlay)
+
+**Tests**
+- [ ] Rendu du tableau de bord (indicateurs, alerte conditionnelle)
+
+**Accessibilité**
+- [ ] Formulaires admin : labels associés, focus visible, erreurs annoncées (`aria-live`)
+- [ ] Contraste du texte secondaire (`#9a9a9a` sur `#0a0a0a`) vérifié au ratio WCAG AA
+
+**Responsive**
+- [ ] Adaptation mobile (maquettes déjà validées : `MainMobile`, `CategoryFormMobile`, `SubcategoryFormMobile`, `PhotoEditorMobile`, `AboutFormMobile`, `CategoryShowMobile`)
+
+---
+
+## Axe 6 — Responsive & audit transverse
 
 **Fonctionnalités**
 - [ ] Adaptation mobile (grille empilée, label affiché au tap)
@@ -122,7 +149,7 @@
 
 ---
 
-## Axe 6 — Qualité & couverture globale
+## Axe 7 — Qualité & couverture globale
 
 - [ ] Mesurer la couverture de tests réelle (SimpleCov), combler les trous identifiés
 - [ ] Vérifier qu'aucune route admin n'est accessible sans authentification
@@ -130,7 +157,7 @@
 
 ---
 
-## Axe 7 — Préparation au déploiement
+## Axe 8 — Préparation au déploiement
 
 - [ ] Choix définitif de l'hébergement (VPS + Kamal vs PaaS)
 - [ ] Configuration production réelle : domaine, `force_ssl`, `RAILS_MASTER_KEY`, clés Cloudinary
@@ -141,9 +168,21 @@
 
 ---
 
-## Axe 8 — Mise en production
+## Axe 9 — Mise en production
 
 - [ ] Premier déploiement
 - [ ] Smoke tests manuels en conditions réelles (incluant vérif a11y et protection images)
 - [ ] Sauvegardes de base de données automatiques et récurrentes (pas ponctuelles)
 - [ ] Monitoring d'erreurs en production (Sentry ou Honeybadger)
+
+
+---
+
+## Roadmap V2 — Améliorations futures
+
+- [ ] **Gestion des messages de contact**
+  - [ ] Persistance : migration + modèle `Contact` en ActiveRecord (`read_at`, `archived_at`) — actuellement un simple objet de formulaire, rien n'est stocké
+  - [ ] `ContactsController` : enregistrer le message en base en plus de l'envoi mail
+  - [ ] Page "Messages de contact" en admin (liste, non lus mis en évidence, répondre par mail, archiver) — maquette déjà validée (`ContactMessages.dc.html` + `ContactMessagesMobile.dc.html`)
+  - [ ] Réactiver, sur le tableau de bord (Axe 5), le bloc "derniers messages" et le badge non-lus, omis en V1
+  - [ ] Tests : modèle (persistance, statut), contrôleur (message enregistré + mail envoyé), marquer lu/archiver
