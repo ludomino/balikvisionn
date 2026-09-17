@@ -38,6 +38,23 @@ class Admin::SubcategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Nouveau nom", @subcategory.name
   end
 
+  # Régression axe 1 : route de suppression pointait vers la collection au lieu du member
+  test "destroy redirects to login when not authenticated" do
+    delete admin_category_subcategory_path(@category, @subcategory)
+    assert_redirected_to new_session_path
+  end
+
+  test "destroy removes the subcategory when authenticated" do
+    sign_in_as @user
+
+    assert_difference "Subcategory.count", -1 do
+      delete admin_category_subcategory_path(@category, @subcategory)
+    end
+
+    assert_redirected_to admin_category_path(@category)
+    assert_not Subcategory.exists?(@subcategory.id)
+  end
+
   # Vérifie qu'un upload réel crée un Photo avec image attachée
   test "create attaches an uploaded photo to the new subcategory" do
     sign_in_as @user

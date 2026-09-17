@@ -1,6 +1,7 @@
 <%= render layout: "shared/auth_card" do %>
-  <%= tag.div(flash[:alert], style: "color:#ff8080") if flash[:alert] %>
-  <%= tag.div(flash[:notice], style: "color:#8faf8a") if flash[:notice] %>
+  <%# Avant : simple <div> coloré, invisible pour un lecteur d'écran / Après : role="alert"|"status" annonce le message automatiquement (aria-live implicite) %>
+  <%= tag.div(flash[:alert], style: "color:#ff8080", role: "alert") if flash[:alert] %>
+  <%= tag.div(flash[:notice], style: "color:#8faf8a", role: "status") if flash[:notice] %>
 
   <%= form_with url: session_path do |form| %>
     <%= form.label :email_address, "Adresse email" %>
