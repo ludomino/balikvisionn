@@ -41,4 +41,24 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_select "h3", count: 0
     assert_select "p", text: subcategory.description
   end
+
+  test "affiche un lien d'ancre par sous-catégorie quand il y en a plusieurs" do
+    portugal = Subcategory.create!(name: "Portugal", description: "Été 2024", category: @category)
+    tokyo = Subcategory.create!(name: "Tokyo", description: "Hiver 2023", category: @category)
+
+    get category_path(@category)
+
+    assert_select "nav.subcategories-nav a[href='#subcategory-#{portugal.id}']", text: portugal.name
+    assert_select "nav.subcategories-nav a[href='#subcategory-#{tokyo.id}']", text: tokyo.name
+    assert_select "#subcategory-#{portugal.id}"
+    assert_select "#subcategory-#{tokyo.id}"
+  end
+
+  test "masque la nav d'ancrage s'il n'y a qu'une seule sous-catégorie" do
+    Subcategory.create!(name: "Portugal", description: "Été 2024", category: @category)
+
+    get category_path(@category)
+
+    assert_select "nav.subcategories-nav", count: 0
+  end
 end

@@ -20,59 +20,66 @@
   position: center;
 }
 
+html {
+  background-color: $bg-dark; // Avant : fond blanc du navigateur visible au-delà du contenu plafonné à 1400px / Après : plus aucun blanc possible, quelle que soit la largeur d'écran
+}
+
 body {
-  font-family: 'Archivo', sans-serif;
-  font-family: 'Roboto', sans-serif;
-  background-color: #000000;
+  margin: 0 auto; // Avant : collé à gauche une fois plafonné à 1400px / Après : centré sur les écrans plus larges
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: $body-font;
+  background-color: $bg-dark;
+  color: $text-light;
+}
+
+main {
+  flex: 1; // Avant : rien ne forçait le footer en bas / Après : main absorbe l'espace restant, footer toujours en bas
 }
 
 a {
-  color: #ffffff;
+  color: $text-light;
   text-decoration: none;
-}
-
-em {
-  color: #a5b4fc;
-  font-style: normal;
 }
 
 h1 {
   font-size: 3.5em;
-  color: #a5b4fc;
-  font-family: 'Montserrat', sans-serif;
+  font-family: $headers-font;
+  font-weight: 900;
+  letter-spacing: -0.02em; // Avant : espacement par défaut / Après : lettres légèrement resserrées, effet "titre percutant"
+  color: $accent;
 }
 
 h2 {
-  color: #f9f8ff;
+  color: $text-light;
 }
 
 p,
 li {
   font-size: 1.1em;
-  color: #f9f8ff;
+  color: $text-light;
 }
 
 
 header,
 footer {
-  background-color: black;
+  background-color: $bg-dark;
   padding: 1% 50px;
 }
 
-.cta {
-  display: inline-block;
-  background: linear-gradient(#8e86b5, #acaeed);
-  color: white;
-  border-radius: 50px;
-  padding: 20px 30px;
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: $header-height;
+  display: flex;
+  align-items: center;
 }
 
 a:hover {
-  text-decoration: none;
-}
-
-.cta:hover {
-  background: linear-gradient(#696484, #8788ba);
+  color: $accent;
   text-decoration: none;
 }
 

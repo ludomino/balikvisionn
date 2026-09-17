@@ -9,9 +9,18 @@
   </div>
 </section>
 
+<% if @subcategories.size > 1 %>
+  <nav class="subcategories-nav">
+    <% @subcategories.each do |subcategory| %>
+      <%= link_to subcategory.name, "#subcategory-#{subcategory.id}" %>
+    <% end %>
+  </nav>
+<% end %>
+
 <section class="subcategories-photos">
   <% @subcategories.each do |subcategory| %>
     <div class="subcategory"
+         id="subcategory-<%= subcategory.id %>"
          data-controller="lightbox"
          data-lightbox-photos-value="<%= subcategory.photos.map { |p| { url: photo_lightbox_url(p), alt: p.alt_text.presence || subcategory.name } }.to_json %>">
       <div class="subinfos">
