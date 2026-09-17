@@ -1,0 +1,97 @@
+.about-bio {
+  // Avant : dans un <article>, donc pas de padding (la règle globale ne cible que "section") / Après : même respiration que les pages en <section>
+  padding: 80px;
+
+  @media screen and (max-width: 996px) {
+    padding: 50px 20px 50px 20px; // même override mobile que la règle globale "section"
+  }
+}
+
+.bio-content {
+  // Avant : grille Bootstrap .row/.col-md-6 (50/50 rigide, gros vide si la photo ne remplit pas sa colonne) / Après : flex, l'espace suit le contenu réel
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+
+  img {
+    flex: 0 0 auto;
+  }
+
+  p {
+    max-width: 640px;
+  }
+
+  @media screen and (max-width: 996px) {
+    flex-direction: column;
+  }
+}
+
+.contact-section {
+  display: flex;
+  justify-content: center; // centre le formulaire dans la section
+}
+
+.contact-form {
+  width: 100%;
+  max-width: 750px;
+  border-top: 1px solid $border;
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+
+  .field {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 10px; // Avant : 0, tout géré par le gap du parent / Après : marge additionnelle pour plus d'air entre les champs
+  }
+
+  label {
+    font-size: 0.75em;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: $text-muted;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: $bg-input;
+    border: 1px solid $border;
+    border-radius: 4px;
+    padding: 12px 14px;
+    color: $text-light;
+    font-family: $body-font;
+    font-size: 0.9em;
+
+    &:focus-visible {
+      outline: 2px solid $accent;
+      outline-offset: 2px;
+      border-color: $accent;
+    }
+  }
+
+  textarea { resize: none; }
+
+  .btn-submit {
+    align-self: center;
+    margin-top: 30px;
+    padding: 13px 32px;
+    border-radius: 50px;
+    border: none;
+    background-color: $accent;
+    color: $bg-dark;
+    font-family: $body-font;
+    font-size: 0.9em;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+
+    &:hover { background-color: $accent-hover; }
+  }
+}
