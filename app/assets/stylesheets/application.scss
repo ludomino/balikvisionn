@@ -14,18 +14,17 @@
 @import "pages/show";
 
 
-* {
-  margin: 0;
-  max-width: 1400px;
-  position: center;
+html {
+  background-color: $bg-dark;
 }
 
-html {
-  background-color: $bg-dark; // Avant : fond blanc du navigateur visible au-delà du contenu plafonné à 1400px / Après : plus aucun blanc possible, quelle que soit la largeur d'écran
+* {
+  margin: 0;
 }
 
 body {
-  margin: 0 auto; // Avant : collé à gauche une fois plafonné à 1400px / Après : centré sur les écrans plus larges
+  max-width: 1400px;
+  margin: 0 auto; // Avant : body centré dans un html tout aussi étroit, donc aucun effet / Après : body est la seule boîte plafonnée, elle se centre vraiment dans la fenêtre
   display: flex;
   flex-direction: column;
   min-height: 100vh;
