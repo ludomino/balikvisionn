@@ -25,7 +25,7 @@
 - [x] Authentification admin (générateur natif Rails 8 : `bin/rails generate authentication`)
 
 **Tests**
-- [ ] Test reproduisant le bug update/delete (rouge avant correctif)
+- [x] Test reproduisant le bug update/delete (couverture confirmée le 2026-09-17 : `admin/subcategories_controller_test.rb` + `system/subcategories_test.rb`, 11 runs / 0 failures)
 - [x] Tests d'authentification (accès refusé sans connexion / accordé après / échec sur identifiants invalides)
 
 **Accessibilité**
@@ -64,9 +64,6 @@
 - [x] Redimensionnement de case (1/2/3)
 - [x] Suppression de photo
 - [x] Décision technique : Stimulus + SortableJS (cohérent avec l'architecture existante, pas de build step)
-
-**Pistes futures (non planifiées)**
-- [ ] Orientation portrait pour la mosaïque (tailles 1/2/3 en vertical, en plus de l'horizontal actuel) — nécessite une colonne `rowspan`, `grid-auto-rows` fixe côté CSS (remplace l'`aspect-ratio` actuel), et `photo_mosaic_dimensions` adapté aux deux dimensions. Décision prise (2026-09-17) : orientation exclusive (paysage OU portrait, pas les deux en même temps) plutôt que deux curseurs indépendants — plus simple et plus cohérent avec un vrai grain de photo.
 
 **Tests**
 - [x] Test système (Capybara) du drag-and-drop : position persistée en base
@@ -186,3 +183,5 @@
   - [ ] Page "Messages de contact" en admin (liste, non lus mis en évidence, répondre par mail, archiver) — maquette déjà validée (`ContactMessages.dc.html` + `ContactMessagesMobile.dc.html`)
   - [ ] Réactiver, sur le tableau de bord (Axe 5), le bloc "derniers messages" et le badge non-lus, omis en V1
   - [ ] Tests : modèle (persistance, statut), contrôleur (message enregistré + mail envoyé), marquer lu/archiver
+
+- [ ] **Orientation portrait pour la mosaïque** (tailles 1/2/3 en vertical, en plus de l'horizontal actuel) — nécessite une colonne `rowspan`, `grid-auto-rows` fixe côté CSS (remplace l'`aspect-ratio` actuel), et `photo_mosaic_dimensions` adapté aux deux dimensions. Décision prise (2026-09-17) : orientation exclusive (paysage OU portrait, pas les deux en même temps) plutôt que deux curseurs indépendants — plus simple et plus cohérent avec un vrai grain de photo.
