@@ -25,25 +25,24 @@
         </div>
       </nav>
     </header>
-  <main>
-    <%= yield %>
-  </main>
+    <main>
+      <%= yield %>
+    </main>
 
-  <footer>
-    <div class="icone-contact">
-      <%= link_to "mailto:balik.vision.contact@gmail.com", class: "lien-icone" do %>
-        <i class="fa-regular fa-user fa-lg" style="color: #ffffff;"></i>
-      <% end %>
-      <%= link_to "https://twitter.com/balik_vision/media", target: "_blank", class: "lien-icone" do %>
-        <i class="fa-brands fa-twitter fa-lg" style="color: #ffffff;"></i>
-      <% end %>
-      <%= link_to "https://www.instagram.com/balik_vision", target: "_blank", class: "lien-icone" do %>
-        <i class="fa-brands fa-instagram fa-lg" style="color: #ffffff;"></i>
-      <% end %>
-      <%= link_to "mailto:balik.vision.contact@gmail.com", target: "_blank", class: "lien-icone" do %>
-        <i class="fa-solid fa-envelope fa-lg" style="color: #ffffff;"></i>
-      <% end %>
-    </div>
-  </footer>
+    <footer>
+      <div class="icone-contact">
+        <%= link_to "https://x.com/balik_vision", target: "_blank", class: "lien-icone", "aria-label": "Twitter/X" do %>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#ffffff">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+          </svg>
+        <% end %>
+        <%= link_to "https://www.instagram.com/balik_vision", target: "_blank", class: "lien-icone", "aria-label": "Instagram" do %>
+          <i class="fa-brands fa-instagram fa-lg" style="color: #ffffff;"></i>
+        <% end %>
+        <%= link_to "mailto:balik.vision.contact@gmail.com", class: "lien-icone", "aria-label": "Contact par e-mail" do %>
+          <i class="fa-solid fa-envelope fa-lg" style="color: #ffffff;"></i>
+        <% end %>
+      </div>
+    </footer>
   </body>
 </html>
