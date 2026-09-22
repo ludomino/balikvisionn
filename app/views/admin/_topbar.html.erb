@@ -8,10 +8,15 @@
   <% end %>
 
   <div class="admin-topbar-right">
+    <%= link_to root_path, target: "_blank", rel: "noopener",
+          class: "admin-topbar-icon-btn", "aria-label": "Voir le site public" do %>
+      <i class="fa-solid fa-arrow-up-right-from-square"></i>
+    <% end %>
+
     <div class="admin-topbar-logout-form">
       <%= button_to session_path, method: :delete,
             form: { data: { turbo_confirm: false } },
-            class: "admin-topbar-logout", "aria-label": "Se déconnecter" do %>
+            class: "admin-topbar-icon-btn admin-topbar-logout", "aria-label": "Se déconnecter" do %>
         <i class="fa-solid fa-right-from-bracket"></i>
       <% end %>
     </div>
