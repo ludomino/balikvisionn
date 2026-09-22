@@ -102,4 +102,23 @@ class Admin::CategoriesControllerTest < ActionDispatch::IntegrationTest
     get admin_root_path
     assert_select ".admin-badge-warning", text: "Sans couverture"
   end
+
+  test "edit is accessible when authenticated" do
+    sign_in_as @user
+    get edit_admin_category_path(@category)
+    assert_response :success
+  end
+
+  test "new displays the admin form" do
+    sign_in_as @user
+    get new_admin_category_path
+    assert_select ".admin-form-title", text: "Nouvelle catégorie"
+  end
+
+  test "edit displays the admin form with the category name prefilled" do
+    sign_in_as @user
+    get edit_admin_category_path(@category)
+    assert_select ".admin-form-title", text: "Modifier la catégorie"
+    assert_select "input[name='category[name]'][value='Concerts']"
+  end
 end
