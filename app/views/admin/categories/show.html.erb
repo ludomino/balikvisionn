@@ -1,38 +1,49 @@
-<section class="subcategories-header">
-  <div class="subhead">
-    <div class="left-content">
-      <%= link_to raw('<i class="fa-solid fa-arrow-left"></i>'), admin_categories_path, class: "btn" %>
-    </div>
-    <div class="center-content">
+<div class="admin-breadcrumb">
+  <%= link_to admin_root_path, class: "admin-breadcrumb-link" do %>
+    <i class="fa-solid fa-arrow-left"></i> Toutes les catégories
+  <% end %>
+</div>
+
+<div class="admin-category-head">
+  <div class="admin-category-head-top">
+    <div class="admin-category-head-title">
       <h1><%= @category.name %></h1>
+      <% if @category.missing_cover? %>
+        <span class="admin-badge admin-badge-warning">Sans couverture</span>
+      <% end %>
+    </div>
+    <div class="admin-category-head-actions">
+      <%= link_to "Modifier la catégorie", edit_admin_category_path(@category), class: "btn-admin-outline" %>
+      <%= link_to "Supprimer", admin_category_path(@category), data: { turbo_method: :delete, turbo_confirm: "Confirmer la suppression ?" }, class: "btn-admin-danger" %>
     </div>
   </div>
-    <div class="right-content">
-      <%= link_to "Créer une sous-catégorie", new_admin_category_subcategory_path(@category), class: "btn btn-dark" %>
-    </div>
-</section>
 
-<section class="subcategories-photos">
+  <p class="admin-category-head-meta">
+    <%= pluralize(@subcategories.size, "sous-catégorie") %> · <%= pluralize(@photo_count, "photo publiée", plural: "photos publiées") %>
+  </p>
+
+  <%= link_to "+ Nouvelle sous-catégorie", new_admin_category_subcategory_path(@category), class: "btn-admin-accent" %>
+</div>
+
+<div class="admin-subcategory-grid">
   <% @subcategories.each do |subcategory| %>
-    <div class="subcategory">
-      <div class="subinfos">
-        <h2><%= subcategory.name %></h2>
-        <h3><%= subcategory.description %></h3>
+    <div class="admin-subcategory-card">
+      <div class="admin-subcategory-card-cover">
+        <% cover_photo = subcategory.photos.first %>
+        <% if cover_photo %>
+          <%= cloudinary_image_tag cover_photo.image, alt: "", width: 400, height: 130, crop: :fill %>
+        <% else %>
+          <span class="admin-subcategory-card-cover-empty">Aucune photo</span>
+        <% end %>
+        <div class="admin-subcategory-card-icons">
+          <%= link_to raw('<i class="fa-regular fa-pen-to-square"></i>'), edit_admin_category_subcategory_path(@category, subcategory), class: "admin-icon-btn", title: "Modifier" %>
+          <%= link_to raw('<i class="fa-solid fa-trash"></i>'), admin_category_subcategory_path(@category, subcategory), data: { turbo_method: :delete, turbo_confirm: "Confirmer la suppression ?" }, class: "admin-icon-btn", title: "Supprimer" %>
+        </div>
       </div>
-      <div class="subparams">
-        <%= link_to raw('<i class="fa-regular fa-pen-to-square"></i>'), edit_admin_category_subcategory_path(@category, subcategory), class: 'btn btn-icon' %>
-        <%= link_to raw('<i class="fa-solid fa-trash"></i>'), admin_category_subcategory_path(@category, subcategory), data: { turbo_method: :delete, turbo_confirm: 'Confirmer la suppression ?' }, class: 'btn btn-icon' %>
-      </div>
-     </div>
-     <div class="subphotosgrid">
-       <div class="row">
-         <% subcategory.photos.each do |photo| %>
-           <div class="col-lg-4 col-md-6 col-sm-12">
-             <%= cloudinary_image_tag photo.image, alt: photo.alt_text.presence || subcategory.name, height: 400, width: 300, crop: :fill %>
-           </div>
-         <% end %>
-       </div>
-     </div>
+      <%= link_to edit_admin_category_subcategory_path(@category, subcategory), class: "admin-subcategory-card-body" do %>
+        <div class="admin-subcategory-card-name"><%= subcategory.name %></div>
+        <div class="admin-subcategory-card-count"><%= pluralize(subcategory.photos.size, "photo") %></div>
+      <% end %>
     </div>
   <% end %>
-</section>
+</div>

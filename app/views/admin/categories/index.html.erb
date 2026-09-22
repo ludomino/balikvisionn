@@ -1,1 +1,6 @@
 <%= render "grid" %>
+
+<div class="admin-shortcuts-row">
+  <%= link_to "+ Nouvelle catégorie", new_admin_category_path, class: "btn-admin-accent" %>
+  <%= link_to "Modifier la page À propos", edit_admin_about_page_path, class: "btn-admin-outline" %>
+</div>

@@ -4,4 +4,8 @@ class Category < ApplicationRecord
 
   validates :name, presence: true
   # validates :cover, presence: true
+
+  def missing_cover?
+    !cover.attached?
+  end
 end

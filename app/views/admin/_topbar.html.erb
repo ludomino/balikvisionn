@@ -1,4 +1,19 @@
 <div class="admin-topbar">
-  <span class="admin-topbar-greeting">Bonjour, Ludo</span>
-  <%= button_to "Se déconnecter", session_path, method: :delete, class: "admin-topbar-logout", form: { data: { turbo_confirm: false } } %>
+  <div class="admin-topbar-left">
+    <span class="admin-topbar-greeting">Qué lo que, BALIK</span>
+  </div>
+
+  <%= link_to admin_root_path, class: "admin-topbar-logo" do %>
+    <%= image_tag "00Logo_BALIKVISION_.png", alt: "Logo Balikvision" %>
+  <% end %>
+
+  <div class="admin-topbar-right">
+    <div class="admin-topbar-logout-form">
+      <%= button_to session_path, method: :delete,
+            form: { data: { turbo_confirm: false } },
+            class: "admin-topbar-logout", "aria-label": "Se déconnecter" do %>
+        <i class="fa-solid fa-right-from-bracket"></i>
+      <% end %>
+    </div>
+  </div>
 </div>

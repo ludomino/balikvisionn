@@ -14,14 +14,36 @@
   height: $header-height;
   background-color: $bg-dark;
   border-bottom: 1px solid $border;
+  display: block;
 }
 
 .admin-topbar {
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 0 48px;
+}
+
+.admin-topbar-left,
+.admin-topbar-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.admin-topbar-right {
+  justify-content: flex-end;
+}
+
+.admin-topbar-logo {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+
+  img {
+    max-height: 36px;
+    width: auto;
+  }
 }
 
 .admin-topbar-greeting {
@@ -32,16 +54,22 @@
   opacity: 0.7;
 }
 
+.admin-topbar-logout-form {
+  margin: 0 0 0 auto;
+  flex-shrink: 0;
+}
+
 .admin-topbar-logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
   background: transparent;
   border: 1px solid $border;
-  border-radius: 4px;
+  border-radius: 50%;
   color: $text-muted;
-  font-family: $body-font;
-  font-size: 0.8em;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  padding: 8px 14px;
+  font-size: 0.9em;
   cursor: pointer;
 
   &:hover {
