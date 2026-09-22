@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get "contact", to: redirect("/about"), as: nil # filet de sécurité si l'utilisateur rafraîchit après une erreur 422
 
   namespace :admin do
+    root to: "dashboard#index"
     resource :about_page, only: [:edit, :update]
     resources :categories do
       resources :subcategories do

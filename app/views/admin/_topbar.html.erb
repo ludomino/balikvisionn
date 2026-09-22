@@ -1,0 +1,4 @@
+<div class="admin-topbar">
+  <span class="admin-topbar-greeting">Bonjour, Ludo</span>
+  <%= button_to "Se déconnecter", session_path, method: :delete, class: "admin-topbar-logout", form: { data: { turbo_confirm: false } } %>
+</div>

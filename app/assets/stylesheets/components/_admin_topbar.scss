@@ -1,0 +1,65 @@
+// Barre du haut de l'espace admin — commune à toutes les pages du back-office
+.admin-body {
+  background-color: $bg-dark;
+  max-width: none;
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.admin-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: $header-height;
+  background-color: $bg-dark;
+  border-bottom: 1px solid $border;
+}
+
+.admin-topbar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+}
+
+.admin-topbar-greeting {
+  font-size: 0.85em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: $text-muted;
+  opacity: 0.7;
+}
+
+.admin-topbar-logout {
+  background: transparent;
+  border: 1px solid $border;
+  border-radius: 4px;
+  color: $text-muted;
+  font-family: $body-font;
+  font-size: 0.8em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: $accent;
+    color: $accent;
+  }
+}
+
+.admin-main {
+  padding: 40px 48px;
+}
+
+@media screen and (max-width: 996px) {
+  .admin-topbar {
+    padding: 0 20px;
+  }
+
+  .admin-main {
+    padding: 24px 20px;
+  }
+}

@@ -4,3 +4,19 @@
   right: 16px;
   z-index: 1000;
 }
+
+.alert-notice {
+  background-color: $bg-card;
+  border: 1px solid $accent;
+  color: $text-light;
+  padding: 12px 18px;
+  border-radius: 6px;
+}
+
+.alert-alert {
+  background-color: $bg-card;
+  border: 1px solid $danger;
+  color: $danger;
+  padding: 12px 18px;
+  border-radius: 6px;
+}
