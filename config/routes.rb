@@ -22,6 +22,7 @@ Rails.application.routes.draw do
           member do
             patch :move_higher
             patch :move_lower
+            patch :colspan
           end
         end
       end

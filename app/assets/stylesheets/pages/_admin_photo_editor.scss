@@ -1,0 +1,141 @@
+// Éditeur mosaïque admin — grille de cartes avec contrôles en overlay
+.admin-mosaic-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-flow: dense;
+  gap: 10px;
+}
+
+.admin-mosaic-card {
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  background: $bg-input;
+  cursor: grab;
+}
+
+.admin-mosaic-card--span-1 { grid-column: span 1; aspect-ratio: 1 / 1; }
+.admin-mosaic-card--span-2 { grid-column: span 2; aspect-ratio: 2 / 1; }
+.admin-mosaic-card--span-3 { grid-column: span 3; aspect-ratio: 3 / 1; }
+
+.admin-mosaic-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.admin-mosaic-overlay-top-left,
+.admin-mosaic-overlay-top-right {
+  position: absolute;
+  top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: nowrap;
+}
+
+.admin-mosaic-overlay-top-left { left: 8px; }
+.admin-mosaic-overlay-top-right { right: 8px; }
+
+.admin-mosaic-handle,
+.admin-mosaic-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background: rgba(10, 10, 10, 0.65);
+  color: $text-muted;
+  font-size: 0.7em;
+  cursor: pointer;
+
+  &:hover {
+    color: $text-light;
+  }
+}
+
+.admin-mosaic-handle { cursor: grab; }
+
+.admin-mosaic-delete-btn:hover {
+  color: #e05555;
+}
+
+.admin-mosaic-sizes {
+  display: flex;
+  gap: 2px;
+  background: rgba(10, 10, 10, 0.65);
+  border-radius: 4px;
+  padding: 2px;
+}
+
+.admin-mosaic-size-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  color: $text-muted;
+  font-size: 0.7em;
+
+  &.is-active {
+    background: $accent;
+    color: $bg-dark;
+  }
+
+  &:hover:not(.is-active) {
+    color: $text-light;
+  }
+}
+
+.admin-mosaic-overlay-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 8px;
+  background: rgba(10, 10, 10, 0.85);
+
+  .field-input {
+    padding: 8px 10px;
+    font-size: 0.8em;
+  }
+}
+
+// Nouveau bloc : icônes resserrées spécifiquement sur les cartes les plus petites
+.admin-mosaic-card--span-1 {
+  .admin-mosaic-handle,
+  .admin-mosaic-icon-btn {
+    width: 18px;
+    height: 18px;
+    font-size: 0.55em;
+  }
+
+  .admin-mosaic-overlay-top-left,
+  .admin-mosaic-overlay-top-right {
+    gap: 1px;
+  }
+
+  .admin-mosaic-sizes {
+    gap: 1px;
+    padding: 1px;
+  }
+
+  .admin-mosaic-size-btn {
+    width: 15px;
+    height: 15px;
+    font-size: 0.55em;
+  }
+}
+
+@media screen and (max-width: 996px) {
+  .admin-mosaic-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .admin-mosaic-card--span-3 {
+    grid-column: span 2;
+  }
+}

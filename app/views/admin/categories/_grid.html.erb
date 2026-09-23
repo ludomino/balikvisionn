@@ -21,7 +21,7 @@
       <%= link_to admin_category_path(category), class: "admin-category-card-body" do %>
         <div class="admin-category-card-name"><%= category.name %></div>
         <div class="admin-category-card-count">
-          <%= pluralize(category.subcategories.size, "sous-catégorie") %> · <%= pluralize(category.subcategories.sum { |s| s.photos.size }, "photo") %>
+          <%= pluralize(category.subcategories.size, "sous-catégorie", plural: "sous-catégories") %> · <%= pluralize(category.subcategories.sum { |s| s.photos.size }, "photo", plural: "photos") %>
         </div>
       <% end %>
     </div>

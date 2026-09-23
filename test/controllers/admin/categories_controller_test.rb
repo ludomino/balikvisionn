@@ -121,4 +121,18 @@ class Admin::CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_select ".admin-form-title", text: "Modifier la catégorie"
     assert_select "input[name='category[name]'][value='Concerts']"
   end
+
+  test "edit form displays the cover filename and a compact replace link" do
+    sign_in_as @user
+    @category.cover.attach(
+      io: File.open(Rails.root.join("test/fixtures/files/test_photo.png")),
+      filename: "test_photo.png",
+      content_type: "image/png"
+    )
+
+    get edit_admin_category_path(@category)
+
+    assert_select "label[for='category_cover']", text: "Remplacer l'image"
+    assert_select ".admin-form-cover-filename", text: "test_photo.png"
+  end
 end

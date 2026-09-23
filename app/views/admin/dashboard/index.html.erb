@@ -1,11 +1,11 @@
 <div class="admin-stats-row">
   <div class="admin-stat-tile">
     <div class="admin-stat-value"><%= @category_count %></div>
-    <div class="admin-stat-label"><%= pluralize(@category_count, "catégorie") %></div>
+  <div class="admin-stat-label"><%= pluralize(@category_count, "catégorie", plural: "catégories") %></div>
   </div>
   <div class="admin-stat-tile">
     <div class="admin-stat-value"><%= @subcategory_count %></div>
-    <div class="admin-stat-label"><%= pluralize(@subcategory_count, "sous-catégorie") %></div>
+    <div class="admin-stat-label"><%= pluralize(@subcategory_count, "sous-catégorie", plural: "sous-catégories") %></div>
   </div>
   <div class="admin-stat-tile">
     <div class="admin-stat-value"><%= @photo_count %></div>

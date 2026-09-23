@@ -17,18 +17,31 @@
 
   <div class="admin-form-card">
     <%= simple_form_for [:admin, @category], html: { multipart: true, class: "admin-form" } do |f| %>
-      <% if @category.cover.attached? %>
-        <div class="admin-form-field">
-          <span class="admin-form-label">Couverture actuelle</span>
-          <%= cloudinary_image_tag @category.cover, alt: "", width: 200, height: 120, crop: :fill, class: "admin-form-cover-preview" %>
-        </div>
-      <% end %>
-
       <%= f.input :name, label: "Nom de la catégorie", placeholder: "Ex. Concerts",
             input_html: { class: "field-input" }, wrapper_html: { class: "admin-form-field" }, label_html: { class: "admin-form-label" } %>
 
-      <%= f.input :cover, as: :file, label: @category.cover.attached? ? "Remplacer la couverture" : "Photo de couverture",
-            wrapper_html: { class: "admin-form-field" }, label_html: { class: "admin-form-label" } %>
+      <div class="admin-form-field">
+        <span class="admin-form-label">Image de couverture</span>
+        <div class="admin-form-avatar-row">
+          <% if @category.cover.attached? %>
+            <%= cloudinary_image_tag @category.cover, alt: "", width: 72, height: 72, crop: :fill, class: "admin-form-cover-thumb" %>
+          <% else %>
+            <span class="admin-form-cover-thumb admin-form-avatar-empty"></span>
+          <% end %>
+
+          <div class="admin-form-cover-info">
+            <% if @category.cover.attached? %>
+              <span class="admin-form-cover-filename"><%= @category.cover.filename %></span>
+            <% end %>
+            <label for="category_cover" class="admin-form-cover-replace-link">
+              <%= @category.cover.attached? ? "Remplacer l'image" : "Choisir une image" %>
+            </label>
+          </div>
+        </div>
+
+        <%= f.input :cover, as: :file, label: false, wrapper: false,
+              input_html: { id: "category_cover", class: "admin-visually-hidden-input" } %>
+      </div>
 
       <div class="admin-form-actions">
         <%= f.submit(@category.persisted? ? "Enregistrer" : "Créer la catégorie", class: "btn-admin-accent") %>
