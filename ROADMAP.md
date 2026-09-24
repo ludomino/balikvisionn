@@ -1,6 +1,6 @@
 # Feuille de route — Balikvisionn
 
-*Dernière mise à jour : 2026-09-12*
+*Dernière mise à jour : 2026-09-24*
 
 ## État actuel
 
@@ -29,7 +29,7 @@
 - [x] Tests d'authentification (accès refusé sans connexion / accordé après / échec sur identifiants invalides)
 
 **Accessibilité**
-+- [x] Formulaire de connexion : labels associés, focus visible, erreurs annoncées (`aria-live`)
+- [x] Formulaire de connexion : labels associés, focus visible, erreurs annoncées (`aria-live`)
 
 ---
 
@@ -147,7 +147,31 @@
 
 ---
 
-## Axe 7 — Qualité & couverture globale
+## Axe 7 — Environnement de Préproduction (recette client)
+
+*Ajouté le 2026-09-24 — objectif : offrir au client un environnement de démonstration fidèle à la prod, pour recette avant toute mise en ligne officielle*
+
+**Infrastructure**
+- [ ] Créer le service Web de préprod sur Render
+- [ ] Créer le projet Postgres de préprod sur Neon (plan gratuit — persistant, sans expiration, contrairement au Postgres gratuit de Render qui expire à 30 jours)
+- [ ] `config/environments/staging.rb` (base `production.rb`, logs plus verbeux)
+- [ ] Variables d'environnement dédiées : `RAILS_MASTER_KEY`, `DATABASE_URL` (URL "pooled" Neon, avec `prepared_statements: false` côté `database.yml`), `CLOUDINARY_URL` (dossier Cloudinary séparé de la prod, jamais partagé)
+- [ ] Domaine/sous-domaine de préprod dédié
+
+**Protection & indexation**
+- [ ] Non-indexation par les moteurs de recherche (`X-Robots-Tag: noindex` ou robots.txt dédié à l'environnement)
+- [ ] Authentification HTTP basique le temps de la recette
+
+**Déploiement**
+- [ ] Déploiement automatique vers la préprod à chaque push sur la branche d'intégration
+- [ ] `bin/rails test` + `bin/rails test:system` exécutés en CI avant chaque déploiement
+
+**Recette**
+- [ ] Première recette client sur la préprod, retours consolidés avant l'Axe 8
+
+---
+
+## Axe 8 — Qualité & couverture globale
 
 - [ ] Mesurer la couverture de tests réelle (SimpleCov), combler les trous identifiés
 - [ ] Vérifier qu'aucune route admin n'est accessible sans authentification
@@ -155,9 +179,10 @@
 
 ---
 
-## Axe 8 — Préparation au déploiement
+## Axe 9 — Préparation au déploiement
 
 - [ ] Choix définitif de l'hébergement (VPS + Kamal vs PaaS)
+- [ ] Base de données de production : démarrer sur Neon (plan gratuit) tant que le trafic reste faible ; bascule vers le plan Launch (pay-as-you-go, PITR 7 jours) déclenchée par un critère concret — juste avant de partager l'URL avec le client, ou dès que perdre des données au-delà de 6h devient risqué — pas un abonnement payant dès le premier jour (Crunchy Bridge en plan B si le comportement à l'usage ne convient pas)
 - [ ] Configuration production réelle : domaine, `force_ssl`, `RAILS_MASTER_KEY`, clés Cloudinary
 - [ ] Vérifier headers anti-hotlink et CSP avec le vrai domaine
 - [ ] Mise en place du CI (`bin/ci`) via GitHub Actions
@@ -166,7 +191,7 @@
 
 ---
 
-## Axe 9 — Mise en production
+## Axe 10 — Mise en production
 
 - [ ] Premier déploiement
 - [ ] Smoke tests manuels en conditions réelles (incluant vérif a11y et protection images)
