@@ -154,22 +154,22 @@
 *Ajouté le 2026-09-24 — objectif : offrir au client un environnement de démonstration fidèle à la prod, pour recette avant toute mise en ligne officielle*
 
 **Infrastructure**
-- [ ] Créer le service Web de préprod sur Render
-- [ ] Créer le projet Postgres de préprod sur Neon (plan gratuit — persistant, sans expiration, contrairement au Postgres gratuit de Render qui expire à 30 jours)
-- [ ] `config/environments/staging.rb` (base `production.rb`, logs plus verbeux)
-- [ ] Variables d'environnement dédiées : `RAILS_MASTER_KEY`, `DATABASE_URL` (URL "pooled" Neon, avec `prepared_statements: false` côté `database.yml`), `CLOUDINARY_URL` (dossier Cloudinary séparé de la prod, jamais partagé)
-- [ ] Domaine/sous-domaine de préprod dédié
+- [x] Créer le service Web de préprod sur Render — `balikvisionn-staging`, région Frankfurt
+- [x] Créer le projet Postgres de préprod sur Neon (plan gratuit — persistant, sans expiration, contrairement au Postgres gratuit de Render qui expire à 30 jours)
+- [x] `config/environments/staging.rb` (base `production.rb`, logs plus verbeux)
+- [x] Variables d'environnement dédiées : `RAILS_MASTER_KEY`, `DATABASE_URL` (URL "pooled" Neon côté app, URL directe côté migrations, `prepared_statements: false` dans `database.yml`), `CLOUDINARY_URL` (isolation automatique par environnement via `folder: <%= Rails.env %>` dans `storage.yml` — pas de compte/dossier séparé nécessaire)
+- [x] Domaine/sous-domaine de préprod dédié — sous-domaine fourni par Render (`balikvisionn-staging.onrender.com`), pas de nom de domaine personnalisé
 
 **Protection & indexation**
-- [ ] Non-indexation par les moteurs de recherche (`X-Robots-Tag: noindex` ou robots.txt dédié à l'environnement)
-- [ ] Authentification HTTP basique le temps de la recette
+- [x] Non-indexation par les moteurs de recherche — header `X-Robots-Tag: noindex, nofollow` vérifié sur les réponses authentifiées
+- [x] Authentification HTTP basique le temps de la recette
 
 **Déploiement**
-- [ ] Déploiement automatique vers la préprod à chaque push sur la branche d'intégration
-- [ ] `bin/rails test` + `bin/rails test:system` exécutés en CI avant chaque déploiement
+- [ ] Déploiement automatique vers la préprod à chaque push sur la branche d'intégration — en attente : Render pointe encore sur `feature/preprod-environment`, bascule vers `master` à faire dans Settings → Branch
+- [ ] `bin/rails test` + `bin/rails test:system` exécutés en CI avant chaque déploiement — reporté à l'Axe 9 (mise en place du CI via GitHub Actions) ; en attendant, tests lancés manuellement en local avant chaque push
 
 **Recette**
-- [ ] Première recette client sur la préprod, retours consolidés avant l'Axe 8
+- [ ] Première recette client sur la préprod, retours consolidés avant l'Axe 8 — décidé de laisser l'environnement vierge et de recueillir les retours du client directement
 
 ---
 
@@ -187,7 +187,7 @@
 - [ ] Base de données de production : démarrer sur Neon (plan gratuit) tant que le trafic reste faible ; bascule vers le plan Launch (pay-as-you-go, PITR 7 jours) déclenchée par un critère concret — juste avant de partager l'URL avec le client, ou dès que perdre des données au-delà de 6h devient risqué — pas un abonnement payant dès le premier jour (Crunchy Bridge en plan B si le comportement à l'usage ne convient pas)
 - [ ] Configuration production réelle : domaine, `force_ssl`, `RAILS_MASTER_KEY`, clés Cloudinary
 - [ ] Vérifier headers anti-hotlink et CSP avec le vrai domaine
-- [ ] Mise en place du CI (`bin/ci`) via GitHub Actions
+- [ ] Mise en place du CI (`bin/ci`) via GitHub Actions — exécution automatique de `bin/rails test` + `bin/rails test:system` avant chaque déploiement (item reporté depuis l'Axe 7)
 - [ ] Conformité légale française : mentions légales, politique de confidentialité (RGPD, collecte email via contact)
 - [ ] Protection anti-abus (`Rack::Attack`) sur les endpoints publics sensibles (contact, connexion admin)
 
