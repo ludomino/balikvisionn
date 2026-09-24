@@ -19,7 +19,7 @@
     </header>
     <main class="admin-main">
       <% flash.each do |type, message| %>
-        <div class="alert alert-<%= type %>"><%= message %></div>
+        <div class="alert alert-<%= type %>" role="alert"><%= message %></div>
       <% end %>
       <%= yield %>
     </main>
