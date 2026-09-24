@@ -29,7 +29,7 @@
 - [x] Tests d'authentification (accès refusé sans connexion / accordé après / échec sur identifiants invalides)
 
 **Accessibilité**
-- [ ] Formulaire de connexion : labels associés, focus visible, erreurs annoncées (`aria-live`)
++- [x] Formulaire de connexion : labels associés, focus visible, erreurs annoncées (`aria-live`)
 
 ---
 
@@ -103,27 +103,28 @@
 ## Axe 5 — Interface Back-Office : tableau de bord & finitions admin
 
 *Ajouté suite à validation des maquettes le 2026-09-17 (thème sombre #0a0a0a, accent kaki, Archivo)*
+*Dernière mise à jour : 2026-09-12* → 2026-09-22
 
 **Fonctionnalités**
-- [ ] Tableau de bord admin (nouvelle page d'accueil back-office)
-  - [ ] Indicateurs clés (nb catégories, sous-catégories, photos publiées)
-  - [ ] Alerte "catégories sans photo de couverture"
-  - [ ] Raccourcis (nouvelle catégorie / nouvelle sous-catégorie / modifier À propos)
-  - [ ] Grille de synthèse des catégories
+- [x] Tableau de bord admin (nouvelle page d'accueil back-office)
+  - [x] Indicateurs clés (nb catégories, sous-catégories, photos publiées)
+  - [x] Alerte "catégories sans photo de couverture"
+  - [x] Raccourcis (nouvelle catégorie / nouvelle sous-catégorie / modifier À propos)
+  - [x] Grille de synthèse des catégories
   - [ ] *(bloc "derniers messages" + badge non-lus de la maquette volontairement omis — dépend de la V2, cf. Roadmap V2 en fin de fichier)*
-- [ ] Refonte visuelle des formulaires existants (`CategoryForm`, `SubcategoryForm`, `AboutForm`) sur le thème admin validé
-- [ ] Refonte visuelle de la vue catégorie admin (fil d'ariane, actions modifier/supprimer, grille sous-catégories)
+- [x] Refonte visuelle des formulaires existants (`CategoryForm`, `SubcategoryForm`, `AboutForm`) sur le thème admin validé
+- [x] Refonte visuelle de la vue catégorie admin (fil d'ariane, actions modifier/supprimer, grille sous-catégories)
 - [ ] Refonte visuelle de l'éditeur mosaïque (poignée de drag, boutons de taille 1/2/3 et suppression en overlay)
 
 **Tests**
-- [ ] Rendu du tableau de bord (indicateurs, alerte conditionnelle)
+- [x] Rendu du tableau de bord (indicateurs, alerte conditionnelle)
 
 **Accessibilité**
-- [ ] Formulaires admin : labels associés, focus visible, erreurs annoncées (`aria-live`)
-- [ ] Contraste du texte secondaire (`#9a9a9a` sur `#0a0a0a`) vérifié au ratio WCAG AA
+- [x] Formulaires admin : labels associés, focus visible, erreurs annoncées (`aria-live`)
+- [x] Contraste du texte secondaire vérifié au ratio WCAG AA (couleur réelle `$text-muted: #f4f4f4`, ratio 15:1 à 19:1 selon le fond — largement conforme)
 
 **Responsive**
-- [ ] Adaptation mobile (maquettes déjà validées : `MainMobile`, `CategoryFormMobile`, `SubcategoryFormMobile`, `PhotoEditorMobile`, `AboutFormMobile`, `CategoryShowMobile`)
+- [x] Adaptation mobile et tablette du back-office (Dashboard, CategoryForm, SubcategoryForm, PhotoEditor, AboutForm, CategoryShow) et du site public (Accueil, CategoryShow, À propos + Contact) — breakpoint mobile à `640px`, palier intermédiaire à `900px` pour `SubcategoryForm` et la page À propos (dont le layout desktop ne tenait pas tel quel en tablette), tablette ≥900px identique au desktop
 
 ---
 
