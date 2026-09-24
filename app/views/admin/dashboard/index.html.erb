@@ -1,15 +1,15 @@
 <div class="admin-stats-row">
-  <div class="admin-stat-tile">
+    <div class="admin-stat-tile">
     <div class="admin-stat-value"><%= @category_count %></div>
-  <div class="admin-stat-label"><%= pluralize(@category_count, "catégorie", plural: "catégories") %></div>
+    <div class="admin-stat-label"><%= @category_count == 1 ? "catégorie" : "catégories" %></div>
   </div>
   <div class="admin-stat-tile">
     <div class="admin-stat-value"><%= @subcategory_count %></div>
-    <div class="admin-stat-label"><%= pluralize(@subcategory_count, "sous-catégorie", plural: "sous-catégories") %></div>
+    <div class="admin-stat-label"><%= @subcategory_count == 1 ? "sous-catégorie" : "sous-catégories" %></div>
   </div>
   <div class="admin-stat-tile">
     <div class="admin-stat-value"><%= @photo_count %></div>
-    <div class="admin-stat-label"><%= pluralize(@photo_count, "photo publiée", plural: "photos publiées") %></div>
+    <div class="admin-stat-label"><%= @photo_count == 1 ? "photo publiée" : "photos publiées" %></div>
   </div>
 </div>
 

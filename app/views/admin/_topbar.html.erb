@@ -15,7 +15,6 @@
 
     <div class="admin-topbar-logout-form">
       <%= button_to session_path, method: :delete,
-            form: { data: { turbo_confirm: false } },
             class: "admin-topbar-icon-btn admin-topbar-logout", "aria-label": "Se déconnecter" do %>
         <i class="fa-solid fa-right-from-bracket"></i>
       <% end %>

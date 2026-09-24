@@ -21,7 +21,10 @@
           <%= image_tag("00Logo_BALIKVISION_.png", alt: "Logo Balikvision") %>
         <% end %>
         <div class="nav-right">
-          <%= link_to "À propos", about_path %>
+          <%= link_to about_path, class: "nav-about-link", "aria-label": "À propos" do %>
+            <span class="nav-about-text">À propos</span>
+            <i class="fa-solid fa-circle-info nav-about-icon" aria-hidden="true"></i>
+          <% end %>
         </div>
       </nav>
     </header>

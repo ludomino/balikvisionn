@@ -201,8 +201,22 @@
   opacity: 0.7;
 }
 
-@media screen and (max-width: 996px) {
+@media screen and (max-width: 640px) {
   .admin-subcategory-grid {
     grid-template-columns: 1fr;
+  }
+
+  .btn-admin-outline,
+  .btn-admin-danger,
+  .btn-admin-accent {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  .admin-category-head-actions {
+    flex-direction: column;
+    width: 100%;
   }
 }

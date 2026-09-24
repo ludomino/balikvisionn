@@ -1,14 +1,12 @@
 .about-bio {
-  // Avant : dans un <article>, donc pas de padding (la règle globale ne cible que "section") / Après : même respiration que les pages en <section>
   padding: 80px;
 
-  @media screen and (max-width: 996px) {
-    padding: 50px 20px 50px 20px; // même override mobile que la règle globale "section"
+  @media screen and (max-width: 640px) {
+    padding: 50px 2%;
   }
 }
 
 .bio-content {
-  // Avant : grille Bootstrap .row/.col-md-6 (50/50 rigide, gros vide si la photo ne remplit pas sa colonne) / Après : flex, l'espace suit le contenu réel
   display: flex;
   gap: 48px;
   align-items: flex-start;
@@ -19,10 +17,21 @@
 
   p {
     max-width: 640px;
+    text-align: justify;
+    hyphens: auto;
   }
 
-  @media screen and (max-width: 996px) {
+  @media screen and (max-width: 900px) {
+    img {
+      width: 260px;
+      height: 260px;
+    }
+  }
+
+  @media screen and (max-width: 640px) {
     flex-direction: column;
+    align-items: center;
+    gap: 20px;
   }
 }
 

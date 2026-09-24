@@ -42,7 +42,15 @@ nav a {
   font-weight: 700;
 }
 
-@media screen and (max-width: 996px) {
+.nav-about-icon {
+  display: none;
+}
+
+@media screen and (max-width: 640px) {
+  header nav {
+    padding: 0 20px;
+  }
+
   header nav img {
     max-height: 48px;
   }
@@ -50,5 +58,14 @@ nav a {
   nav a {
     margin-left: 10px;
     margin-right: 10px;
+  }
+
+  .nav-about-text {
+    display: none;
+  }
+
+  .nav-about-icon {
+    display: inline-block;
+    font-size: 1.3em;
   }
 }

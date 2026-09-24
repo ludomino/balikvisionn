@@ -160,8 +160,18 @@
   }
 }
 
-@media screen and (max-width: 996px) {
+@media screen and (max-width: 640px) {
   .admin-category-grid {
     grid-template-columns: 1fr;
+  }
+
+  .admin-shortcuts-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .admin-shortcut-select {
+    width: 100%;
+    box-sizing: border-box;
   }
 }
