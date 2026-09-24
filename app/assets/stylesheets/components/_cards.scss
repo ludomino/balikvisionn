@@ -27,6 +27,8 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      user-select: none;
+      -webkit-touch-callout: none;
     }
   }
 
@@ -43,11 +45,16 @@
 
   .card-category-text {
     color: white;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 700;               // était "bold" (identique en valeur, juste explicite via variable de graisse cohérente)
     text-transform: uppercase;
     letter-spacing: 0.08em;         // Avant : texte serré / Après : espacement large, même logique que les libellés de catégorie BAPE (HOMMES, FEMMES...)
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    text-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.9),
+      0 -1px 3px rgba(0, 0, 0, 0.9),
+      1px 0 3px rgba(0, 0, 0, 0.9),
+      -1px 0 3px rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.35);
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
     position: absolute;

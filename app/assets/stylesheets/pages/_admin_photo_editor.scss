@@ -43,8 +43,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
   border-radius: 4px;
   background: rgba(10, 10, 10, 0.65);
   color: $text-muted;
@@ -74,8 +74,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border-radius: 3px;
   color: $text-muted;
   font-size: 0.7em;
@@ -108,8 +108,8 @@
 .admin-mosaic-card--span-1 {
   .admin-mosaic-handle,
   .admin-mosaic-icon-btn {
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 22px;
     font-size: 0.55em;
   }
 
@@ -124,8 +124,8 @@
   }
 
   .admin-mosaic-size-btn {
-    width: 15px;
-    height: 15px;
+    width: 18px;
+    height: 18px;
     font-size: 0.55em;
   }
 }

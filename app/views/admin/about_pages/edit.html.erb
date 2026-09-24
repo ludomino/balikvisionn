@@ -17,7 +17,8 @@
           <% else %>
             <span class="admin-form-avatar admin-form-avatar-empty"></span>
           <% end %>
-          <%= f.input :photo, as: :file, label: false, wrapper_html: { class: "admin-form-avatar-input" } %>
+          <%= f.input :photo, as: :file, label: false, wrapper_html: { class: "admin-form-avatar-input" },
+              input_html: { "aria-label": "Photo de profil" } %>
         </div>
       </div>
 

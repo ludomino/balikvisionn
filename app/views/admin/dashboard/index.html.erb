@@ -28,7 +28,7 @@
 <div class="admin-shortcuts-row">
   <%= link_to "+ Nouvelle catégorie", new_admin_category_path, class: "btn-admin-accent" %>
 
-  <select class="admin-shortcut-select" onchange="if (this.value) window.location = this.value;">
+  <select class="admin-shortcut-select" aria-label="Créer une nouvelle sous-catégorie dans une catégorie" onchange="if (this.value) window.location = this.value;">
     <option value="">+ Nouvelle sous-catégorie…</option>
     <% @categories.each do |category| %>
       <option value="<%= new_admin_category_subcategory_path(category) %>"><%= category.name %></option>

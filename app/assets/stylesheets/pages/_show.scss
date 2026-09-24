@@ -16,6 +16,8 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    user-select: none;
+    -webkit-touch-callout: none;
   }
 }
 

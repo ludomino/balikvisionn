@@ -13,6 +13,8 @@
 
   img {
     flex: 0 0 auto;
+    user-select: none;
+    -webkit-touch-callout: none;
   }
 
   p {

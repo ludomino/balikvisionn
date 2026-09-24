@@ -11,14 +11,13 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  height: $header-height;
+  min-height: $header-height;
   background-color: $bg-dark;
   border-bottom: 1px solid $border;
   display: block;
 }
 
 .admin-topbar {
-  height: 100%;
   display: flex;
   align-items: center;
   padding: 0 48px;
@@ -63,8 +62,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   background: transparent;
   border: 1px solid $border;
   border-radius: 50%;
@@ -82,8 +81,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   background: transparent;
   border: 1px solid $border;
   border-radius: 50%;

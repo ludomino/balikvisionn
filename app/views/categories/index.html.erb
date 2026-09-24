@@ -1,11 +1,11 @@
 <section class="accueil-photos">
   <h1 class="visually-hidden">Portfolio photographies — catégories</h1>
     <% @categories.each do |category| %>
-      <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3))">
+      <div class="card-category">
         <a href="<%= category_path(category) %>">
           <div class="card-image">
             <% if category.cover.attached? %>
-              <%= cloudinary_image_tag category.cover, alt: category.name, height: 300, width: 400, crop: :fill, gravity: :auto %>
+              <%= cloudinary_image_tag category.cover, alt: category.name, height: 300, width: 400, crop: :fill, gravity: :auto, protected: true %>
             <% else %>
               <div>No Cover Image</div>
             <% end %>

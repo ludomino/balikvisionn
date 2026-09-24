@@ -17,13 +17,13 @@ class SubcategoriesDeletionTest < ApplicationSystemTestCase
     fill_in "Mot de passe", with: "password"
     click_button "Se connecter"
 
-    assert_current_path root_path, ignore_query: true
+    assert_current_path admin_root_path, ignore_query: true
 
     visit admin_category_path(@category)
     assert_text(/#{Regexp.escape(@subcategory.name)}/i)
 
     accept_confirm do
-      find("a.btn-icon i.fa-trash").click
+      find("a.admin-icon-btn i.fa-trash").click
     end
 
     assert_no_text(/#{Regexp.escape(@subcategory.name)}/i)

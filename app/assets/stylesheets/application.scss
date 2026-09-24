@@ -76,11 +76,10 @@ header {
   position: sticky;
   top: 0;
   z-index: 100;
-  height: $header-height;
+  min-height: $header-height;
   display: flex;
   align-items: center;
   margin-top: 20px;
-
 }
 
 a:hover {
@@ -91,7 +90,12 @@ a:hover {
 .icone-contact {
   margin-bottom: 1%;
   .lien-icone {
-    margin-left: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-left: 4px;
     text-decoration: none;
     &:hover {
       opacity: 0.5;

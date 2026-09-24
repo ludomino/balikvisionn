@@ -28,7 +28,7 @@ class LightboxTest < ApplicationSystemTestCase
     visit category_path(@category)
     first(".mosaic-photo").click
 
-    click_button "Photo suivante"
+    find(".lightbox-next").click
     assert_selector "[data-lightbox-target='overlay'] img[alt='Photo numéro 2']"
 
     find("[data-lightbox-target='overlay']").send_keys(:arrow_right)
