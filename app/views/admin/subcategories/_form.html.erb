@@ -1,32 +1,95 @@
-<div class="container py-5">
-  <div class="row">
-    <div class="col-12 col-md-6 offset-lg-3">
-      <div class="bg-white rounded p-3 shadow">
-        <%= simple_form_for [:admin, @category, @subcategory], html: { multipart: true } do |f| %>
-          <%= f.input :name, placeholder: 'Nom...' %>
-          <%= f.input :description %>
-          <%= f.input :photos, as: :file, input_html: { multiple: true } %>
+<div class="admin-form-page admin-form-page--split">
+  <div class="admin-breadcrumb">
+    <%= link_to admin_category_path(@category), class: "admin-breadcrumb-link" do %>
+      <i class="fa-solid fa-arrow-left"></i> Retour à la catégorie
+    <% end %>
+  </div>
+  <h1 class="admin-form-title">
+    <%= @subcategory.persisted? ? "Modifier #{@subcategory.name}" : "Nouvelle sous-catégorie" %>
+  </h1>
+  <%= simple_form_for [:admin, @category, @subcategory], html: { multipart: true, class: "admin-form-split", data: { controller: "photo-preview" } } do |f| %>
+    <div class="admin-form-split-left">
+      <div class="admin-form-card">
+        <div class="admin-form-field">
+          <span class="admin-form-label">Catégorie parente</span>
+          <div class="admin-form-static"><%= @category.name %></div>
+        </div>
 
-          <% if @subcategory.persisted? && @subcategory.photos.any? %>
-            <hr>
-            <p class="text-muted small mb-2">Photos existantes (glisser-déposer pour réordonner)</p>
-            <div data-controller="sortable" data-sortable-url-value="<%= reorder_admin_category_subcategory_photos_path(@category, @subcategory) %>">
-              <%= f.simple_fields_for :photos, @subcategory.photos do |photo_f| %>
-                <div class="d-flex align-items-center mb-2" data-id="<%= photo_f.object.id %>" style="gap: 0.5rem; cursor: grab;">
-                  <%= cloudinary_image_tag photo_f.object.image, alt: photo_f.object.alt_text.presence || @subcategory.name, width: 80, height: 60, crop: :fill %>
-                  <%= photo_f.input :alt_text, label: false, placeholder: "Texte alternatif..." %>
-                  <%= photo_f.input :colspan, label: false, collection: [1, 2, 3], include_blank: false %>
-                  <%= link_to "↑", move_higher_admin_category_subcategory_photo_path(@category, @subcategory, photo_f.object), data: { turbo_method: :patch }, class: "btn btn-sm btn-outline-secondary" %>
-                  <%= link_to "↓", move_lower_admin_category_subcategory_photo_path(@category, @subcategory, photo_f.object), data: { turbo_method: :patch }, class: "btn btn-sm btn-outline-secondary" %>
-                  <%= link_to "Supprimer", admin_category_subcategory_photo_path(@category, @subcategory, photo_f.object), data: { turbo_method: :delete, turbo_confirm: "Supprimer cette photo ?" }, class: "btn btn-sm btn-outline-danger" %>
-                </div>
-              <% end %>
-            </div>
-          <% end %>
+        <%= f.input :name, label: "Nom de la sous-catégorie", placeholder: "Ex. Boiler Room",
+              input_html: { class: "field-input" }, wrapper_html: { class: "admin-form-field" }, label_html: { class: "admin-form-label" } %>
 
-          <%= f.submit class: 'btn btn-flat' %>
-        <% end %>
+        <%= f.input :description, label: "Description", as: :text,
+              input_html: { class: "field-input", rows: 4 }, wrapper_html: { class: "admin-form-field" }, label_html: { class: "admin-form-label" } %>
+
+        <%= f.input :photos, as: :file, label: false, wrapper: false,
+              input_html: { multiple: true, id: "subcategory_photos", class: "admin-visually-hidden-input",
+                            data: { photo_preview_target: "input", action: "change->photo-preview#show" } } %>
+
+        <div class="admin-form-actions">
+          <%= f.submit(@subcategory.persisted? ? "Enregistrer" : "Créer la sous-catégorie", class: "btn-admin-accent") %>
+          <%= link_to "Annuler", admin_category_path(@category), class: "btn-admin-outline" %>
+        </div>
       </div>
     </div>
-  </div>
+
+    <div class="admin-form-split-right">
+      <div class="admin-mosaic-header">
+        <div>
+          <h2 class="admin-mosaic-heading">
+            <%= @subcategory.persisted? ? @subcategory.name : "Photos" %>
+          </h2>
+          <% if @subcategory.persisted? && @subcategory.photos.any? %>
+            <p class="admin-form-hint">
+              <%= pluralize(@subcategory.photos.count, "photo", plural: "photos") %> · glisser pour réordonner, choisir 1 / 2 / 3 pour la largeur
+            </p>
+          <% end %>
+        </div>
+        <label for="subcategory_photos" class="btn-admin-accent">+ Ajouter des photos</label>
+      </div>
+
+      <div class="admin-form-photo-preview" data-photo-preview-target="list"></div>
+
+      <% if @subcategory.persisted? && @subcategory.photos.any? %>
+        <div class="admin-mosaic-grid" data-controller="sortable"
+            data-sortable-url-value="<%= reorder_admin_category_subcategory_photos_path(@category, @subcategory) %>"
+            data-sortable-handle-value=".admin-mosaic-handle">
+          <%= f.simple_fields_for :photos, @subcategory.photos do |photo_f| %>
+            <% photo = photo_f.object %>
+            <div class="admin-mosaic-card admin-mosaic-card--span-<%= photo.colspan %>" data-id="<%= photo.id %>" data-controller="mosaic-card">
+              <%= cloudinary_image_tag photo.image, alt: photo.alt_text.presence || @subcategory.name, width: 600, height: 400, crop: :fill, class: "admin-mosaic-photo" %>
+
+              <div class="admin-mosaic-overlay-top-left">
+                <span class="admin-mosaic-handle" title="Glisser pour réordonner"><i class="fa-solid fa-grip-vertical"></i></span>
+                <%= link_to raw('<i class="fa-solid fa-arrow-up"></i>'), move_higher_admin_category_subcategory_photo_path(@category, @subcategory, photo), data: { turbo_method: :patch }, class: "admin-mosaic-icon-btn", title: "Monter" %>
+                <%= link_to raw('<i class="fa-solid fa-arrow-down"></i>'), move_lower_admin_category_subcategory_photo_path(@category, @subcategory, photo), data: { turbo_method: :patch }, class: "admin-mosaic-icon-btn", title: "Descendre" %>
+              </div>
+
+              <div class="admin-mosaic-overlay-top-right">
+                <div class="admin-mosaic-sizes">
+                  <% [1, 2, 3].each do |size| %>
+                    <%= link_to size, colspan_admin_category_subcategory_photo_path(@category, @subcategory, photo, colspan: size),
+                          data: { turbo_method: :patch },
+                          class: "admin-mosaic-size-btn#{' is-active' if photo.colspan == size}" %>
+                  <% end %>
+                </div>
+                <%= button_tag type: "button", class: "admin-mosaic-icon-btn", title: "Texte alternatif", data: { action: "mosaic-card#toggleAlt" } do %>
+                  <i class="fa-solid fa-pen"></i>
+                <% end %>
+                <%= link_to raw('<i class="fa-solid fa-trash"></i>'), admin_category_subcategory_photo_path(@category, @subcategory, photo), data: { turbo_method: :delete, turbo_confirm: "Supprimer cette photo ?" }, class: "admin-mosaic-icon-btn admin-mosaic-delete-btn", title: "Supprimer" %>
+              </div>
+
+              <div class="admin-mosaic-overlay-bottom" data-mosaic-card-target="altPanel" hidden>
+                <%= photo_f.input :alt_text, label: false, placeholder: "Texte alternatif…", input_html: { class: "field-input" }, wrapper_html: { class: "admin-mosaic-alt-field" } %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="admin-form-hint-box">
+          <i class="fa-solid fa-circle-info"></i>
+          <span>Les photos se gèrent aussi depuis l'éditeur mosaïque, une fois la sous-catégorie créée.</span>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>

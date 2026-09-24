@@ -1,0 +1,23 @@
+<div class="admin-topbar">
+  <div class="admin-topbar-left">
+    <span class="admin-topbar-greeting">Qué lo que, BALIK</span>
+  </div>
+
+  <%= link_to admin_root_path, class: "admin-topbar-logo" do %>
+    <%= image_tag "00Logo_BALIKVISION_.png", alt: "Logo Balikvision" %>
+  <% end %>
+
+  <div class="admin-topbar-right">
+    <%= link_to root_path, target: "_blank", rel: "noopener",
+          class: "admin-topbar-icon-btn", "aria-label": "Voir le site public" do %>
+      <i class="fa-solid fa-arrow-up-right-from-square"></i>
+    <% end %>
+
+    <div class="admin-topbar-logout-form">
+      <%= button_to session_path, method: :delete,
+            class: "admin-topbar-icon-btn admin-topbar-logout", "aria-label": "Se déconnecter" do %>
+        <i class="fa-solid fa-right-from-bracket"></i>
+      <% end %>
+    </div>
+  </div>
+</div>

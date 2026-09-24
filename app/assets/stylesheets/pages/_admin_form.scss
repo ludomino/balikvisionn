@@ -1,0 +1,336 @@
+// Formulaires admin partagés (SubcategoryForm pour l'instant ; CategoryForm/AboutForm à suivre)
+
+.admin-form-page {
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.admin-form-title {
+  margin: 0;
+  font-size: 1.5em;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.admin-form-card {
+  background: $bg-card;
+  border: 1px solid $border;
+  border-radius: 10px;
+  padding: 32px;
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.admin-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-form-label {
+  font-size: 0.75em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $text-muted;
+  opacity: 0.7;
+}
+
+.admin-form-static {
+  font-size: 0.95em;
+  color: $text-light;
+}
+
+.field-input {
+  width: 100%;
+  box-sizing: border-box;
+  background: $bg-input;
+  border: 1px solid $border;
+  border-radius: 6px;
+  padding: 13px 14px;
+  color: $text-light;
+  font-size: 0.9em;
+  font-family: $body-font;
+
+  &::placeholder {
+    color: $text-muted;
+    opacity: 0.5;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $accent;
+    outline-offset: 2px;
+    border-color: $accent;
+  }
+}
+
+textarea.field-input {
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.admin-form-existing-photos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-form-hint {
+  font-size: 0.8em;
+  color: $text-muted;
+  opacity: 0.7;
+  margin: 0;
+}
+
+.admin-form-photo-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: grab;
+
+  img {
+    border-radius: 4px;
+    flex: 0 0 auto;
+  }
+}
+
+.admin-form-photo-alt {
+  flex: 1 1 auto;
+}
+
+.admin-form-photo-colspan {
+  flex: 0 0 70px;
+}
+
+.admin-form-hint-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-size: 0.85em;
+  color: $text-muted;
+}
+
+.admin-form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.admin-form-cover-preview {
+  border-radius: 6px;
+  display: block;
+}
+
+.admin-form-avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.admin-form-avatar {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: 0 0 auto;
+}
+
+.admin-form-avatar-empty {
+  background: #242424;
+  display: block;
+}
+
+.admin-form-avatar-input {
+  flex: 1 1 auto;
+
+  input[type="file"] {
+    color: $text-muted;
+    font-size: 0.8em;
+  }
+}
+
+// Nouveau : layout à deux colonnes pour SubcategoryForm (formulaire / éditeur mosaïque)
+.admin-form-page--split {
+  max-width: 1180px;
+}
+
+.admin-form-split {
+  display: grid;
+  grid-template-columns: minmax(320px, 400px) 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.admin-form-split-left,
+.admin-form-split-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-mosaic-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.admin-mosaic-heading {
+  margin: 0 0 4px;
+  font-size: 1.3em;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+// Champ fichier natif toujours présent (accessibilité, focus clavier) mais invisible :
+// c'est le <label for="subcategory_photos"> stylé en bouton qui sert de déclencheur visuel.
+.admin-visually-hidden-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.admin-form-photo-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.admin-form-photo-preview-thumb {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid $border;
+}
+
+// Layout à deux colonnes pour SubcategoryForm (formulaire / éditeur mosaïque)
+.admin-form-page--split {
+  max-width: 1180px;
+}
+
+.admin-form-split {
+  display: grid;
+  grid-template-columns: minmax(320px, 400px) 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.admin-form-split-left,
+.admin-form-split-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-mosaic-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.admin-mosaic-heading {
+  margin: 0 0 4px;
+  font-size: 1.3em;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+// Champ fichier natif toujours présent (accessibilité, focus clavier) mais invisible :
+// c'est le <label for="subcategory_photos"> stylé en bouton qui sert de déclencheur visuel.
+.admin-visually-hidden-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.admin-form-cover-thumb {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex: 0 0 auto;
+  display: block;
+}
+
+.admin-form-cover-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.admin-form-cover-filename {
+  font-size: 0.85em;
+  color: $text-light;
+  word-break: break-all;
+}
+
+.admin-form-cover-replace-link {
+  font-size: 0.8em;
+  color: $accent;
+  cursor: pointer;
+  text-decoration: underline;
+  width: fit-content;
+
+  &:hover {
+    color: $accent-hover;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .admin-form-split {
+    grid-template-columns: 260px 1fr;
+    gap: 24px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .admin-form-split {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-form-card {
+    padding: 22px;
+  }
+
+  .admin-form-photo-row {
+    flex-wrap: wrap;
+  }
+
+  .admin-form-actions {
+    flex-direction: column;
+  }
+
+  .admin-mosaic-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

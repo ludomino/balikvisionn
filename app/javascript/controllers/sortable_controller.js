@@ -3,12 +3,13 @@ import Sortable from "sortablejs"
 
 // Glisser-déposer pour réordonner les photos ; persiste via reorder (PATCH)
 export default class extends Controller {
-  static values = { url: String }
+  static values = { url: String, handle: String }
 
   connect() {
     this.sortable = Sortable.create(this.element, {
       animation: 150,
-      forceFallback: true, // événements souris purs plutôt que l'API HTML5 (fiabilité + testable en Capybara)
+      forceFallback: true,
+      handle: this.hasHandleValue ? this.handleValue : undefined,
       onEnd: () => this.persistOrder()
     })
   }

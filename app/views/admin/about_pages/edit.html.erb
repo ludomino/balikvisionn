@@ -1,13 +1,39 @@
-<div class="container py-5">
-  <div class="row">
-    <div class="col-12 col-md-6 offset-lg-3">
-      <div class="bg-white rounded p-3 shadow">
-        <%= simple_form_for @about_page, url: admin_about_page_path, html: { multipart: true } do |f| %>
-          <%= f.input :biography, as: :text %>
-          <%= f.input :photo, as: :file %>
-          <%= f.submit class: 'btn btn-flat' %>
-        <% end %>
+<div class="admin-form-page">
+  <div class="admin-breadcrumb">
+    <%= link_to admin_root_path, class: "admin-breadcrumb-link" do %>
+      <i class="fa-solid fa-arrow-left"></i> Retour au tableau de bord
+    <% end %>
+  </div>
+
+  <h1 class="admin-form-title">Modifier la page À propos</h1>
+
+  <div class="admin-form-card">
+    <%= simple_form_for @about_page, url: admin_about_page_path, html: { multipart: true, class: "admin-form" } do |f| %>
+      <div class="admin-form-field">
+        <span class="admin-form-label">Photo de profil</span>
+        <div class="admin-form-avatar-row">
+          <% if @about_page.photo.attached? %>
+            <%= cloudinary_image_tag @about_page.photo, alt: "", width: 78, height: 78, crop: :fill, class: "admin-form-avatar" %>
+          <% else %>
+            <span class="admin-form-avatar admin-form-avatar-empty"></span>
+          <% end %>
+          <%= f.input :photo, as: :file, label: false, wrapper_html: { class: "admin-form-avatar-input" },
+              input_html: { "aria-label": "Photo de profil" } %>
+        </div>
       </div>
-    </div>
+
+      <%= f.input :biography, label: "Texte de présentation", as: :text,
+            input_html: { class: "field-input", rows: 7 }, wrapper_html: { class: "admin-form-field" }, label_html: { class: "admin-form-label" } %>
+
+      <div class="admin-form-hint-box">
+        <i class="fa-solid fa-circle-info"></i>
+        <span>Le formulaire de contact du site envoie vers balik.vision.contact@gmail.com — non modifiable ici.</span>
+      </div>
+
+      <div class="admin-form-actions">
+        <%= f.submit "Enregistrer", class: "btn-admin-accent" %>
+        <%= link_to "Annuler", admin_root_path, class: "btn-admin-outline" %>
+      </div>
+    <% end %>
   </div>
 </div>

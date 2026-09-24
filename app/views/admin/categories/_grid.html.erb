@@ -1,0 +1,29 @@
+<div class="admin-category-grid">
+  <% @categories.each do |category| %>
+    <div class="admin-category-card">
+      <%= link_to admin_category_path(category), class: "admin-category-card-cover" do %>
+        <% if category.cover.attached? %>
+          <%= cloudinary_image_tag category.cover, alt: "", width: 400, height: 220, crop: :fill %>
+        <% else %>
+          <span class="admin-category-card-cover-empty">Aucune couverture</span>
+        <% end %>
+      <% end %>
+
+      <% if category.missing_cover? %>
+        <span class="admin-badge admin-badge-warning admin-category-card-badge">Sans couverture</span>
+      <% end %>
+
+      <div class="admin-category-card-icons">
+        <%= link_to raw('<i class="fa-regular fa-pen-to-square"></i>'), edit_admin_category_path(category), class: "admin-icon-btn", title: "Modifier" %>
+        <%= link_to raw('<i class="fa-solid fa-trash"></i>'), admin_category_path(category), data: { turbo_method: :delete, turbo_confirm: "Confirmer la suppression ?" }, class: "admin-icon-btn", title: "Supprimer" %>
+      </div>
+
+      <%= link_to admin_category_path(category), class: "admin-category-card-body" do %>
+        <div class="admin-category-card-name"><%= category.name %></div>
+        <div class="admin-category-card-count">
+          <%= pluralize(category.subcategories.size, "sous-catégorie", plural: "sous-catégories") %> · <%= pluralize(category.subcategories.sum { |s| s.photos.size }, "photo", plural: "photos") %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

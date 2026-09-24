@@ -52,4 +52,87 @@ class Admin::CategoriesControllerTest < ActionDispatch::IntegrationTest
 
     assert_select "a[href='#{edit_admin_about_page_path}']"
   end
+
+    test "show redirects to login when not authenticated" do
+    get admin_category_path(@category)
+    assert_redirected_to new_session_path
+  end
+
+  test "show is accessible when authenticated" do
+    sign_in_as @user
+    get admin_category_path(@category)
+    assert_response :success
+  end
+
+  test "show displays a missing-cover badge when the category has no cover" do
+    sign_in_as @user
+    get admin_category_path(@category)
+    assert_select ".admin-badge-warning", text: "Sans couverture"
+  end
+
+  test "show does not display the missing-cover badge once a cover is attached" do
+    @category.cover.attach(
+      io: File.open(Rails.root.join("test/fixtures/files/test_photo.png")),
+      filename: "test_photo.png",
+      content_type: "image/png"
+    )
+    sign_in_as @user
+    get admin_category_path(@category)
+    assert_select ".admin-badge-warning", false
+  end
+
+  test "show lists subcategories with their photo count" do
+    subcategory = Subcategory.create!(name: "Boiler Room", description: "Session live", category: @category)
+    photo = Photo.create!(subcategory: subcategory, colspan: 1, position: 0)
+    photo.image.attach(
+      io: File.open(Rails.root.join("test/fixtures/files/test_photo.png")),
+      filename: "test_photo.png",
+      content_type: "image/png"
+    )
+
+    sign_in_as @user
+    get admin_category_path(@category)
+
+    assert_select ".admin-subcategory-card-name", text: "Boiler Room"
+    assert_select ".admin-subcategory-card-count", text: "1 photo"
+  end
+
+  test "index displays a missing-cover badge for categories without a cover" do
+    sign_in_as @user
+    get admin_root_path
+    assert_select ".admin-badge-warning", text: "Sans couverture"
+  end
+
+  test "edit is accessible when authenticated" do
+    sign_in_as @user
+    get edit_admin_category_path(@category)
+    assert_response :success
+  end
+
+  test "new displays the admin form" do
+    sign_in_as @user
+    get new_admin_category_path
+    assert_select ".admin-form-title", text: "Nouvelle catégorie"
+  end
+
+  test "edit displays the admin form with the category name prefilled" do
+    sign_in_as @user
+    get edit_admin_category_path(@category)
+    assert_select ".admin-form-title", text: "Modifier la catégorie"
+    assert_select "input[name='category[name]'][value='Concerts']"
+  end
+
+  test "edit form displays the cover filename and a compact replace link" do
+    sign_in_as @user
+    @category.cover.attach(
+      io: File.open(Rails.root.join("test/fixtures/files/test_photo.png")),
+      filename: "test_photo.png",
+      content_type: "image/png"
+    )
+
+    get edit_admin_category_path(@category)
+
+    assert_select "label[for='category_cover']", text: "Remplacer l'image"
+    assert_select ".admin-form-cover-filename", text: "test_photo.png"
+  end
 end

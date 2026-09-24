@@ -58,4 +58,18 @@ class Admin::PhotosControllerTest < ActionDispatch::IntegrationTest
     assert_equal 0, @photo_b.reload.position
     assert_equal 1, @photo_a.reload.position
   end
+
+  test "colspan requires authentication" do
+    patch colspan_admin_category_subcategory_photo_path(@category, @subcategory, @photo_a, colspan: 2)
+    assert_redirected_to new_session_path
+  end
+
+  test "colspan updates the photo width and redirects to the edit page" do
+    sign_in_as @user
+
+    patch colspan_admin_category_subcategory_photo_path(@category, @subcategory, @photo_a, colspan: 2)
+
+    assert_redirected_to edit_admin_category_subcategory_path(@category, @subcategory)
+    assert_equal 2, @photo_a.reload.colspan
+  end
 end

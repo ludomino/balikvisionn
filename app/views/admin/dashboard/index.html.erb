@@ -1,0 +1,41 @@
+<div class="admin-stats-row">
+    <div class="admin-stat-tile">
+    <div class="admin-stat-value"><%= @category_count %></div>
+    <div class="admin-stat-label"><%= @category_count == 1 ? "catégorie" : "catégories" %></div>
+  </div>
+  <div class="admin-stat-tile">
+    <div class="admin-stat-value"><%= @subcategory_count %></div>
+    <div class="admin-stat-label"><%= @subcategory_count == 1 ? "sous-catégorie" : "sous-catégories" %></div>
+  </div>
+  <div class="admin-stat-tile">
+    <div class="admin-stat-value"><%= @photo_count %></div>
+    <div class="admin-stat-label"><%= @photo_count == 1 ? "photo publiée" : "photos publiées" %></div>
+  </div>
+</div>
+
+<% if @categories_missing_cover.any? %>
+  <div class="admin-alert-banner">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    <span>
+      <%= pluralize(@categories_missing_cover.size, "catégorie sans photo de couverture", plural: "catégories sans photo de couverture") %> :
+      <% @categories_missing_cover.each_with_index do |category, index| %>
+        <%= link_to category.name, admin_category_path(category) %><%= ", " unless index == @categories_missing_cover.size - 1 %>
+      <% end %>
+    </span>
+  </div>
+<% end %>
+
+<div class="admin-shortcuts-row">
+  <%= link_to "+ Nouvelle catégorie", new_admin_category_path, class: "btn-admin-accent" %>
+
+  <select class="admin-shortcut-select" aria-label="Créer une nouvelle sous-catégorie dans une catégorie" onchange="if (this.value) window.location = this.value;">
+    <option value="">+ Nouvelle sous-catégorie…</option>
+    <% @categories.each do |category| %>
+      <option value="<%= new_admin_category_subcategory_path(category) %>"><%= category.name %></option>
+    <% end %>
+  </select>
+
+  <%= link_to "Modifier la page À propos", edit_admin_about_page_path, class: "btn-admin-outline" %>
+</div>
+
+<%= render "admin/categories/grid" %>

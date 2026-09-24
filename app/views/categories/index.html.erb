@@ -1,15 +1,21 @@
+<% content_for :title, "Balikvision Photographie — Portfolio" %>
+<% content_for :meta_description, "Portfolio photographique de Balikvision : parcourez les catégories et découvrez les séries les plus récentes." %>
+<% first_cover = @categories.find { |c| c.cover.attached? }&.cover %>
+<% content_for :og_image, first_cover.url(quality: :auto, fetch_format: :auto) if first_cover %>
+
 <section class="accueil-photos">
+  <h1 class="visually-hidden">Portfolio photographies — catégories</h1>
     <% @categories.each do |category| %>
-      <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3))">
-        <div class="card-image">
+      <div class="card-category">
         <a href="<%= category_path(category) %>">
-          <% if category.cover.attached? %>
-            <%= cloudinary_image_tag category.cover, alt: category.name, height: 300, width: 400, crop: :fill %>
-          <% else %>
-            <div>No Cover Image</div>
-          <% end %>
-        </div>
-          <div class="card-category-text"><%= link_to category.name.capitalize, category_path(category)%></div>
+          <div class="card-image">
+            <% if category.cover.attached? %>
+              <%= cloudinary_image_tag category.cover, alt: category.name, height: 300, width: 400, crop: :fill, gravity: :auto, protected: true %>
+            <% else %>
+              <div>No Cover Image</div>
+            <% end %>
+          </div>
+          <div class="card-category-text"><%= category.name.capitalize %></div>
         </a>
       </div>
     <% end %>

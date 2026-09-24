@@ -1,0 +1,222 @@
+.admin-breadcrumb {
+  margin-bottom: 24px;
+
+  .admin-breadcrumb-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8em;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: $text-muted;
+    opacity: 0.7;
+
+    &:hover {
+      opacity: 1;
+      color: $accent;
+    }
+  }
+}
+
+.admin-category-head {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.admin-category-head-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.admin-category-head-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  h1 {
+    margin: 0;
+    font-size: 1.6em;
+  }
+}
+
+.admin-badge {
+  font-size: 0.7em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 3px;
+}
+
+.admin-badge-warning {
+  background: rgba(201, 162, 75, 0.15);
+  color: #d9c493;
+  border: 1px solid rgba(201, 162, 75, 0.35);
+}
+
+.admin-category-head-actions {
+  display: flex;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+.admin-category-head-meta {
+  font-size: 0.9em;
+  color: $text-muted;
+  opacity: 0.7;
+  margin: 0;
+}
+
+.btn-admin-outline,
+.btn-admin-danger,
+.btn-admin-accent {
+  display: inline-block;
+  font-size: 0.75em;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-admin-outline {
+  background: transparent;
+  color: $text-muted;
+  border: 1px solid $border;
+
+  &:hover {
+    border-color: $accent;
+    color: $accent;
+  }
+}
+
+.btn-admin-danger {
+  background: transparent;
+  color: $danger;
+  border: 1px solid rgba(255, 128, 128, 0.4);
+
+  &:hover {
+    background: rgba(255, 128, 128, 0.1);
+  }
+}
+
+.btn-admin-accent {
+  background: $accent;
+  color: $bg-dark;
+  border: none;
+  width: fit-content;
+
+  &:hover {
+    background: $accent-hover;
+  }
+}
+
+.admin-subcategory-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.admin-subcategory-card {
+  background: $bg-card;
+  border: 1px solid $border;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.admin-subcategory-card-cover {
+  position: relative;
+  height: 130px;
+  background: $bg-dark;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .admin-subcategory-card-cover-empty {
+    font-size: 0.75em;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: $text-muted;
+    opacity: 0.4;
+  }
+}
+
+.admin-subcategory-card-icons {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+.admin-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 4px;
+  background: rgba(10, 10, 10, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: $text-light;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: $accent;
+  }
+}
+
+.admin-subcategory-card-body {
+  display: block;
+  padding: 16px 18px;
+
+  &:hover .admin-subcategory-card-name {
+    color: $accent;
+  }
+}
+
+.admin-subcategory-card-name {
+  font-size: 0.95em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: $text-light;
+  margin-bottom: 6px;
+}
+
+.admin-subcategory-card-count {
+  font-size: 0.85em;
+  color: $text-muted;
+  opacity: 0.7;
+}
+
+@media screen and (max-width: 640px) {
+  .admin-subcategory-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .btn-admin-outline,
+  .btn-admin-danger,
+  .btn-admin-accent {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  .admin-category-head-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+}

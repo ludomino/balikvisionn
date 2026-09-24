@@ -1,47 +1,117 @@
 .subcategories-header {
-  padding: 30px;
+  // Avant : simple padding, flèche + h1 en flux normal / Après : bandeau cover en fond, flèche + h1 superposés
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+  background-color: $bg-card; // repli si la catégorie n'a pas encore de cover
+  margin-bottom: 12px;
+  margin-top: 20px;
+
+.header-cover {
+  position: absolute;
+  inset: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
 }
 
+  .header-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85) 100%);
+  }
+
+  .header-back {
+    position: absolute;
+    top: 28px;
+    left: 40px;
+    z-index: 2;
+  }
+
+  h1 {
+    position: absolute;
+    left: 40px;
+    bottom: 24px;
+    z-index: 2;
+    margin: 0;
+    text-transform: uppercase;
+  }
+}
+
+.subcategories-nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding: 15px 30px;
+  position: sticky;
+  top: $header-height; // était : 0 — pour ne pas se superposer au header désormais sticky
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 10;
+
+  a {
+    color: $text-light;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    font-size: 0.9em;
+
+    &:hover {
+      color: $accent;
+    }
+  }
+}
 
 .subcategories-photos {
-  display: flex;
-  flex-direction: column;
-  background-color: black;
-  display: flex;
+  background-color: $bg-dark;
+  padding: 0; // Avant : 80px hérités de la règle globale "section" / Après : mosaïque plein cadre, bord à bord
 }
 
-  .subcategory{
-    background-color: pink;
-    width: 100%;
-    margin-bottom: 2%;
-    position: relative; /* Add this */
+.subcategory {
+  width: 100%;
+  margin-bottom: 60px;
+  position: relative;
 
-    .btn-icon {
-      background-color: white;
-      color: #333;
-      border-radius: 50px;
-      border-color: #333;
-    }
-
-    a {
-      color: #ffffff;
-      text-decoration: none;
-    }
+  .btn-icon {
+    background-color: white;
+    color: #333;
+    border-radius: 50px;
+    border-color: #333;
   }
 
-  .subinfos{
-    color: #242424;
-    text-align: center;
-    margin-bottom: 5%;
-    margin-top: 1%;
+  a {
+    color: $text-light;
+    text-decoration: none;
+  }
+}
+
+.subinfos {
+  text-align: left;
+  padding-left: 30px; // la section n'a plus de padding (mosaïque plein cadre), on évite que le texte colle au bord
+  margin-bottom: 20px;
+
+  h2 {
+    font-size: 1.4em; // nouveau : réduit sans toucher au h2 global (utilisé aussi par "Me contacter" sur la page à propos)
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
   }
 
-  .subparams {
-    position: absolute; /* Add this */
-    top: 2%; /* Adjust as needed */
-    right: 2%; /* Adjust as needed */
+  p {
+    color: $accent;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.85em;
   }
+}
 
-  .subphotosgrid{
-    margin-bottom: 1%;
-  }
+.subparams {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+}

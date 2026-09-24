@@ -1,7 +1,27 @@
 header nav {
-  flex-direction: column;
+  display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 50px;
+
+  .nav-left,
+  .nav-right {
+    flex: 1;
+    display: flex;
+  }
+
+  .nav-left {
+    justify-content: flex-start; // future place du bouton burger
+  }
+
+  .nav-right {
+    justify-content: flex-end;
+  }
+
+  .nav-logo {
+    flex: 0 0 auto; // largeur fixe au contenu (le logo), ne s'étire pas
+  }
 }
 
 footer,
@@ -11,25 +31,49 @@ nav {
 }
 
 nav img {
-  width: 300px;
-}
-nav a {
-  margin-left: 30px;
+  width: auto;
+  max-height: 75px;
 }
 
-@media screen and (max-width: 996px) {
+nav a {
+  margin-left: 30px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+
+.nav-about-icon {
+  display: none;
+}
+
+@media screen and (max-width: 640px) {
   header nav {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    padding: 0 20px;
   }
 
   header nav img {
-    margin-bottom: 20px;
+    max-height: 48px;
   }
 
   nav a {
     margin-left: 10px;
     margin-right: 10px;
+  }
+
+  .nav-about-text {
+    display: none;
+  }
+
+  .nav-about-icon {
+    display: inline-block;
+    font-size: 1.3em;
+  }
+
+  .nav-about-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
   }
 }

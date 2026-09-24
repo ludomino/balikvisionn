@@ -1,12 +1,13 @@
 module Admin
   class CategoriesController < Admin::BaseController
     def index
-      @categories = Category.all
+      @categories = Category.with_attached_cover.includes(subcategories: :photos)
     end
 
     def show
       @category = Category.find(params[:id])
-      @subcategories = @category.subcategories
+      @subcategories = @category.subcategories.includes(:photos)
+      @photo_count = @subcategories.sum { |s| s.photos.size }
     end
 
     def new

@@ -1,8 +1,12 @@
 module ImagesHelper
   # image_tag Cloudinary : qualité/format auto + lazy loading
-  def cloudinary_image_tag(attachment, alt:, **options)
+  # Avant : pas de protection / Après : option "protected" ajoute anti-clic-droit + anti-glisser, activée uniquement au cas par cas
+  def cloudinary_image_tag(attachment, alt:, protected: false, **options)
     return unless attachment.attached?
 
-    image_tag attachment.url(quality: :auto, fetch_format: :auto, **options), alt: alt, loading: "lazy"
+    html_options = { alt: alt, loading: "lazy" }
+    html_options.merge!(draggable: false, oncontextmenu: "return false;") if protected
+
+    image_tag attachment.url(quality: :auto, fetch_format: :auto, **options), **html_options
   end
 end

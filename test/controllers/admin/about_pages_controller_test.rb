@@ -39,4 +39,10 @@ class Admin::AboutPagesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unprocessable_entity
   end
+
+  test "edit displays the admin form" do
+    sign_in_as @user
+    get edit_admin_about_page_path
+    assert_select ".admin-form-title", text: "Modifier la page À propos"
+  end
 end

@@ -116,7 +116,7 @@ class Admin::SubcategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_select "input[name='subcategory[photos_attributes][0][alt_text]']"
   end
 
-    test "edit form displays move up/down links for each existing photo" do
+  test "edit form displays move up/down links for each existing photo" do
     sign_in_as @user
 
     get edit_admin_category_subcategory_path(@category, @subcategory)
@@ -146,5 +146,32 @@ class Admin::SubcategoriesControllerTest < ActionDispatch::IntegrationTest
     get edit_admin_category_subcategory_path(@category, @subcategory)
 
     assert_select "a[href='#{admin_category_subcategory_photo_path(@category, @subcategory, @photo)}'][data-turbo-method='delete']"
+  end
+
+  test "new form displays the parent category name and the create heading" do
+    sign_in_as @user
+
+    get new_admin_category_subcategory_path(@category)
+
+    assert_select ".admin-form-static", text: @category.name
+    assert_select ".admin-form-title", text: "Nouvelle sous-catégorie"
+  end
+
+  test "edit form displays the edit heading and a cancel link back to the category" do
+    sign_in_as @user
+
+    get edit_admin_category_subcategory_path(@category, @subcategory)
+
+    assert_select ".admin-form-title", text: "Modifier #{@subcategory.name}"
+    assert_select "a[href='#{admin_category_path(@category)}']", text: "Annuler"
+  end
+
+  test "edit form displays the mosaic size buttons with the current size active" do
+    sign_in_as @user
+
+    get edit_admin_category_subcategory_path(@category, @subcategory)
+
+    assert_select "a.admin-mosaic-size-btn.is-active", text: "1"
+    assert_select "a[href='#{colspan_admin_category_subcategory_photo_path(@category, @subcategory, @photo, colspan: 2)}']"
   end
 end

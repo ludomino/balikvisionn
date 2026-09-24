@@ -13,20 +13,20 @@ class SubcategoriesDeletionTest < ApplicationSystemTestCase
 
   test "deleting a subcategory from the admin category page removes it" do
     visit new_session_path
-    fill_in "Email address", with: @user.email_address
-    fill_in "Password", with: "password"
-    click_button "Sign in"
+    fill_in "Adresse email", with: @user.email_address
+    fill_in "Mot de passe", with: "password"
+    click_button "Se connecter"
 
-    assert_current_path root_path, ignore_query: true
+    assert_current_path admin_root_path, ignore_query: true
 
     visit admin_category_path(@category)
-    assert_text @subcategory.name
+    assert_text(/#{Regexp.escape(@subcategory.name)}/i)
 
     accept_confirm do
-      find("a.btn-icon i.fa-trash").click
+      find("a.admin-icon-btn i.fa-trash").click
     end
 
-    assert_no_text @subcategory.name
+    assert_no_text(/#{Regexp.escape(@subcategory.name)}/i)
     assert_not Subcategory.exists?(@subcategory.id)
   end
 end

@@ -1,4 +1,4 @@
-// app/assets/stylesheets/_cards.scss
+// app/assets/stylesheets/components/_cards.scss
 
 .card-category {
   display: flex;
@@ -11,28 +11,60 @@
   justify-content: center;
   flex-wrap: wrap;
   flex-direction: column;
-  position: relative; /* Add this */
+  position: relative;
+  overflow: hidden;
 
   .card-image {
-    flex: 1; /* Allow the image to take up remaining vertical space */
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+  }
+
+  a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+  .card-category-text {
+    color: white;
+    font-size: 22px;
+    font-weight: 700;               // était "bold" (identique en valeur, juste explicite via variable de graisse cohérente)
+    text-transform: uppercase;
+    letter-spacing: 0.08em;         // Avant : texte serré / Après : espacement large, même logique que les libellés de catégorie BAPE (HOMMES, FEMMES...)
+    text-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.9),
+      0 -1px 3px rgba(0, 0, 0, 0.9),
+      1px 0 3px rgba(0, 0, 0, 0.9),
+      -1px 0 3px rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    position: absolute;
+    inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .card-category-text {
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-    opacity: 0;
-    transition: opacity 0.2s ease-in-out;
-    text-decoration: none;
-    display: flex;
-    position: absolute;
-  }
-
-    @media (hover: none) {
+  @media (hover: none) {
     .card-category-text {
       opacity: 1;
     }
@@ -43,7 +75,7 @@
     opacity: 1;
   }
 
-  .card-category-params{
+  .card-category-params {
     display: flex;
     position: absolute;
     top: 30px;
@@ -57,12 +89,8 @@
     border-color: #333;
   }
 
-  a {
-    color: #ffffff;
-    text-decoration: none;
-  }
-  @media screen and (max-width: 996px) {
-    height: 350px;
+  @media screen and (max-width: 640px) {
+    height: 220px;
     width: 100%;
   }
 }

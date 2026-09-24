@@ -1,0 +1,139 @@
+// Barre du haut de l'espace admin — commune à toutes les pages du back-office
+.admin-body {
+  background-color: $bg-dark;
+  max-width: none;
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.admin-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  min-height: $header-height;
+  background-color: $bg-dark;
+  border-bottom: 1px solid $border;
+  display: block;
+}
+
+.admin-topbar {
+  display: flex;
+  align-items: center;
+  padding: 0 48px;
+}
+
+.admin-topbar-left,
+.admin-topbar-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.admin-topbar-right {
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.admin-topbar-logo {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+
+  img {
+    max-height: 36px;
+    width: auto;
+  }
+}
+
+.admin-topbar-greeting {
+  font-size: 0.85em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: $text-muted;
+  opacity: 0.7;
+}
+
+.admin-topbar-logout-form {
+  flex-shrink: 0;
+}
+
+.admin-topbar-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: 1px solid $border;
+  border-radius: 50%;
+  color: $text-muted;
+  font-size: 0.9em;
+  cursor: pointer;
+
+  &:hover {
+    border-color: $accent;
+    color: $accent;
+  }
+}
+
+.admin-topbar-logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: 1px solid $border;
+  border-radius: 50%;
+  color: $text-muted;
+  font-size: 0.9em;
+  cursor: pointer;
+
+  &:hover {
+    border-color: $accent;
+    color: $accent;
+  }
+}
+
+.admin-main {
+  padding: 40px 48px;
+}
+
+@media screen and (max-width: 640px) {
+  .admin-header {
+    height: auto;
+  }
+
+  .admin-topbar {
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    row-gap: 4px;
+    padding: 14px 20px;
+  }
+
+  .admin-topbar-logo {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .admin-topbar-right {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .admin-topbar-left {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .admin-topbar-greeting {
+    font-size: 0.7em;
+  }
+
+  .admin-main {
+    padding: 24px 20px;
+  }
+}

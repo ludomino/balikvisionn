@@ -1,13 +1,52 @@
-<div class="container py-5">
-  <div class="row">
-    <div class="col-12 col-md-6 offset-lg-3">
-      <div class="bg-white rounded p-3 shadow">
-        <%= simple_form_for [:admin, @category], html: { multipart: true } do |f| %>
-          <%= f.input :name, placeholder: 'Nom...' %>
-          <%= f.input :cover, as: :file %>
-          <%= f.submit class: 'btn btn-flat' %>
-        <% end %>
+<div class="admin-form-page">
+  <div class="admin-breadcrumb">
+    <% if @category.persisted? %>
+      <%= link_to admin_category_path(@category), class: "admin-breadcrumb-link" do %>
+        <i class="fa-solid fa-arrow-left"></i> Retour à la catégorie
+      <% end %>
+    <% else %>
+      <%= link_to admin_root_path, class: "admin-breadcrumb-link" do %>
+        <i class="fa-solid fa-arrow-left"></i> Retour au tableau de bord
+      <% end %>
+    <% end %>
+  </div>
+
+  <h1 class="admin-form-title">
+    <%= @category.persisted? ? "Modifier la catégorie" : "Nouvelle catégorie" %>
+  </h1>
+
+  <div class="admin-form-card">
+    <%= simple_form_for [:admin, @category], html: { multipart: true, class: "admin-form" } do |f| %>
+      <%= f.input :name, label: "Nom de la catégorie", placeholder: "Ex. Concerts",
+            input_html: { class: "field-input" }, wrapper_html: { class: "admin-form-field" }, label_html: { class: "admin-form-label" } %>
+
+      <div class="admin-form-field">
+        <span class="admin-form-label">Image de couverture</span>
+        <div class="admin-form-avatar-row">
+          <% if @category.cover.attached? %>
+            <%= cloudinary_image_tag @category.cover, alt: "", width: 72, height: 72, crop: :fill, class: "admin-form-cover-thumb" %>
+          <% else %>
+            <span class="admin-form-cover-thumb admin-form-avatar-empty"></span>
+          <% end %>
+
+          <div class="admin-form-cover-info">
+            <% if @category.cover.attached? %>
+              <span class="admin-form-cover-filename"><%= @category.cover.filename %></span>
+            <% end %>
+            <label for="category_cover" class="admin-form-cover-replace-link">
+              <%= @category.cover.attached? ? "Remplacer l'image" : "Choisir une image" %>
+            </label>
+          </div>
+        </div>
+
+        <%= f.input :cover, as: :file, label: false, wrapper: false,
+              input_html: { id: "category_cover", class: "admin-visually-hidden-input" } %>
       </div>
-    </div>
+
+      <div class="admin-form-actions">
+        <%= f.submit(@category.persisted? ? "Enregistrer" : "Créer la catégorie", class: "btn-admin-accent") %>
+        <%= link_to "Annuler", @category.persisted? ? admin_category_path(@category) : admin_root_path, class: "btn-admin-outline" %>
+      </div>
+    <% end %>
   </div>
 </div>
