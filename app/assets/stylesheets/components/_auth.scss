@@ -7,6 +7,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
 }
 
 .auth-card {
