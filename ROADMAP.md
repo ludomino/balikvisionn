@@ -79,7 +79,7 @@
 - [x] Contact par mail (formulaire ou lien)
 - [x] Finalisation accueil : grille 6 catégories, label au survol (+ tap mobile)
 - [x] Finalisation pages sous-catégories : mosaïque + lightbox plein écran avec navigation précédent/suivant
-- [ ] SEO & partage social : meta description par page, Open Graph (`og:image`, `og:title`), sitemap.xml
+- [x] SEO & partage social : meta description par page, Open Graph (`og:image`, `og:title`), sitemap.xml généré dynamiquement (`request`/`url_for`, aucun domaine codé en dur)
 - [x] Anti-spam sur le formulaire de contact (champ honeypot)
 
 **Tests**
@@ -91,7 +91,7 @@
 - [x] Sémantique HTML (`<nav>`, `<main>`, `<section>`, landmarks ARIA)
 - [x] Lightbox : `role="dialog"`, `aria-modal="true"`, focus trap, fermeture Échap, restitution du focus, navigation clavier (flèches)
 - [x] `alt` obligatoire sur chaque photo affichée
-- [ ] Contraste suffisant des labels de catégorie sur fond photo
+- [x] Contraste suffisant des labels de catégorie sur fond photo (halo de texte + fond semi-opaque sur `.card-category-text`)
 
 **Sécurité images**
 - [x] Désactivation du menu contextuel (`contextmenu` JS)
@@ -130,20 +130,22 @@
 
 ## Axe 6 — Responsive & audit transverse
 
+*Terminé le 2026-09-24*
+
 **Fonctionnalités**
-- [ ] Adaptation mobile (grille empilée, label affiché au tap)
+- [x] Adaptation mobile (grille empilée, label affiché au tap)
 
 **Tests**
-- [ ] Tests système à plusieurs largeurs de viewport
-- [ ] Vérification de l'affichage du label au tap sur mobile
+- [x] Tests système à plusieurs largeurs de viewport (`responsive_test.rb`)
+- [x] Vérification de l'affichage du label au tap sur mobile (émulation tactile Chrome, `responsive_test.rb`)
 
 **Accessibilité**
-- [ ] Audit complet (Lighthouse ou axe-core) sur toutes les pages
-- [ ] Zoom texte 200 % sans casser la mise en page
-- [ ] Zones tactiles ≥ 44×44px
+- [x] Audit complet (axe-core, WCAG 2A/2AA, 7 pages publiques + admin) — 4 violations réelles trouvées et corrigées (`accessibility_test.rb`)
+- [x] Zoom texte 200 % sans casser la mise en page (en-têtes en `min-height`, vérifié manuellement)
+- [x] Zones tactiles ≥ 44×44px — exception documentée : contrôles overlay de l'éditeur mosaïque en `span-1` (~22-30px), un vrai 44px ferait se chevaucher les boutons sur des vignettes de ~100-120px
 
 **Sécurité images**
-- [ ] Blocage du menu contextuel "enregistrer l'image" en appui long (tactile)
+- [x] Blocage du menu contextuel "enregistrer l'image" en appui long (tactile) — `-webkit-touch-callout: none` + `user-select: none`, étendu à toutes les images publiques
 
 ---
 
