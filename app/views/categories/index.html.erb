@@ -1,3 +1,8 @@
+<% content_for :title, "Balikvision Photographie — Portfolio" %>
+<% content_for :meta_description, "Portfolio photographique de Balikvision : parcourez les catégories et découvrez les séries les plus récentes." %>
+<% first_cover = @categories.find { |c| c.cover.attached? }&.cover %>
+<% content_for :og_image, first_cover.url(quality: :auto, fetch_format: :auto) if first_cover %>
+
 <section class="accueil-photos">
   <h1 class="visually-hidden">Portfolio photographies — catégories</h1>
     <% @categories.each do |category| %>

@@ -4,7 +4,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Balikvision Photographie</title>
+    <title><%= content_for(:title) || "Balikvision Photographie" %></title>
+    <meta name="description" content="<%= content_for(:meta_description) || "Portfolio photographique de Balikvision : parcourez les catégories et découvrez les séries les plus récentes." %>">
+    <link rel="canonical" href="<%= request.original_url %>">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Balikvision Photographie">
+    <meta property="og:title" content="<%= content_for(:title) || "Balikvision Photographie" %>">
+    <meta property="og:description" content="<%= content_for(:meta_description) || "Portfolio photographique de Balikvision : parcourez les catégories et découvrez les séries les plus récentes." %>">
+    <meta property="og:url" content="<%= request.original_url %>">
+    <meta property="og:image" content="<%= content_for(:og_image) || image_url("00Logo_BALIKVISION_.png") %>">
     <%= csp_meta_tag %>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>

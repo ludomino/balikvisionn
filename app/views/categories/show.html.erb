@@ -1,5 +1,8 @@
-<section class="subcategories-header">
-  <div class="header-cover">
+<% content_for :title, "#{@category.name} — Balikvision Photographie" %>
+<% content_for :meta_description, "Découvrez la série « #{@category.name} » du portfolio photographique de Balikvision." %>
+<% content_for :og_image, @category.cover.url(quality: :auto, fetch_format: :auto) if @category.cover.attached? %>
+
+<section class="subcategories-header">  <div class="header-cover">
     <% if @category.cover.attached? %>
       <%= cloudinary_image_tag @category.cover, alt: "", width: 1600, height: 300, crop: :fill, gravity: :auto, protected: true %>
     <% end %>

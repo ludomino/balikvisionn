@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   get "about", to: "about#show"
 
+  get "sitemap.xml", to: "sitemap#index", as: :sitemap, defaults: { format: :xml }
   resource :contact, only: [:create]
   get "contact", to: redirect("/about"), as: nil # filet de sécurité si l'utilisateur rafraîchit après une erreur 422
 
