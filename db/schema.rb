@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_16_080426) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_26_182245) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -58,9 +58,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_16_080426) do
     t.string "alt_text"
     t.integer "colspan", default: 1, null: false
     t.datetime "created_at", null: false
+    t.text "description"
+    t.integer "height"
     t.integer "position", default: 0, null: false
     t.bigint "subcategory_id", null: false
+    t.string "title"
     t.datetime "updated_at", null: false
+    t.integer "width"
     t.index ["subcategory_id", "position"], name: "index_photos_on_subcategory_id_and_position"
     t.index ["subcategory_id"], name: "index_photos_on_subcategory_id"
   end
@@ -79,6 +83,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_16_080426) do
     t.datetime "created_at", null: false
     t.text "description"
     t.string "name"
+    t.string "status", default: "draft", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_subcategories_on_category_id"
   end

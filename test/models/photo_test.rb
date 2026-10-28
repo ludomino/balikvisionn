@@ -103,4 +103,15 @@ class PhotoTest < ActiveSupport::TestCase
 
     assert_not ActiveStorage::Blob.exists?(blob.id)
   end
+
+  test "title is optional" do
+    photo = Photo.new(subcategory: @subcategory, colspan: 1, position: 0)
+    assert photo.valid?
+    assert_nil photo.title
+  end
+
+  test "can be created with a title" do
+    photo = Photo.create!(subcategory: @subcategory, colspan: 1, position: 0, title: "Set de clôture")
+    assert_equal "Set de clôture", photo.title
+  end
 end

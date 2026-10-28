@@ -5,11 +5,12 @@ header nav {
   width: 100%;
   padding: 0 50px;
 
-  .nav-left,
-  .nav-right {
-    flex: 1;
-    display: flex;
-  }
+.nav-left,
+.nav-right {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+}
 
   .nav-left {
     justify-content: flex-start; // future place du bouton burger

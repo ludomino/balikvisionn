@@ -16,6 +16,12 @@
   letter-spacing: 0.02em;
 }
 
+.admin-form-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .admin-form-card {
   background: $bg-card;
   border: 1px solid $border;

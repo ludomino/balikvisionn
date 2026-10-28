@@ -14,9 +14,25 @@
   cursor: grab;
 }
 
-.admin-mosaic-card--span-1 { grid-column: span 1; aspect-ratio: 1 / 1; }
-.admin-mosaic-card--span-2 { grid-column: span 2; aspect-ratio: 2 / 1; }
-.admin-mosaic-card--span-3 { grid-column: span 3; aspect-ratio: 3 / 1; }
+.admin-mosaic-card--span-1 { grid-column: span 1; grid-row: span 1; aspect-ratio: 4 / 5; }
+.admin-mosaic-card--span-2 { grid-column: span 2; grid-row: span 2; aspect-ratio: 4 / 5; }
+.admin-mosaic-card--span-3 { grid-column: span 3; grid-row: span 3; aspect-ratio: 4 / 5; }
+
+// Variante paysage : la photo source est plus large que haute, on inverse
+// la logique "N×N" pour que le bloc s'étire en largeur plutôt qu'en hauteur.
+.admin-mosaic-card--span-2.admin-mosaic-card--landscape {
+  grid-column: span 2;
+  grid-row: span 1;
+  aspect-ratio: 8 / 5;
+  align-self: start;
+}
+
+.admin-mosaic-card--span-3.admin-mosaic-card--landscape {
+  grid-column: span 3;
+  grid-row: span 1;
+  aspect-ratio: 12 / 5;
+  align-self: start;
+}
 
 .admin-mosaic-photo {
   width: 100%;
@@ -137,5 +153,6 @@
 
   .admin-mosaic-card--span-3 {
     grid-column: span 2;
+    grid-row: span 2;
   }
 }

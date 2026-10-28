@@ -45,8 +45,8 @@ module Admin
           private
 
       def subcategory_params
-        # photos: [] retiré (géré par attach_photos) ; photos_attributes : édition alt_text + colspan
-        params.require(:subcategory).permit(:name, :description, photos_attributes: [:id, :alt_text, :colspan])
+        # photos: [] retiré (géré par attach_photos) ; photos_attributes : édition alt_text + colspan + title + description
+        params.require(:subcategory).permit(:name, :description, :status, :cover, photos_attributes: [:id, :alt_text, :colspan, :title, :description])
       end
 
       def uploaded_photo_files

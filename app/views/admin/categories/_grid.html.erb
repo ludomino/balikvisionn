@@ -22,6 +22,10 @@
         <div class="admin-category-card-name"><%= category.name %></div>
         <div class="admin-category-card-count">
           <%= pluralize(category.subcategories.size, "sous-catégorie", plural: "sous-catégories") %> · <%= pluralize(category.subcategories.sum { |s| s.photos.size }, "photo", plural: "photos") %>
+          <% draft_count = category.subcategories.draft.size %>
+          <% if draft_count > 0 %>
+            · <%= pluralize(draft_count, "brouillon", plural: "brouillons") %>
+          <% end %>
         </div>
       <% end %>
     </div>

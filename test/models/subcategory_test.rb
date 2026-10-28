@@ -34,4 +34,31 @@ class SubcategoryTest < ActiveSupport::TestCase
       @subcategory.update!(photos_attributes: [{ alt_text: "Sans id, doit être ignoré" }])
     end
   end
+
+  test "nouvelle sous-catégorie est en brouillon par défaut" do
+    assert @subcategory.draft?
+  end
+
+  test "peut passer en publié" do
+    @subcategory.published!
+    assert @subcategory.published?
+  end
+
+  test "missing_cover? is true when no cover is attached" do
+    assert @subcategory.missing_cover?
+  end
+
+  test "missing_cover? is false once a cover is attached" do
+    @subcategory.cover.attach(
+      io: File.open(Rails.root.join("test/fixtures/files/test_photo.png")),
+      filename: "test_photo.png",
+      content_type: "image/png"
+    )
+    assert_not @subcategory.missing_cover?
+  end
+
+  test "valid without a description" do
+    subcategory = Subcategory.new(name: "Test", category: @category)
+    assert subcategory.valid?
+  end
 end

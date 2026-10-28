@@ -219,34 +219,36 @@
 
 ## Axe 9 — Admin : brouillons, mise en avant, couverture de sous-catégorie
 
-*Ajouté le 2026-10-23*
+*Ajouté le 2026-10-23 — vu le 2026-10-28*
 
 **Fonctionnalités**
-- [ ] Migration `subcategories` : ajouter `status` (`draft`/`published`, défaut `draft`)
-- [ ] Migration `subcategories` : ajouter l'attachment `cover` (`has_one_attached :cover`)
-- [ ] Migration `photos` : ajouter `title` (string) — pas de colonne `featured` : voir le modèle `HomeFeature` en Axe 10
-- [ ] Formulaire sous-catégorie : champ « Image de couverture » (même pattern que `CategoryForm`)
-- [ ] Formulaire sous-catégorie : bouton « Enregistrer comme brouillon » à côté d'« Annuler »
-- [ ] Badge « Brouillon » sur le formulaire et sur la grille des sous-catégories (même pattern que le badge « Sans couverture » déjà en place)
-- [ ] Éditeur mosaïque : bouton ★ par photo — ajoute/retire la photo des favoris de la home (logique détaillée en Axe 10)
-- [ ] Éditeur mosaïque : champ « Titre » par photo, en plus de l'alt text existant
-- [ ] Migration `photos` : ajouter `rowspan` (cf. décision Roadmap V2 du 2026-09-17, réactivée ici) — chaque taille 1/2/3 devient un bloc N×N (`colspan` = `rowspan`), ce qui garde chaque tuile en ratio 4:5 exact (cf. principe transverse n°4), sans nécessiter de bascule paysage/portrait
-- [ ] Éditeur mosaïque : les boutons de taille 1/2/3 pilotent désormais `colspan` ET `rowspan` ensemble
-- [ ] Grille mosaïque : `grid-auto-flow: dense` pour que les blocs de tailles différentes se packent sans trou
-- [ ] Aperçus admin (couverture catégorie, couverture sous-catégorie, photo À propos) recadrés en 4:5 — remplace les dimensions actuelles (ex. 400×220, 400×130)
-- [ ] Tableau de bord : carte stat « Brouillons en cours »
-- [ ] Tableau de bord : section « Brouillons en cours » (liste + lien « Reprendre → »), à la place du bloc « derniers messages » omis en V1
+- [x] Migration `subcategories` : ajouter `status` (`draft`/`published`, défaut `draft`)
+- [x] Migration `subcategories` : ajouter l'attachment `cover` (`has_one_attached :cover`)
+- [x] Migration `photos` : ajouter `title` (string) — `description` (text) ajoutée aussi, non prévue initialement, pour l'affichage pleine page (Axe 8)
+- [x] Formulaire sous-catégorie : champ « Image de couverture » (même pattern que `CategoryForm`) — aperçu en direct dès le choix du fichier, étendu à `CategoryForm` et à la page À propos par cohérence
+- [x] Formulaire sous-catégorie : bouton « Enregistrer comme brouillon » à côté d'« Annuler »
+- [x] Badge « Brouillon » sur le formulaire et sur la grille des sous-catégories (même pattern que le badge « Sans couverture » déjà en place)
+- [ ] Éditeur mosaïque : bouton ★ par photo — reporté à l'Axe 10 (dépend du modèle `HomeFeature`)
+- [x] Éditeur mosaïque : champ « Titre » par photo, en plus de l'alt text existant
+- [x] ~~Migration `photos` : ajouter `rowspan`~~ — **implémenté différemment** : pas de colonne `rowspan`, le ratio 4:5 est obtenu uniquement en CSS (`grid-column`/`grid-row` dérivés de `colspan`). En revanche, migration `width`/`height` (integer) ajoutée, remplies via l'API Cloudinary (Active Storage ne peut pas analyser les images en local, vips/ImageMagick absents) — sert à détecter l'orientation de la photo source.
+- [x] Éditeur mosaïque : les boutons de taille 1/2/3 pilotent désormais la taille du bloc (largeur + hauteur en CSS, pas de colonne dédiée)
+- [x] Grille mosaïque : `grid-auto-flow: dense` déjà en place, confirmé fonctionnel après résolution du bug de cache CSS (voir note ci-dessous)
+- [x] **Ajout non prévu initialement** : bascule automatique paysage/portrait par tuile (`Photo#landscape?`), une photo paysage en taille 2/3 s'étire en largeur (ratio 8:5 / 12:5) Taille 1 reste toujours 4:5 quelle que soit l'orientation.
+- [x] Aperçus admin : couverture sous-catégorie (grille et formulaire) recadrés en 4:5 (ou carré pour la miniature 72×72 du formulaire, volontairement) ; mosaïque en 4:5/8:5/12:5 selon orientation
+- [ ] Aperçus admin : photo de la page À propos — pattern d'upload unifié, mais recadrage 4:5 pas encore appliqué (reporté avec Axe 8)
+- [ ] Tableau de bord : carte stat « Brouillons en cours » — non fait ; à la place, chaque carte catégorie affiche son propre nombre de brouillons (« · N brouillon(s) »)
+- [ ] Tableau de bord : section « Brouillons en cours » (liste + lien « Reprendre → »)
 - [ ] Tableau de bord : bouton « + Nouveau brouillon »
 
 **Tests**
-- [ ] Migration `status` : défaut `draft`, transition vers `published`
-- [ ] Sous-catégorie brouillon : exclue des routes publiques (redondant avec Axe 8, à vérifier côté modèle/scope)
-- [ ] Bouton ★ : ajoute/retire bien l'entrée `HomeFeature` associée (Axe 10)
-- [ ] `colspan`/`rowspan` : les trois tailles produisent bien un ratio 4:5 à l'affichage
-- [ ] Packing `grid-auto-flow: dense` : aucun trou visible avec un nombre impair de tuiles/tailles mélangées
+- [x] Migration `status` : défaut `draft`, transition vers `published`
+- [x] Sous-catégorie brouillon : exclue des routes publiques (filtre `.published` ajouté sur `CategoriesController#show`, bug réel trouvé en recette — le filtre n'existait pas du tout avant)
+- [ ] Bouton ★ : reporté à l'Axe 10
+- [x] Tailles 1/2/3 : ratio 4:5 (portrait) ou 8:5/12:5 (paysage) confirmés à l'affichage, vérifiés pixel par pixel via DevTools
+- [x] Packing `grid-auto-flow: dense` : trou résolu (`align-self: start` sur les tuiles paysage, qui ne s'étirent plus à la hauteur de leur ligne de grille partagée)
 
 **Accessibilité**
-- [ ] Alternative clavier au bouton ★ et au champ titre (déjà le cas pour le drag existant)
+- [ ] Alternative clavier au bouton ★ et au champ titre — ★ reporté à l'Axe 10 ; champ titre déjà un input standard
 - [ ] Badge brouillon annoncé correctement par les lecteurs d'écran (pas seulement une couleur)
 
 **Responsive**

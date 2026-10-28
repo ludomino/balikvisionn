@@ -131,7 +131,7 @@
 
 .admin-subcategory-card-cover {
   position: relative;
-  height: 130px;
+  aspect-ratio: 4 / 5;
   background: $bg-dark;
   display: flex;
   align-items: center;
@@ -150,6 +150,15 @@
     color: $text-muted;
     opacity: 0.4;
   }
+}
+
+.admin-subcategory-card-badges {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .admin-subcategory-card-icons {

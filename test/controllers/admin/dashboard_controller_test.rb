@@ -85,4 +85,24 @@ class Admin::DashboardControllerTest < ActionDispatch::IntegrationTest
 
     assert_select "option[value='#{new_admin_category_subcategory_path(category)}']", text: "Concerts"
   end
+
+  test "index displays the number of draft subcategories on each category card" do
+    category = Category.create!(name: "Concerts")
+    Subcategory.create!(name: "Boiler Room", description: "Session live", category: category)
+
+    sign_in_as @user
+    get admin_root_path
+
+    assert_select ".admin-category-card-count", text: /1 brouillon/
+  end
+
+  test "index does not display a draft count when all subcategories are published" do
+    category = Category.create!(name: "Concerts")
+    Subcategory.create!(name: "Boiler Room", description: "Session live", category: category, status: "published")
+
+    sign_in_as @user
+    get admin_root_path
+
+    assert_select ".admin-category-card-count", text: /brouillon/, count: 0
+  end
 end

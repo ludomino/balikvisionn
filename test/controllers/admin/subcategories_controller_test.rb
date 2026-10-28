@@ -38,6 +38,21 @@ class Admin::SubcategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Nouveau nom", @subcategory.name
   end
 
+  test "update saves the status of a subcategory" do
+    sign_in_as @user
+
+    patch admin_category_subcategory_path(@category, @subcategory), params: {
+      subcategory: {
+        name: @subcategory.name,
+        description: @subcategory.description,
+        status: "published"
+      }
+    }
+
+    assert_redirected_to admin_category_path(@category)
+    assert_equal "published", @subcategory.reload.status
+  end
+
   # Vérifie qu'un upload réel crée un Photo avec image attachée
   test "create attaches an uploaded photo to the new subcategory" do
     sign_in_as @user
@@ -54,6 +69,21 @@ class Admin::SubcategoriesControllerTest < ActionDispatch::IntegrationTest
 
     subcategory = Subcategory.last
     assert subcategory.photos.first.image.attached?
+  end
+
+  test "update attaches a cover to the subcategory" do
+    sign_in_as @user
+
+    patch admin_category_subcategory_path(@category, @subcategory), params: {
+      subcategory: {
+        name: @subcategory.name,
+        description: @subcategory.description,
+        cover: fixture_file_upload("test_photo.png", "image/png")
+      }
+    }
+
+    assert_redirected_to admin_category_path(@category)
+    assert @subcategory.reload.cover.attached?
   end
 
     # Un fichier invalide ne doit pas empêcher l'upload des autres
@@ -116,6 +146,14 @@ class Admin::SubcategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_select "input[name='subcategory[photos_attributes][0][alt_text]']"
   end
 
+  test "edit form displays a cover upload field" do
+    sign_in_as @user
+
+    get edit_admin_category_subcategory_path(@category, @subcategory)
+
+    assert_select "input[type='file'][name='subcategory[cover]']"
+  end
+
   test "edit form displays move up/down links for each existing photo" do
     sign_in_as @user
 
@@ -140,7 +178,22 @@ class Admin::SubcategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_equal 3, @photo.reload.colspan
   end
 
-    test "edit form displays a delete link for each existing photo" do
+  test "update saves title for an existing photo via nested attributes" do
+    sign_in_as @user
+
+    patch admin_category_subcategory_path(@category, @subcategory), params: {
+      subcategory: {
+        name: @subcategory.name,
+        description: @subcategory.description,
+        photos_attributes: { "0" => { id: @photo.id, title: "Set de clôture" } }
+      }
+    }
+
+    assert_redirected_to admin_category_path(@category)
+    assert_equal "Set de clôture", @photo.reload.title
+  end
+
+  test "edit form displays a delete link for each existing photo" do
     sign_in_as @user
 
     get edit_admin_category_subcategory_path(@category, @subcategory)
@@ -173,5 +226,55 @@ class Admin::SubcategoriesControllerTest < ActionDispatch::IntegrationTest
 
     assert_select "a.admin-mosaic-size-btn.is-active", text: "1"
     assert_select "a[href='#{colspan_admin_category_subcategory_photo_path(@category, @subcategory, @photo, colspan: 2)}']"
+  end
+
+  test "edit form displays separate publish and save-as-draft buttons" do
+    sign_in_as @user
+
+    get edit_admin_category_subcategory_path(@category, @subcategory)
+
+    assert_select "button[type='submit'][name='subcategory[status]'][value='published']", text: "Enregistrer"
+    assert_select "button[type='submit'][name='subcategory[status]'][value='draft']", text: "Brouillon"
+  end
+
+  test "edit form displays a draft badge when the subcategory is a draft" do
+    sign_in_as @user
+
+    get edit_admin_category_subcategory_path(@category, @subcategory)
+
+    assert_select ".admin-badge.admin-badge-warning", text: "Brouillon"
+  end
+
+  test "edit form does not display a draft badge when the subcategory is published" do
+    sign_in_as @user
+    @subcategory.update!(status: "published")
+
+    get edit_admin_category_subcategory_path(@category, @subcategory)
+
+    assert_select ".admin-badge.admin-badge-warning", text: "Brouillon", count: 0
+  end
+
+  test "update saves description for an existing photo via nested attributes" do
+    sign_in_as @user
+
+    patch admin_category_subcategory_path(@category, @subcategory), params: {
+      subcategory: {
+        name: @subcategory.name,
+        description: @subcategory.description,
+        photos_attributes: { "0" => { id: @photo.id, description: "Vue depuis la fosse" } }
+      }
+    }
+
+    assert_redirected_to admin_category_path(@category)
+    assert_equal "Vue depuis la fosse", @photo.reload.description
+  end
+
+  test "edit form displays a title and description field for each existing photo" do
+    sign_in_as @user
+
+    get edit_admin_category_subcategory_path(@category, @subcategory)
+
+    assert_select "input[name='subcategory[photos_attributes][0][title]']"
+    assert_select "textarea[name='subcategory[photos_attributes][0][description]']"
   end
 end
