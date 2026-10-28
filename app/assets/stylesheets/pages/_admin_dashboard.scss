@@ -151,6 +151,7 @@
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  text-align: center;
   cursor: pointer;
 
   &:hover {
@@ -164,13 +165,37 @@
     grid-template-columns: 1fr;
   }
 
+  .admin-stats-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .admin-stat-tile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+  }
+
+  .admin-stat-value {
+    font-size: 1.4em;
+    margin-bottom: 0;
+  }
+
+  .admin-stat-label {
+    font-size: 0.8em;
+    text-align: right;
+  }
+
   .admin-shortcuts-row {
     flex-direction: column;
     align-items: stretch;
   }
 
   .admin-shortcut-select {
+    display: block;
     width: 100%;
     box-sizing: border-box;
+    text-align: center;
   }
 }

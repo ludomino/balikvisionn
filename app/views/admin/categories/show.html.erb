@@ -29,12 +29,19 @@
   <% @subcategories.each do |subcategory| %>
     <div class="admin-subcategory-card">
       <div class="admin-subcategory-card-cover">
-        <% cover_photo = subcategory.photos.first %>
-        <% if cover_photo %>
-          <%= cloudinary_image_tag cover_photo.image, alt: "", width: 400, height: 130, crop: :fill %>
+        <% if subcategory.cover.attached? %>
+          <%= cloudinary_image_tag subcategory.cover, alt: "", width: 400, height: 500, crop: :fill, gravity: :auto %>
         <% else %>
           <span class="admin-subcategory-card-cover-empty">Aucune photo</span>
         <% end %>
+        <div class="admin-subcategory-card-badges">
+          <% if subcategory.missing_cover? %>
+            <span class="admin-badge admin-badge-warning">Sans couverture</span>
+          <% end %>
+          <% if subcategory.draft? %>
+            <span class="admin-badge admin-badge-warning">Brouillon</span>
+          <% end %>
+        </div>
         <div class="admin-subcategory-card-icons">
           <%= link_to raw('<i class="fa-regular fa-pen-to-square"></i>'), edit_admin_category_subcategory_path(@category, subcategory), class: "admin-icon-btn", title: "Modifier" %>
           <%= link_to raw('<i class="fa-solid fa-trash"></i>'), admin_category_subcategory_path(@category, subcategory), data: { turbo_method: :delete, turbo_confirm: "Confirmer la suppression ?" }, class: "admin-icon-btn", title: "Supprimer" %>

@@ -36,15 +36,15 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "subcategory description is rendered as text, not as a heading" do
-    subcategory = Subcategory.create!(name: "Portugal", description: "Été 2024", category: @category)
+    subcategory = Subcategory.create!(name: "Portugal", description: "Été 2024", category: @category, status: "published")
     get category_path(@category)
     assert_select "h3", count: 0
     assert_select "p", text: subcategory.description
   end
 
   test "affiche un lien d'ancre par sous-catégorie quand il y en a plusieurs" do
-    portugal = Subcategory.create!(name: "Portugal", description: "Été 2024", category: @category)
-    tokyo = Subcategory.create!(name: "Tokyo", description: "Hiver 2023", category: @category)
+    portugal = Subcategory.create!(name: "Portugal", description: "Été 2024", category: @category, status: "published")
+    tokyo = Subcategory.create!(name: "Tokyo", description: "Hiver 2023", category: @category, status: "published")
 
     get category_path(@category)
 
@@ -55,10 +55,25 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "masque la nav d'ancrage s'il n'y a qu'une seule sous-catégorie" do
-    Subcategory.create!(name: "Portugal", description: "Été 2024", category: @category)
-
+    Subcategory.create!(name: "Portugal", description: "Été 2024", category: @category, status: "published")
     get category_path(@category)
 
     assert_select "nav.subcategories-nav", count: 0
+  end
+
+  test "does not display draft subcategories publicly" do
+    Subcategory.create!(name: "Brouillon en cours", description: "Pas encore prêt", category: @category, status: "draft")
+
+    get category_path(@category)
+
+    assert_select "p", text: "Pas encore prêt", count: 0
+  end
+
+  test "displays published subcategories publicly" do
+    Subcategory.create!(name: "Prêt", description: "Visible", category: @category, status: "published")
+
+    get category_path(@category)
+
+    assert_select "p", text: "Visible"
   end
 end

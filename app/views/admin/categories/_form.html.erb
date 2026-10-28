@@ -20,19 +20,21 @@
       <%= f.input :name, label: "Nom de la catégorie", placeholder: "Ex. Concerts",
             input_html: { class: "field-input" }, wrapper_html: { class: "admin-form-field" }, label_html: { class: "admin-form-label" } %>
 
-      <div class="admin-form-field">
+      <div class="admin-form-field" data-controller="photo-preview" data-photo-preview-thumb-class-value="admin-form-cover-thumb">
         <span class="admin-form-label">Image de couverture</span>
         <div class="admin-form-avatar-row">
-          <% if @category.cover.attached? %>
-            <%= cloudinary_image_tag @category.cover, alt: "", width: 72, height: 72, crop: :fill, class: "admin-form-cover-thumb" %>
-          <% else %>
-            <span class="admin-form-cover-thumb admin-form-avatar-empty"></span>
-          <% end %>
+          <div data-photo-preview-target="list">
+            <% if @category.cover.attached? %>
+              <%= cloudinary_image_tag @category.cover, alt: "", width: 72, height: 72, crop: :fill, class: "admin-form-cover-thumb" %>
+            <% else %>
+              <span class="admin-form-cover-thumb admin-form-avatar-empty"></span>
+            <% end %>
+          </div>
 
           <div class="admin-form-cover-info">
-            <% if @category.cover.attached? %>
-              <span class="admin-form-cover-filename"><%= @category.cover.filename %></span>
-            <% end %>
+            <span class="admin-form-cover-filename" data-photo-preview-target="name">
+              <%= @category.cover.filename if @category.cover.attached? %>
+            </span>
             <label for="category_cover" class="admin-form-cover-replace-link">
               <%= @category.cover.attached? ? "Remplacer l'image" : "Choisir une image" %>
             </label>
@@ -40,9 +42,9 @@
         </div>
 
         <%= f.input :cover, as: :file, label: false, wrapper: false,
-              input_html: { id: "category_cover", class: "admin-visually-hidden-input" } %>
+              input_html: { id: "category_cover", class: "admin-visually-hidden-input",
+                            data: { photo_preview_target: "input", action: "change->photo-preview#show" } } %>
       </div>
-
       <div class="admin-form-actions">
         <%= f.submit(@category.persisted? ? "Enregistrer" : "Créer la catégorie", class: "btn-admin-accent") %>
         <%= link_to "Annuler", @category.persisted? ? admin_category_path(@category) : admin_root_path, class: "btn-admin-outline" %>

@@ -5,6 +5,7 @@ module ImagesHelper
     return unless attachment.attached?
 
     html_options = { alt: alt, loading: "lazy" }
+    html_options[:class] = options.delete(:class) if options.key?(:class)
     html_options.merge!(draggable: false, oncontextmenu: "return false;") if protected
 
     image_tag attachment.url(quality: :auto, fetch_format: :auto, **options), **html_options

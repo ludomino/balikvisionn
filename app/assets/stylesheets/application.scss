@@ -20,6 +20,7 @@
 
 html {
   background-color: $bg-dark;
+  overflow-x: hidden;
 }
 
 * {
@@ -28,11 +29,12 @@ html {
 
 body {
   max-width: 1400px;
-  margin: 0 auto; // Avant : body centré dans un html tout aussi étroit, donc aucun effet / Après : body est la seule boîte plafonnée, elle se centre vraiment dans la fenêtre
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   min-height: 100dvh;
+  overflow-x: hidden; // même filet côté body (certains navigateurs regardent l'un ou l'autre selon le contexte)
   font-family: $body-font;
   background-color: $bg-dark;
   color: $text-light;
@@ -79,7 +81,6 @@ header {
   min-height: $header-height;
   display: flex;
   align-items: center;
-  margin-top: 20px;
 }
 
 a:hover {
