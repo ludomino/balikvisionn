@@ -42,17 +42,23 @@
 }
 
 .admin-mosaic-overlay-top-left,
-.admin-mosaic-overlay-top-right {
+.admin-mosaic-overlay-top-right,
+.admin-mosaic-overlay-bottom-right {
   position: absolute;
-  top: 8px;
   display: flex;
   align-items: center;
   gap: 4px;
   flex-wrap: nowrap;
 }
 
+.admin-mosaic-overlay-top-left,
+.admin-mosaic-overlay-top-right {
+  top: 8px;
+}
+
 .admin-mosaic-overlay-top-left { left: 8px; }
 .admin-mosaic-overlay-top-right { right: 8px; }
+.admin-mosaic-overlay-bottom-right { bottom: 8px; right: 8px; }
 
 .admin-mosaic-handle,
 .admin-mosaic-icon-btn {
@@ -130,7 +136,8 @@
   }
 
   .admin-mosaic-overlay-top-left,
-  .admin-mosaic-overlay-top-right {
+  .admin-mosaic-overlay-top-right,
+  .admin-mosaic-overlay-bottom-right {
     gap: 1px;
   }
 

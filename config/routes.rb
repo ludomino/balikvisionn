@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
 
-  root to: "categories#index"
+  root to: "home#index"
   resources :categories, only: [:index, :show]
 
   get "about", to: "about#show"
@@ -14,15 +14,26 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: "dashboard#index"
     resource :about_page, only: [:edit, :update]
+
+    resources :home_features, only: [:index, :destroy] do
+      collection do
+        patch :reorder
+      end
+      member do
+        patch :colspan
+      end
+    end
+
     resources :categories do
+      resource :home_feature, only: [:create, :destroy]
       resources :subcategories do
+        resource :home_feature, only: [:create, :destroy]
         resources :photos, only: [:destroy] do
+          resource :home_feature, only: [:create, :destroy]
           collection do
             patch :reorder
           end
           member do
-            patch :move_higher
-            patch :move_lower
             patch :colspan
           end
         end

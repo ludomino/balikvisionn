@@ -10,6 +10,7 @@
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
+@import "pages/home";
 @import "components/show";
 @import "pages/show";
 @import "pages/about";
@@ -17,6 +18,7 @@
 @import "pages/admin_dashboard";
 @import "pages/admin_form";
 @import "pages/admin_photo_editor";
+@import "pages/admin_home_features";
 
 html {
   background-color: $bg-dark;

@@ -89,14 +89,9 @@
           <%= f.simple_fields_for :photos, @subcategory.photos do |photo_f| %>
             <% photo = photo_f.object %>
             <div class="admin-mosaic-card admin-mosaic-card--span-<%= photo.colspan %><%= ' admin-mosaic-card--landscape' if photo.colspan > 1 && photo.landscape? %>" data-id="<%= photo.id %>" data-controller="mosaic-card">
-            <%= cloudinary_image_tag photo.image, alt: photo.alt_text.presence || @subcategory.name, width: 600, aspect_ratio: photo.mosaic_crop_ratio, crop: :fill, gravity: :auto, class: "admin-mosaic-photo" %>
+            <%= cloudinary_image_tag photo.image, alt: photo.alt_text.presence || @subcategory.name, width: 600, aspect_ratio: photo.mosaic_crop_ratio(photo.colspan), crop: :fill, gravity: :auto, class: "admin-mosaic-photo" %>
               <div class="admin-mosaic-overlay-top-left">
                 <span class="admin-mosaic-handle" title="Glisser pour réordonner"><i class="fa-solid fa-grip-vertical"></i></span>
-                <%= link_to raw('<i class="fa-solid fa-arrow-up"></i>'), move_higher_admin_category_subcategory_photo_path(@category, @subcategory, photo), data: { turbo_method: :patch }, class: "admin-mosaic-icon-btn", title: "Monter" %>
-                <%= link_to raw('<i class="fa-solid fa-arrow-down"></i>'), move_lower_admin_category_subcategory_photo_path(@category, @subcategory, photo), data: { turbo_method: :patch }, class: "admin-mosaic-icon-btn", title: "Descendre" %>
-              </div>
-
-              <div class="admin-mosaic-overlay-top-right">
                 <div class="admin-mosaic-sizes">
                   <% [1, 2, 3].each do |size| %>
                     <%= link_to size, colspan_admin_category_subcategory_photo_path(@category, @subcategory, photo, colspan: size),
@@ -104,6 +99,15 @@
                           class: "admin-mosaic-size-btn#{' is-active' if photo.colspan == size}" %>
                   <% end %>
                 </div>
+              </div>
+              <div class="admin-mosaic-overlay-top-right">
+                <% if photo.home_feature.present? %>
+                  <%= link_to raw('<i class="fa-solid fa-star"></i>'), admin_category_subcategory_photo_home_feature_path(@category, @subcategory, photo), data: { turbo_method: :delete }, class: "admin-mosaic-icon-btn", title: "Retirer des favoris à la une" %>
+                <% else %>
+                  <%= link_to raw('<i class="fa-regular fa-star"></i>'), admin_category_subcategory_photo_home_feature_path(@category, @subcategory, photo), data: { turbo_method: :post }, class: "admin-mosaic-icon-btn", title: "Ajouter aux favoris à la une" %>
+                <% end %>
+              </div>
+              <div class="admin-mosaic-overlay-bottom-right">
                 <%= button_tag type: "button", class: "admin-mosaic-icon-btn", title: "Titre, description & texte alternatif", data: { action: "mosaic-card#toggleAlt" } do %>
                   <i class="fa-solid fa-pen"></i>
                 <% end %>

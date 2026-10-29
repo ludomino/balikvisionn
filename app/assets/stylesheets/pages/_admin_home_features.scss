@@ -1,0 +1,32 @@
+// Écran admin « Favoris de la home » — réutilise les classes .admin-mosaic-*
+// de l'éditeur mosaïque ; seule la légende (type + nom) est spécifique ici.
+.admin-home-features-page {
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+.admin-home-feature-caption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.admin-home-features-page .admin-mosaic-overlay-bottom {
+  padding: 14px;
+}
+
+.admin-mosaic-caption {
+  font-size: 0.8em;
+  color: $text-light;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-badge-type {
+  background: rgba(255, 255, 255, 0.08);
+  color: $text-muted;
+  border: 1px solid $border;
+  flex: 0 0 auto;
+}

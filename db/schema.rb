@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_26_182245) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_29_105605) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -50,8 +50,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_26_182245) do
 
   create_table "categories", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.integer "height"
     t.string "name"
     t.datetime "updated_at", null: false
+    t.integer "width"
+  end
+
+  create_table "home_features", force: :cascade do |t|
+    t.integer "colspan", default: 1, null: false
+    t.datetime "created_at", null: false
+    t.bigint "featurable_id", null: false
+    t.string "featurable_type", null: false
+    t.integer "position", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.index ["featurable_type", "featurable_id"], name: "index_home_features_on_featurable", unique: true
+    t.index ["position"], name: "index_home_features_on_position"
   end
 
   create_table "photos", force: :cascade do |t|
@@ -82,9 +95,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_26_182245) do
     t.bigint "category_id", null: false
     t.datetime "created_at", null: false
     t.text "description"
+    t.integer "height"
     t.string "name"
     t.string "status", default: "draft", null: false
     t.datetime "updated_at", null: false
+    t.integer "width"
     t.index ["category_id"], name: "index_subcategories_on_category_id"
   end
 

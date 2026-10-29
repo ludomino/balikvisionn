@@ -4,6 +4,7 @@ class Subcategory < ApplicationRecord
   # Avant : has_many_attached :photos (pas de métadonnée par photo)
   # Après : vrais enregistrements Photo, triés, supprimés en cascade
   has_many :photos, -> { order(:position) }, dependent: :destroy
+  has_one :home_feature, as: :featurable, dependent: :destroy
 
   enum :status, { draft: "draft", published: "published" }, default: :draft
 
@@ -14,6 +15,9 @@ class Subcategory < ApplicationRecord
   validates :name, presence: true
   # validates :description, presence: true
   has_one_attached :cover
+
+  include OrientationTrackable
+  tracks_orientation_via :cover, refresh: true
 
   def missing_cover?
     !cover.attached?
