@@ -1,19 +1,10 @@
 module Admin
   class PhotosController < Admin::BaseController
     before_action :set_subcategory
-    before_action :set_photo, only: [:move_higher, :move_lower, :destroy, :colspan]
-
-    def move_higher
-      @photo.move_higher
-      redirect_to edit_admin_category_subcategory_path(@subcategory.category, @subcategory)
-    end
+    before_action :set_photo, only: [:destroy, :colspan]
 
     def colspan
       @photo.update(colspan: params[:colspan])
-      redirect_to edit_admin_category_subcategory_path(@subcategory.category, @subcategory)
-    end
-    def move_lower
-      @photo.move_lower
       redirect_to edit_admin_category_subcategory_path(@subcategory.category, @subcategory)
     end
 

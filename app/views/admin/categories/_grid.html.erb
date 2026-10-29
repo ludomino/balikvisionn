@@ -14,6 +14,11 @@
       <% end %>
 
       <div class="admin-category-card-icons">
+        <% if category.home_feature.present? %>
+          <%= link_to raw('<i class="fa-solid fa-star"></i>'), admin_category_home_feature_path(category), data: { turbo_method: :delete }, class: "admin-icon-btn", title: "Retirer des favoris à la une" %>
+        <% else %>
+          <%= link_to raw('<i class="fa-regular fa-star"></i>'), admin_category_home_feature_path(category), data: { turbo_method: :post }, class: "admin-icon-btn", title: "Ajouter aux favoris à la une" %>
+        <% end %>
         <%= link_to raw('<i class="fa-regular fa-pen-to-square"></i>'), edit_admin_category_path(category), class: "admin-icon-btn", title: "Modifier" %>
         <%= link_to raw('<i class="fa-solid fa-trash"></i>'), admin_category_path(category), data: { turbo_method: :delete, turbo_confirm: "Confirmer la suppression ?" }, class: "admin-icon-btn", title: "Supprimer" %>
       </div>

@@ -1,0 +1,25 @@
+<% content_for :title, "Balikvision Photographie — Portfolio" %>
+<% content_for :meta_description, "Portfolio photographique de Balikvision : parcourez la sélection du moment." %>
+<% cover_feature = @home_features.find { |hf| hf.cover_attachment.attached? } %>
+<% content_for :og_image, cover_feature.cover_attachment.url(quality: :auto, fetch_format: :auto) if cover_feature %>
+
+<section class="home-features">
+  <h1 class="visually-hidden">Portfolio photographies — sélection</h1>
+
+  <% if @home_features.any? %>
+    <div class="home-features-grid">
+      <% @home_features.each do |home_feature| %>
+        <%= link_to home_feature_public_path(home_feature),
+              class: "home-feature-tile home-feature-tile--span-#{home_feature.colspan}" do %>
+          <% if home_feature.cover_attachment.attached? %>
+            <%= cloudinary_image_tag home_feature.cover_attachment, alt: home_feature.label,
+                  width: home_feature.colspan * 500, aspect_ratio: "4:5", crop: :fill, gravity: :auto, protected: true %>
+          <% end %>
+          <span class="home-feature-tile-label"><%= home_feature.label %></span>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="home-features-empty">Aucune sélection pour le moment.</p>
+  <% end %>
+</section>

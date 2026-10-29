@@ -228,7 +228,7 @@
 - [x] Formulaire sous-catégorie : champ « Image de couverture » (même pattern que `CategoryForm`) — aperçu en direct dès le choix du fichier, étendu à `CategoryForm` et à la page À propos par cohérence
 - [x] Formulaire sous-catégorie : bouton « Enregistrer comme brouillon » à côté d'« Annuler »
 - [x] Badge « Brouillon » sur le formulaire et sur la grille des sous-catégories (même pattern que le badge « Sans couverture » déjà en place)
-- [ ] Éditeur mosaïque : bouton ★ par photo — reporté à l'Axe 10 (dépend du modèle `HomeFeature`)
+- [x] Éditeur mosaïque : bouton ★ par photo — fait avec l'Axe 10
 - [x] Éditeur mosaïque : champ « Titre » par photo, en plus de l'alt text existant
 - [x] ~~Migration `photos` : ajouter `rowspan`~~ — **implémenté différemment** : pas de colonne `rowspan`, le ratio 4:5 est obtenu uniquement en CSS (`grid-column`/`grid-row` dérivés de `colspan`). En revanche, migration `width`/`height` (integer) ajoutée, remplies via l'API Cloudinary (Active Storage ne peut pas analyser les images en local, vips/ImageMagick absents) — sert à détecter l'orientation de la photo source.
 - [x] Éditeur mosaïque : les boutons de taille 1/2/3 pilotent désormais la taille du bloc (largeur + hauteur en CSS, pas de colonne dédiée)
@@ -243,12 +243,12 @@
 **Tests**
 - [x] Migration `status` : défaut `draft`, transition vers `published`
 - [x] Sous-catégorie brouillon : exclue des routes publiques (filtre `.published` ajouté sur `CategoriesController#show`, bug réel trouvé en recette — le filtre n'existait pas du tout avant)
-- [ ] Bouton ★ : reporté à l'Axe 10
+- [x] Bouton ★ : couvert par les tests `Admin::HomeFeaturesController` (création/suppression depuis catégorie, sous-catégorie et photo)
 - [x] Tailles 1/2/3 : ratio 4:5 (portrait) ou 8:5/12:5 (paysage) confirmés à l'affichage, vérifiés pixel par pixel via DevTools
 - [x] Packing `grid-auto-flow: dense` : trou résolu (`align-self: start` sur les tuiles paysage, qui ne s'étirent plus à la hauteur de leur ligne de grille partagée)
 
 **Accessibilité**
-- [ ] Alternative clavier au bouton ★ et au champ titre — ★ reporté à l'Axe 10 ; champ titre déjà un input standard
+- [x] Alternative clavier au bouton ★ : c'est un lien standard (`link_to`), focusable et activable au clavier (Tab + Entrée) comme n'importe quel lien — champ titre déjà un input standard
 - [ ] Badge brouillon annoncé correctement par les lecteurs d'écran (pas seulement une couleur)
 
 **Responsive**
@@ -257,29 +257,32 @@
 
 ---
 
-## Axe 10 — Page d'accueil : sélection de favoris (catégories & photos)
+## Axe 10 — Page d'accueil : sélection de favoris (catégories, sous-catégories & photos)
 
-*Ajouté le 2026-10-23 — remplace la home « grille des 6 catégories » par une sélection curée en admin.*
+*Ajouté le 2026-10-23 — vu le 2026-10-29*
 
 **Fonctionnalités**
-- [ ] Nouveau modèle `HomeFeature` : association polymorphe `featurable` (`Category` ou `Photo`), colonne `position` pour l'ordre d'affichage
-- [ ] Migration associée + validations (unicité par `featurable`, présence de `position`)
-- [ ] `dependent: :destroy` (ou vérification à l'affichage) pour qu'une catégorie/photo supprimée retire automatiquement son favori
-- [ ] Sur la grille des catégories (admin) : bouton ★ pour ajouter/retirer une catégorie des favoris de la home — construit directement en code, sans maquette dédiée (décision du 2026-10-23)
-- [ ] Nouvel écran admin « Favoris de la home » : liste ordonnable (glisser-déposer, même pattern que l'éditeur mosaïque) mêlant catégories et photos sélectionnées, avec aperçu et retrait — construit directement en code, sans maquette dédiée
-- [ ] Tableau de bord : raccourci vers cet écran
-- [ ] Page d'accueil : grille affichant les `HomeFeature` dans l'ordre défini, chaque tuile en ratio 4:5
-- [ ] Lien de chaque tuile : `category_path` si `featurable_type == "Category"`, sinon route de la sous-catégorie parente de la photo (`featurable.subcategory`)
+- [x] Nouveau modèle `HomeFeature` : association polymorphe `featurable` — **étendue à 3 types** (`Category`, `Subcategory` et `Photo`, et non seulement `Category`/`Photo` comme prévu initialement, à la demande explicite), colonne `position` pour l'ordre d'affichage
+- [x] Migration associée + validations — unicité par `featurable` (scope `featurable_type`), `position` auto-assignée à la création (`before_validation`) plutôt qu'une simple présence ; **ajout non prévu** : `colspan` (1/2/3) pour piloter la taille d'affichage, même logique que l'éditeur mosaïque
+- [x] `dependent: :destroy` sur `Category`, `Subcategory` et `Photo` : la suppression retire automatiquement le favori associé
+- [x] Sur la grille des catégories (admin) : bouton ★
+- [x] **Ajout non prévu initialement** : bouton ★ aussi sur les cards de sous-catégories et sur chaque photo de l'éditeur mosaïque (ce dernier point reporté depuis l'Axe 9, implémenté ici)
+- [x] Nouvel écran admin « Favoris de la home » : liste ordonnable en glisser-déposer — **réutilise les classes `.admin-mosaic-*` de l'éditeur mosaïque** plutôt qu'une liste ad hoc : mêmes boutons de taille 1/2/3, aperçu recadré selon l'orientation (paysage/portrait), légende (type + nom), compteur de favoris et lien de retour au tableau de bord
+- [x] Tableau de bord : raccourci « ★ Favoris de la home »
+- [x] Page d'accueil : grille affichant les `HomeFeature` dans l'ordre défini, chaque tuile en ratio 4:5 (pas de bascule paysage/portrait ici, contrairement à l'admin — toutes les tuiles restent en 4:5) — **servie par un nouveau `HomeController#index`** plutôt que `CategoriesController#index`, pour un nommage cohérent avec `AboutController`/`ContactsController` ; `categories#index` (grille de toutes les catégories) est conservée comme page séparée à `/categories`, pas encore liée depuis la nav — décision du 2026-10-29
+- [x] Lien de chaque tuile : `category_path` pour une `Category` ou une `Subcategory` (vers sa catégorie parente, en l'absence de page sous-catégorie dédiée côté public — Axe 8), route de la catégorie parente de la sous-catégorie de la photo pour un `Photo`
 
 **Tests**
-- [ ] Création/suppression d'un `HomeFeature` depuis une catégorie et depuis une photo
-- [ ] Réordonnancement persisté en base
-- [ ] Rendu de la home : lien catégorie vs lien sous-catégorie selon le type
-- [ ] Suppression d'une catégorie/sous-catégorie favorite : le favori disparaît proprement de la home
+- [x] Création/suppression d'un `HomeFeature` depuis une catégorie, une sous-catégorie et une photo
+- [x] Réordonnancement persisté en base
+- [x] Rendu de la home : lien catégorie vs lien sous-catégorie selon le type (`HomeControllerTest`)
+- [x] Suppression d'une catégorie/sous-catégorie/photo favorite : le favori disparaît proprement (`dependent: :destroy`)
 
 **Accessibilité**
-- [ ] Alternative clavier au glisser-déposer de l'écran « Favoris de la home » (même pattern que l'éditeur mosaïque : monter/descendre)
+- [ ] Alternative clavier au glisser-déposer de l'écran « Favoris de la home ». La mention d'origine (« même pattern que l'éditeur mosaïque : monter/descendre ») n'est plus valable : ces boutons monter/descendre ont été retirés de l'éditeur mosaïque ce sprint (repositionnement des icônes) — à redéfinir entièrement
 
+**Responsive**
+- [ ] Pas vérifié ce sprint
 
 ---
 

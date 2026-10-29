@@ -1,9 +1,9 @@
 import { Controller } from "@hotwired/stimulus"
 import Sortable from "sortablejs"
 
-// Glisser-déposer pour réordonner les photos ; persiste via reorder (PATCH)
+// Glisser-déposer générique pour réordonner une liste ; persiste via une requête PATCH
 export default class extends Controller {
-  static values = { url: String, handle: String }
+  static values = { url: String, handle: String, idsParam: { type: String, default: "photo_ids" } }
 
   connect() {
     this.sortable = Sortable.create(this.element, {
@@ -19,7 +19,7 @@ export default class extends Controller {
   }
 
   persistOrder() {
-    const photoIds = Array.from(this.element.children).map((el) => el.dataset.id)
+    const ids = Array.from(this.element.children).map((el) => el.dataset.id)
 
     fetch(this.urlValue, {
       method: "PATCH",
@@ -27,7 +27,7 @@ export default class extends Controller {
         "Content-Type": "application/json",
         "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
       },
-      body: JSON.stringify({ photo_ids: photoIds })
+      body: JSON.stringify({ [this.idsParamValue]: ids })
     })
   }
 }

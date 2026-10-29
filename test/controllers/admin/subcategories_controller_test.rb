@@ -154,15 +154,6 @@ class Admin::SubcategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_select "input[type='file'][name='subcategory[cover]']"
   end
 
-  test "edit form displays move up/down links for each existing photo" do
-    sign_in_as @user
-
-    get edit_admin_category_subcategory_path(@category, @subcategory)
-
-    assert_select "a[href='#{move_higher_admin_category_subcategory_photo_path(@category, @subcategory, @photo)}']"
-    assert_select "a[href='#{move_lower_admin_category_subcategory_photo_path(@category, @subcategory, @photo)}']"
-  end
-
   test "update saves colspan for an existing photo via nested attributes" do
     sign_in_as @user
 

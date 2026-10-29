@@ -61,4 +61,19 @@ class SubcategoryTest < ActiveSupport::TestCase
     subcategory = Subcategory.new(name: "Test", category: @category)
     assert subcategory.valid?
   end
+
+  test "landscape? is true when width is greater than height" do
+    @subcategory.update_columns(width: 2000, height: 1000)
+    assert @subcategory.landscape?
+  end
+
+  test "mosaic_crop_ratio stays 4:5 for colspan 1 even when landscape" do
+    @subcategory.update_columns(width: 2000, height: 1000)
+    assert_equal "4:5", @subcategory.mosaic_crop_ratio(1)
+  end
+
+  test "mosaic_crop_ratio returns 8:5 for colspan 2 when landscape" do
+    @subcategory.update_columns(width: 2000, height: 1000)
+    assert_equal "8:5", @subcategory.mosaic_crop_ratio(2)
+  end
 end
