@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Avant : aucune vue plein écran / Après : ouverture, navigation clavier + flèches, focus piégé pour l'a11y
 export default class extends Controller {
-  static targets = ["overlay", "image"]
+  static targets = ["overlay", "image", "photo", "caption", "title", "description", "counter"]
   static values = { photos: Array, index: Number }
 
   get focusableElements() {
@@ -39,6 +39,18 @@ export default class extends Controller {
     const photo = this.photosValue[this.indexValue]
     this.imageTarget.src = photo.url
     this.imageTarget.alt = photo.alt
+    this.photoTarget.classList.toggle("is-landscape", Boolean(photo.landscape))
+
+    const hasTitle = Boolean(photo.title)
+    const hasDescription = Boolean(photo.description)
+
+    this.titleTarget.textContent = photo.title || ""
+    this.titleTarget.hidden = !hasTitle
+    this.descriptionTarget.textContent = photo.description || ""
+    this.descriptionTarget.hidden = !hasDescription
+    this.captionTarget.hidden = !hasTitle && !hasDescription
+
+    this.counterTarget.textContent = `${this.indexValue + 1} / ${this.photosValue.length}`
   }
 
   // Avant : Tab pouvait sortir de la modale / Après : Tab boucle entre les boutons de l'overlay, Shift+Tab dans l'autre sens

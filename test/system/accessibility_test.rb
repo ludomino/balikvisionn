@@ -6,7 +6,7 @@ class AccessibilityTest < ApplicationSystemTestCase
   setup do
     @user = users(:one)
     @category = Category.create!(name: "Concerts")
-    @subcategory = Subcategory.create!(name: "Jimmy Set", description: "Concert du 12 mars", category: @category)
+    @subcategory = Subcategory.create!(name: "Jimmy Set", description: "Concert du 12 mars", category: @category, status: "published")
     photo = @subcategory.photos.build(alt_text: "Photo test", colspan: 1)
     photo.image.attach(
       io: File.open(Rails.root.join("test/fixtures/files/test_photo.png")),

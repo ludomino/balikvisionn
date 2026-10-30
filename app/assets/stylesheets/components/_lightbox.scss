@@ -9,12 +9,61 @@
 
   &.is-open { display: flex; }
 
-  img {
-    max-width: 90vw;
-    max-height: 90vh;
-    object-fit: contain;
-    user-select: none;
-    -webkit-touch-callout: none;
+  .lightbox-photo {
+    position: relative;
+    display: flex;
+
+    img {
+      height: 85vh;
+      aspect-ratio: 4 / 5;
+      max-width: 90vw;
+      object-fit: cover;
+      display: block;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    // Paysage : pas de ratio forcé, la photo entière reste visible (object-fit: contain)
+    &.is-landscape img {
+      aspect-ratio: auto;
+      width: auto;
+      height: auto;
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+    }
+  }
+
+  .lightbox-caption {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 16px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+  }
+
+  .lightbox-caption-title {
+    color: white;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+
+  .lightbox-caption-description {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.9em;
+  }
+
+  .lightbox-counter {
+    position: absolute;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 0.9em;
+    letter-spacing: 0.05em;
   }
 
   button {

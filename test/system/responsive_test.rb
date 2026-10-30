@@ -6,7 +6,7 @@ class ResponsiveTest < ApplicationSystemTestCase
   end
 
   test "la grille de catégories est côte à côte en desktop et empilée sous 640px" do
-    visit root_path
+    visit categories_path
 
     page.driver.browser.manage.window.resize_to(1400, 900)
     cards = all(".card-category")
@@ -23,7 +23,7 @@ class ResponsiveTest < ApplicationSystemTestCase
 
   test "le libellé de catégorie reste visible sans survol possible (tactile)" do
     Capybara.using_driver(:selenium_chrome_mobile) do
-      visit root_path
+      visit categories_path
       opacity = page.evaluate_script(
         "getComputedStyle(document.querySelector('.card-category-text')).opacity"
       )

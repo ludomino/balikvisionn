@@ -25,7 +25,7 @@
     <div class="subcategory"
          id="subcategory-<%= subcategory.id %>"
          data-controller="lightbox"
-         data-lightbox-photos-value="<%= subcategory.photos.map { |p| { url: photo_lightbox_url(p), alt: p.alt_text.presence || subcategory.name } }.to_json %>">
+         data-lightbox-photos-value="<%= subcategory.photos.map { |p| { url: photo_lightbox_url(p), alt: p.alt_text.presence || subcategory.name, title: p.title, description: p.description, landscape: p.landscape? } }.to_json %>">
       <div class="subinfos">
         <h2><%= subcategory.name %></h2>
         <p><%= subcategory.description %></p>

@@ -15,7 +15,7 @@
 1. **TDD strict** : chaque fonctionnalité (ou correctif) s'accompagne de son test écrit *au moment* où elle est développée — jamais reporté à la fin. Pour un bug, le test qui le reproduit s'écrit avant le correctif.
 2. **Accessibilité (a11y)** : sémantique HTML stricte, ARIA, alt text sur toutes les photos, navigation clavier complète.
 3. **Protection des images** : mesures dissuasives (anti clic-droit, anti-glisser, anti-hotlink) — à noter : aucune de ces mesures n'est infranchissable pour un utilisateur déterminé (devtools, capture d'écran) ; un filigrane Cloudinary reste la seule protection réellement robuste si nécessaire.
-4. **Ratio 4:5 sur toute photo affichée** (ajouté le 2026-10-23) : aucune photo du site, publique ou admin, n'est présentée hors de son ratio natif 4:5 — `aspect-ratio: 4/5` + `object-fit: cover` partout (cards, couvertures, mosaïque, lightbox, aperçus admin), sans recadrage carré ni paysage.
+4. **Ratio 4:5 sur toute photo portrait affichée** (ajouté le 2026-10-23, affiné le 2026-10-30) : une photo portrait n'est jamais présentée hors de son ratio natif 4:5 — `aspect-ratio: 4/5` + `object-fit: cover` (cards, couvertures, mosaïque, lightbox, aperçus admin). Une photo paysage bascule vers un affichage adapté à son orientation plutôt que d'être forcée en 4:5 : tuile élargie en mosaïque (8:5/12:5), affichage sans recadrage dans la lightbox.
 
 ---
 
