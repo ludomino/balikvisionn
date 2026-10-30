@@ -73,6 +73,12 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_select ".accueil-photos a[href='#{category_path(draft)}']", count: 0
   end
 
+  test "sidebar does not list draft categories" do
+    Category.create!(name: "Brouillon", status: "draft")
+    get categories_path
+    assert_select ".sidebar-category-title", text: "Brouillon", count: 0
+  end
+
   test "show renders a 404 for a draft category accessed directly" do
     draft = Category.create!(name: "Brouillon", status: "draft")
     get category_path(draft)
