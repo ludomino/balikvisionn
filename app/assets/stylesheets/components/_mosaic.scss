@@ -6,7 +6,6 @@
 
   .mosaic-photo {
     overflow: hidden;
-    border-radius: 4px;
     cursor: pointer;
 
     img {
@@ -15,11 +14,35 @@
       object-fit: cover;
       display: block;
       user-select: none;
-      -webkit-touch-callout: none; // bloque "Enregistrer l'image" en appui long (iOS Safari)
+      -webkit-touch-callout: none;
     }
   }
 
-  .mosaic-photo--span-1 { grid-column: span 1; aspect-ratio: 1 / 1; }
-  .mosaic-photo--span-2 { grid-column: span 2; aspect-ratio: 2 / 1; }
-  .mosaic-photo--span-3 { grid-column: span 3; aspect-ratio: 3 / 1; }
+  .mosaic-photo--span-1 { grid-column: span 1; grid-row: span 1; aspect-ratio: 4 / 5; }
+  .mosaic-photo--span-2 { grid-column: span 2; grid-row: span 2; aspect-ratio: 4 / 5; }
+  .mosaic-photo--span-3 { grid-column: span 3; grid-row: span 3; aspect-ratio: 4 / 5; }
+
+  // Paysage : la tuile s'étire en largeur plutôt qu'en hauteur (même logique que l'éditeur mosaïque admin)
+  .mosaic-photo--span-2.mosaic-photo--landscape {
+    grid-column: span 2;
+    grid-row: span 1;
+    aspect-ratio: 8 / 5;
+    align-self: start;
+  }
+
+  .mosaic-photo--span-3.mosaic-photo--landscape {
+    grid-column: span 3;
+    grid-row: span 1;
+    aspect-ratio: 12 / 5;
+    align-self: start;
+  }
+
+  @media screen and (max-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+
+    .mosaic-photo--span-3 {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+  }
 }

@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
 
   root to: "home#index"
-  resources :categories, only: [:index, :show]
+  resources :categories, only: [:index, :show] do
+    resources :subcategories, only: [:show]
+  end
 
   get "about", to: "about#show"
 

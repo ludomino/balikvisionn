@@ -12,7 +12,7 @@ class ImageProtectionTest < ApplicationSystemTestCase
     )
     photo.save!
 
-    visit category_path(category)
+    visit category_subcategory_path(category, subcategory)
     img = find(".mosaic-photo img")
 
     assert_equal "false", img["draggable"]

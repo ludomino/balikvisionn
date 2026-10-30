@@ -17,7 +17,7 @@ class AccessibilityTest < ApplicationSystemTestCase
   end
 
   test "aucune violation axe-core critique/sérieuse sur les pages publiques" do
-    { "Accueil" => root_path, "Page catégorie" => category_path(@category), "À propos" => about_path }.each do |name, path|
+    { "Accueil" => root_path, "Page catégorie" => category_path(@category), "Page sous-catégorie" => category_subcategory_path(@category, @subcategory), "À propos" => about_path }.each do |name, path|
       visit path
       assert_no_axe_violations(name)
     end

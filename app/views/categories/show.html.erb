@@ -1,46 +1,27 @@
 <% content_for :title, "#{@category.name} — Balikvision Photographie" %>
-<% content_for :meta_description, "Découvrez la série « #{@category.name} » du portfolio photographique de Balikvision." %>
-<% content_for :og_image, @category.cover.url(quality: :auto, fetch_format: :auto) if @category.cover.attached? %>
+<% content_for :meta_description, "Découvrez les séries de la catégorie « #{@category.name} » du portfolio photographique de Balikvision." %>
+<% first_cover = @subcategories.find { |s| s.cover.attached? }&.cover %>
+<% content_for :og_image, first_cover.url(quality: :auto, fetch_format: :auto) if first_cover %>
 
-<section class="subcategories-header">  <div class="header-cover">
-    <% if @category.cover.attached? %>
-      <%= cloudinary_image_tag @category.cover, alt: "", width: 1600, height: 300, crop: :fill, gravity: :auto, protected: true %>
-    <% end %>
-  </div>
-  <div class="header-overlay"></div>
-  <%= link_to raw('<i class="fa-solid fa-arrow-left"></i>'), root_path, class: "btn header-back", "aria-label": "Retour à l'accueil" %>
-  <h1><%= @category.name %></h1>
-</section>
-
-<% if @subcategories.size > 1 %>
-  <nav class="subcategories-nav">
-    <% @subcategories.each do |subcategory| %>
-      <%= link_to subcategory.name, "#subcategory-#{subcategory.id}" %>
-    <% end %>
-  </nav>
+<%= link_to root_path, class: "page-back-link" do %>
+  <i class="fa-solid fa-arrow-left"></i> Retour à l'accueil
 <% end %>
 
-<section class="subcategories-photos">
+<h1 class="category-title"><%= @category.name %></h1>
+
+<section class="subcategories-grid">
   <% @subcategories.each do |subcategory| %>
-    <div class="subcategory"
-         id="subcategory-<%= subcategory.id %>"
-         data-controller="lightbox"
-         data-lightbox-photos-value="<%= subcategory.photos.map { |p| { url: photo_lightbox_url(p), alt: p.alt_text.presence || subcategory.name, title: p.title, description: p.description, landscape: p.landscape? } }.to_json %>">
-      <div class="subinfos">
-        <h2><%= subcategory.name %></h2>
-        <p><%= subcategory.description %></p>
-      </div>
-      <div class="subphotosgrid">
-        <% subcategory.photos.each_with_index do |photo, index| %>
-          <% width, height = photo_mosaic_dimensions(photo.colspan) %>
-          <div class="mosaic-photo mosaic-photo--span-<%= photo.colspan %>"
-               data-action="click->lightbox#open"
-               data-lightbox-index-param="<%= index %>">
-            <%= cloudinary_image_tag photo.image, alt: photo.alt_text.presence || subcategory.name, width: width, height: height, crop: :fill, gravity: :auto, protected: true %>
-          </div>
-        <% end %>
-      </div>
-      <%= render "lightbox" %>
+    <div class="card-category">
+      <%= link_to category_subcategory_path(@category, subcategory) do %>
+        <div class="card-image">
+          <% if subcategory.cover.attached? %>
+            <%= cloudinary_image_tag subcategory.cover, alt: subcategory.name, width: 400, aspect_ratio: "4:5", crop: :fill, gravity: :auto, protected: true %>
+          <% else %>
+            <div>No Cover Image</div>
+          <% end %>
+        </div>
+        <div class="card-category-text"><%= subcategory.name %></div>
+      <% end %>
     </div>
   <% end %>
 </section>

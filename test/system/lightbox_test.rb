@@ -16,7 +16,7 @@ class LightboxTest < ApplicationSystemTestCase
   end
 
   test "cliquer sur une miniature ouvre la lightbox sur la bonne photo" do
-    visit category_path(@category)
+    visit category_subcategory_path(@category, @subcategory)
     first(".mosaic-photo").click
 
     within "[data-lightbox-target='overlay']" do
@@ -25,7 +25,7 @@ class LightboxTest < ApplicationSystemTestCase
   end
 
   test "les flèches et le clavier naviguent entre les photos" do
-    visit category_path(@category)
+    visit category_subcategory_path(@category, @subcategory)
     first(".mosaic-photo").click
 
     find(".lightbox-next").click
@@ -36,7 +36,7 @@ class LightboxTest < ApplicationSystemTestCase
   end
 
   test "Échap ferme la lightbox" do
-    visit category_path(@category)
+    visit category_subcategory_path(@category, @subcategory)
     first(".mosaic-photo").click
     assert_selector "[data-lightbox-target='overlay'].is-open"
 
@@ -45,7 +45,7 @@ class LightboxTest < ApplicationSystemTestCase
   end
 
   test "le focus est piégé dans la lightbox (Tab boucle du dernier au premier bouton)" do
-    visit category_path(@category)
+    visit category_subcategory_path(@category, @subcategory)
     first(".mosaic-photo").click
 
     buttons = all("[data-lightbox-target='overlay'] button")
@@ -60,7 +60,7 @@ class LightboxTest < ApplicationSystemTestCase
   test "affiche le titre et la description de la photo dans la lightbox" do
     @subcategory.photos.first.update!(title: "Lisbonne", description: "Vue sur le Tage au coucher du soleil")
 
-    visit category_path(@category)
+    visit category_subcategory_path(@category, @subcategory)
     first(".mosaic-photo").click
 
     within "[data-lightbox-target='overlay']" do
@@ -70,7 +70,7 @@ class LightboxTest < ApplicationSystemTestCase
   end
 
   test "masque la légende quand la photo n'a ni titre ni description" do
-    visit category_path(@category)
+    visit category_subcategory_path(@category, @subcategory)
     first(".mosaic-photo").click
 
     within "[data-lightbox-target='overlay']" do
@@ -79,7 +79,7 @@ class LightboxTest < ApplicationSystemTestCase
   end
 
   test "le bouton fermer n'affiche que le symbole × (pas de texte)" do
-    visit category_path(@category)
+    visit category_subcategory_path(@category, @subcategory)
     first(".mosaic-photo").click
 
     within "[data-lightbox-target='overlay']" do
@@ -89,7 +89,7 @@ class LightboxTest < ApplicationSystemTestCase
   end
 
   test "affiche un compteur de position centré en bas de page" do
-    visit category_path(@category)
+    visit category_subcategory_path(@category, @subcategory)
     first(".mosaic-photo").click
 
     within "[data-lightbox-target='overlay']" do
@@ -102,7 +102,7 @@ class LightboxTest < ApplicationSystemTestCase
   test "une photo au format paysage ne subit pas le recadrage portrait 4:5" do
     @subcategory.photos.second.update_columns(width: 2000, height: 1000)
 
-    visit category_path(@category)
+    visit category_subcategory_path(@category, @subcategory)
     all(".mosaic-photo")[1].click
 
     within "[data-lightbox-target='overlay']" do

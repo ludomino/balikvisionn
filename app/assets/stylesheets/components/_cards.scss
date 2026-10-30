@@ -2,11 +2,9 @@
 
 .card-category {
   display: flex;
-  background-size: cover;
-  background-position: center;
-  height: 350px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   width: 30%;
+  aspect-ratio: 4 / 5;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
@@ -90,7 +88,6 @@
   }
 
   @media screen and (max-width: 640px) {
-    height: 220px;
     width: 100%;
   }
 }

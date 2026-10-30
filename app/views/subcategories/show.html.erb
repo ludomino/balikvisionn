@@ -1,0 +1,27 @@
+<% content_for :title, "#{@subcategory.name} — #{@category.name} — Balikvision Photographie" %>
+<% content_for :meta_description, @subcategory.description.presence || "Découvrez la série « #{@subcategory.name} » du portfolio photographique de Balikvision." %>
+<% content_for :og_image, @subcategory.cover.url(quality: :auto, fetch_format: :auto) if @subcategory.cover.attached? %>
+
+<%= link_to category_path(@category), class: "page-back-link" do %>
+  <i class="fa-solid fa-arrow-left"></i> Retour à <%= @category.name %>
+<% end %>
+
+<div class="subcategory-header">
+  <h1><%= @subcategory.name %></h1>
+  <p><%= @subcategory.description %></p>
+</div>
+
+<section class="subcategory-photos"
+     data-controller="lightbox"
+     data-lightbox-photos-value="<%= @subcategory.photos.map { |p| { url: photo_lightbox_url(p), alt: p.alt_text.presence || @subcategory.name, title: p.title, description: p.description, landscape: p.landscape? } }.to_json %>">
+  <div class="subphotosgrid">
+    <% @subcategory.photos.each_with_index do |photo, index| %>
+      <div class="mosaic-photo mosaic-photo--span-<%= photo.colspan %><%= ' mosaic-photo--landscape' if photo.colspan > 1 && photo.landscape? %>"
+           data-action="click->lightbox#open"
+           data-lightbox-index-param="<%= index %>">
+        <%= cloudinary_image_tag photo.image, alt: photo.alt_text.presence || @subcategory.name, width: photo.colspan * 500, aspect_ratio: photo.mosaic_crop_ratio(photo.colspan), crop: :fill, gravity: :auto, protected: true %>
+      </div>
+    <% end %>
+  </div>
+  <%= render "lightbox" %>
+</section>

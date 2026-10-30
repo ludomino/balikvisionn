@@ -76,4 +76,14 @@ class SubcategoryTest < ActiveSupport::TestCase
     @subcategory.update_columns(width: 2000, height: 1000)
     assert_equal "8:5", @subcategory.mosaic_crop_ratio(2)
   end
+
+  test "mosaic_crop_ratio returns 12:5 for colspan 3 when landscape" do
+    @subcategory.update_columns(width: 2000, height: 1000)
+    assert_equal "12:5", @subcategory.mosaic_crop_ratio(3)
+  end
+
+  test "mosaic_crop_ratio stays 4:5 for colspan 3 when not landscape" do
+    @subcategory.update_columns(width: 1000, height: 2000)
+    assert_equal "4:5", @subcategory.mosaic_crop_ratio(3)
+  end
 end

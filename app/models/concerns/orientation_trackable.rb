@@ -29,7 +29,7 @@ module OrientationTrackable
 
     case colspan
     when 2 then "8:5"
-    when 3 then "6:5"
+    when 3 then "12:5"
     else "4:5"
     end
   end
