@@ -1,0 +1,115 @@
+// Menu de navigation admin (Axe 9/10). Contrairement à la sidebar
+// publique (fixe en desktop, off-canvas seulement en mobile), celui-ci
+// reste TOUJOURS déclenché par le burger, quelle que soit la largeur :
+// les écrans admin sont denses (grilles 3-4 colonnes) et réserver en
+// permanence 280px de large les aurait compressés.
+
+.admin-sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: 280px;
+  max-width: 85vw;
+  min-height: 100vh;
+  min-height: 100dvh;
+  box-sizing: border-box;
+  padding: 70px 24px 40px;
+  background-color: $bg-dark;
+  border-right: 1px solid $border;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);
+  transition: transform 0.25s ease;
+  z-index: 200;
+
+  &.is-open {
+    transform: translateX(0);
+  }
+}
+
+.admin-sidebar-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  color: $text-muted;
+  font-size: 1.2em;
+  cursor: pointer;
+
+  &:hover {
+    color: $accent;
+  }
+}
+
+.admin-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.admin-sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 10px;
+  border-radius: 4px;
+  font-family: $headers-font;
+  font-weight: 800;
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: $text-muted;
+
+  i {
+    width: 16px;
+    text-align: center;
+  }
+
+  &:hover {
+    color: $text-light;
+    background: $bg-input;
+  }
+
+  &.is-current {
+    color: $accent;
+    background: $bg-input;
+  }
+}
+
+.admin-sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 150;
+
+  &.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.admin-topbar-burger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  color: $text-muted;
+  font-size: 1.1em;
+  cursor: pointer;
+  margin-right: 10px;
+
+  &:hover {
+    color: $accent;
+  }
+}

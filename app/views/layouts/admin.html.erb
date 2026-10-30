@@ -14,7 +14,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@800&family=DM+Sans:wght@400;700;900&display=swap" rel="stylesheet">
   </head>
-  <body class="admin-body">
+  <body class="admin-body" data-controller="sidebar">
+    <div class="admin-sidebar-backdrop" data-sidebar-target="backdrop" data-action="click->sidebar#close"></div>
+    <%= render "admin/sidebar" %>
+
     <header class="admin-header">
       <%= render "admin/topbar" %>
     </header>

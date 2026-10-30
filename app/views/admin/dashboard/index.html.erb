@@ -30,7 +30,7 @@
 <% end %>
 
 <% if @draft_subcategories.any? %>
-  <div class="admin-drafts-section">
+  <div class="admin-drafts-section" id="admin-drafts-section">
     <div class="admin-drafts-header">
       <h2 class="admin-drafts-title">Brouillons en cours</h2>
       <select class="admin-shortcut-select" aria-label="Créer un nouveau brouillon dans une catégorie" onchange="if (this.value) window.location = this.value;">
