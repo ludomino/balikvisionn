@@ -12,9 +12,12 @@
   .lightbox-photo {
     position: relative;
     display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
 
     img {
-      height: 85vh;
+      height: 75vh;
       aspect-ratio: 4 / 5;
       max-width: 90vw;
       object-fit: cover;
@@ -29,18 +32,19 @@
       width: auto;
       height: auto;
       max-width: 90vw;
-      max-height: 85vh;
+      max-height: 75vh;
       object-fit: contain;
     }
   }
 
+  // La légende sort de la photo (plus de superposition, cf. retour du
+  // 30/10) : un bloc de texte centré sous l'image, sur le fond déjà
+  // quasi-noir de l'overlay — plus besoin de carré/fond propre. La photo
+  // est légèrement réduite (75vh au lieu de 85vh) pour lui laisser la place
+  // sans dépasser l'écran.
   .lightbox-caption {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    padding: 16px;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+    max-width: 90vw;
+    text-align: left;
   }
 
   .lightbox-caption-title {
