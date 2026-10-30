@@ -154,12 +154,22 @@
 }
 
 @media screen and (max-width: 640px) {
+  // Bug CSS Grid : aspect-ratio + spans mixtes (1/2/3) + dense produisait
+  // des pistes dégénérées à 0px sur une grille à 2 colonnes (cartes à
+  // largeur/hauteur nulle, boutons positionnés hors écran). On simplifie :
+  // sur petit écran, la mosaïque devient une simple liste empilée en une
+  // colonne, chaque carte en 1×1 — chaque photo garde son propre
+  // aspect-ratio (4:5, 8:5 ou 12:5), donc pas de déformation.
   .admin-mosaic-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
 
-  .admin-mosaic-card--span-3 {
-    grid-column: span 2;
-    grid-row: span 2;
+  .admin-mosaic-card--span-1,
+  .admin-mosaic-card--span-2,
+  .admin-mosaic-card--span-3,
+  .admin-mosaic-card--span-2.admin-mosaic-card--landscape,
+  .admin-mosaic-card--span-3.admin-mosaic-card--landscape {
+    grid-column: span 1;
+    grid-row: span 1;
   }
 }
