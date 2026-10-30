@@ -10,7 +10,7 @@
 
   <div class="bio-content">
     <% if @about_page.photo.attached? %>
-      <%= cloudinary_image_tag @about_page.photo, alt: "Portrait du photographe", width: 400, height: 400, crop: :fill, protected: true %>
+      <%= cloudinary_image_tag @about_page.photo, alt: "Portrait du photographe", width: 400, aspect_ratio: "4:5", crop: :fill, gravity: :auto, protected: true %>
     <% end %>
     <p><%= simple_format(@about_page.biography) %></p>
   </div>
@@ -33,13 +33,13 @@
       <% end %>
 
       <div class="field">
-        <%= f.label :name, "Nom" %>
-        <%= f.text_field :name %>
+        <%= f.label :name do %>Nom <span aria-hidden="true">*</span><% end %>
+        <%= f.text_field :name, required: true %>
       </div>
 
       <div class="field">
-        <%= f.label :email %>
-        <%= f.email_field :email %>
+        <%= f.label :email do %>Email <span aria-hidden="true">*</span><% end %>
+        <%= f.email_field :email, required: true %>
       </div>
 
       <div class="field">

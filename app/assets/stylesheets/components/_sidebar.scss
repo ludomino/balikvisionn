@@ -75,13 +75,18 @@
   padding-top: 20px;
 }
 
-.sidebar-about-link {
+.sidebar-secondary-link {
   font-family: $public-headers-font;
   font-weight: 800;
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: $public-text;
+
+  &.is-current {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
 }
 
 .sidebar-socials {

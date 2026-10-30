@@ -19,6 +19,9 @@
 
   img {
     flex: 0 0 auto;
+    width: 400px;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
     user-select: none;
     -webkit-touch-callout: none;
   }
@@ -33,7 +36,6 @@
   @media screen and (max-width: 900px) {
     img {
       width: 260px;
-      height: 260px;
     }
   }
 

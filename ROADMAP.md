@@ -188,15 +188,15 @@
 *Ajouté le 2026-10-23 — refonte de la navigation publique (menu latéral fixe) et de l'arborescence catégorie/sous-catégorie, suite à la maquette validée.*
 
 **Fonctionnalités**
-- [ ] Nouveau composant menu latéral fixe (desktop) : toutes les catégories + sous-catégories toujours dépliées, « À propos » et réseaux sociaux inclus
-- [ ] Version mobile : menu hors-écran (off-canvas) déclenché par un burger, même contenu que desktop
-- [ ] Retirer le `header nav` centré actuel (`_navbar.scss`, `layouts/application.html.erb`) au profit du layout sidebar + contenu
+- [x] Nouveau composant menu latéral fixe (desktop) : toutes les catégories + sous-catégories toujours dépliées, « À propos » et réseaux sociaux inclus — ajout d'un lien "Toutes les catégories" vers `/categories` en plus des catégories/sous-catégories
+- [x] Version mobile : menu hors-écran (off-canvas) déclenché par un burger, même contenu que desktop
+- [x] Retirer le `header nav` centré actuel (`_navbar.scss`, `layouts/application.html.erb`) au profit du layout sidebar + contenu
 - [x] Nouvelle route + vue publique pour une sous-catégorie unique (`GET /categories/:category_id/subcategories/:id`), extraite de l'actuel `categories#show`
 - [x] `categories#show` devient la page « liste des sous-catégories » : grille de cards ratio 4:5 (nom centré, pas de compteur de photos)
 - [x] Nouvelle page sous-catégorie : reprend la mosaïque actuelle, retire la bannière cover et le `border-radius`, chaque tuile en ratio 4:5 (cf. principe transverse n°4)
 - [x] Page d'accueil : remplacée par la sélection de favoris — voir Axe 10 (fait), ne pas implémenter de grille « 6 catégories » fixe
 - [x] Lightbox : ajouter `title` + description, cadrage photo en 4:5 — **déviation** : paysage en `object-fit: contain` plutôt qu'un cadrage forcé en 4:5 (une vraie photo paysage écrasée en 4:5 était visuellement mauvaise) ; compteur `"X / Y"` plutôt que « X sur Y photos » (préférence explicite) ; bouton « Fermer » remplacé par un simple ✕
-- [ ] Page À propos : photo recadrée en ratio 4:5, remplace l'avatar circulaire actuel (public ET admin)
+- [x] Page À propos : photo recadrée en ratio 4:5, remplace l'avatar circulaire actuel (public uniquement — l'avatar admin reste inchangé, non demandé)
 - [x] Filtrer les sous-catégories en statut brouillon hors des pages publiques (listings + sitemap)
 - [x] **Ajout non prévu initialement** : fix `mosaic_crop_ratio` colspan 3 paysage (`6:5` → `12:5`) — ne correspondait pas au ratio CSS réel du conteneur (`12/5`), causait un recadrage Cloudinary trop serré par rapport à l'affichage (bug déjà présent en admin depuis l'Axe 9, découvert et corrigé ici)
 
@@ -204,16 +204,16 @@
 - [x] Rendu de la page catégorie (grille de cards, lien vers chaque sous-catégorie)
 - [x] Rendu de la nouvelle page sous-catégorie (mosaïque, pas de bannière)
 - [x] Sous-catégorie en brouillon : inaccessible par URL directe, absente des listings
-- [ ] Menu latéral : présence de toutes les catégories/sous-catégories, lien À propos, liens réseaux sociaux
+- [x] Menu latéral : présence de toutes les catégories/sous-catégories, lien À propos, liens réseaux sociaux
 - [x] `sitemap.xml` exclut les sous-catégories brouillon
 - [x] Rendu en 4:5 sans déformation sur chaque composant image public (cards, mosaïque, lightbox) — couvre aussi `mosaic_crop_ratio` colspan 2/3 paysage
 
 **Accessibilité**
-- [ ] Menu latéral : navigation clavier complète, focus visible, `aria-current` sur l'élément actif
-- [ ] Menu mobile off-canvas : focus trap, fermeture Échap, restitution du focus
+- [x] Menu latéral : navigation clavier complète, focus visible, `aria-current` sur l'élément actif
+- [x] Menu mobile off-canvas : focus trap, fermeture Échap, restitution du focus
 
 **Responsive**
-- [ ] Menu latéral desktop / off-canvas mobile, breakpoint cohérent avec l'existant (640px)
+- [x] Menu latéral desktop / off-canvas mobile, breakpoint cohérent avec l'existant (640px)
 
 
 ---
@@ -270,7 +270,7 @@
 - [x] **Ajout non prévu initialement** : bouton ★ aussi sur les cards de sous-catégories et sur chaque photo de l'éditeur mosaïque (ce dernier point reporté depuis l'Axe 9, implémenté ici)
 - [x] Nouvel écran admin « Favoris de la home » : liste ordonnable en glisser-déposer — **réutilise les classes `.admin-mosaic-*` de l'éditeur mosaïque** plutôt qu'une liste ad hoc : mêmes boutons de taille 1/2/3, aperçu recadré selon l'orientation (paysage/portrait), légende (type + nom), compteur de favoris et lien de retour au tableau de bord
 - [x] Tableau de bord : raccourci « ★ Favoris de la home »
-- [x] Page d'accueil : grille affichant les `HomeFeature` dans l'ordre défini, chaque tuile en ratio 4:5 (pas de bascule paysage/portrait ici, contrairement à l'admin — toutes les tuiles restent en 4:5) — **servie par un nouveau `HomeController#index`** plutôt que `CategoriesController#index`, pour un nommage cohérent avec `AboutController`/`ContactsController` ; `categories#index` (grille de toutes les catégories) est conservée comme page séparée à `/categories`, pas encore liée depuis la nav — décision du 2026-10-29
+- [x] Page d'accueil : grille affichant les `HomeFeature` dans l'ordre défini, chaque tuile en ratio 4:5 (pas de bascule paysage/portrait ici, contrairement à l'admin — toutes les tuiles restent en 4:5) — **servie par un nouveau `HomeController#index`** plutôt que `CategoriesController#index`, pour un nommage cohérent avec `AboutController`/`ContactsController` ; `categories#index` (grille de toutes les catégories) est conservée comme page séparée à `/categories`, désormais liée depuis la sidebar sous le libellé « Toutes les catégories » — décision du 2026-10-29, lien ajouté le 2026-10-30
 - [x] Lien de chaque tuile : `category_path` pour une `Category` ou une `Subcategory` (vers sa catégorie parente, en l'absence de page sous-catégorie dédiée côté public — Axe 8), route de la catégorie parente de la sous-catégorie de la photo pour un `Photo`
 
 **Tests**

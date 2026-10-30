@@ -52,6 +52,15 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_select ".sidebar-socials .lien-icone", count: 3
   end
 
+  test "sidebar links to the categories index, marked current only there" do
+    get categories_path
+    assert_select ".sidebar a[href='#{categories_path}'][aria-current='page']", count: 1
+
+    get category_path(@category)
+    assert_select ".sidebar a[href='#{categories_path}']", count: 1
+    assert_select ".sidebar a[href='#{categories_path}'][aria-current]", count: 0
+  end
+
   test "show does not display draft subcategories" do
     Subcategory.create!(name: "Brouillon en cours", category: @category, status: "draft")
     get category_path(@category)

@@ -6,6 +6,10 @@
   </button>
 
   <div class="sidebar-nav">
+    <%= link_to "Toutes les catégories", categories_path,
+          class: class_names("sidebar-secondary-link", "is-current": current_page?(categories_path)),
+          aria: { current: (current_page?(categories_path) ? "page" : nil) } %>
+
     <% sidebar_categories.each do |category| %>
       <% published_subcategories = category.subcategories.select(&:published?) %>
       <div class="sidebar-category">
@@ -29,7 +33,9 @@
   </div>
 
   <div class="sidebar-footer">
-    <%= link_to "À propos", about_path, class: "sidebar-about-link" %>
+    <%= link_to "À propos", about_path,
+          class: class_names("sidebar-secondary-link", "is-current": current_page?(about_path)),
+          aria: { current: (current_page?(about_path) ? "page" : nil) } %>
     <div class="sidebar-socials">
       <%= render "shared/social_links" %>
     </div>
