@@ -11,6 +11,10 @@
     <div class="admin-stat-value"><%= @photo_count %></div>
     <div class="admin-stat-label"><%= @photo_count == 1 ? "photo publiée" : "photos publiées" %></div>
   </div>
+  <div class="admin-stat-tile">
+    <div class="admin-stat-value"><%= @draft_subcategories.size %></div>
+    <div class="admin-stat-label"><%= @draft_subcategories.size == 1 ? "brouillon en cours" : "brouillons en cours" %></div>
+  </div>
 </div>
 
 <% if @categories_missing_cover.any? %>
@@ -22,6 +26,31 @@
         <%= link_to category.name, admin_category_path(category) %><%= ", " unless index == @categories_missing_cover.size - 1 %>
       <% end %>
     </span>
+  </div>
+<% end %>
+
+<% if @draft_subcategories.any? %>
+  <div class="admin-drafts-section">
+    <div class="admin-drafts-header">
+      <h2 class="admin-drafts-title">Brouillons en cours</h2>
+      <select class="admin-shortcut-select" aria-label="Créer un nouveau brouillon dans une catégorie" onchange="if (this.value) window.location = this.value;">
+        <option value="">+ Nouveau brouillon…</option>
+        <% @categories.each do |category| %>
+          <option value="<%= new_admin_category_subcategory_path(category) %>"><%= category.name %></option>
+        <% end %>
+      </select>
+    </div>
+    <ul class="admin-drafts-list">
+      <% @draft_subcategories.each do |subcategory| %>
+        <li class="admin-drafts-item">
+          <div class="admin-drafts-item-info">
+            <span class="admin-drafts-name"><%= subcategory.name %></span>
+            <span class="admin-drafts-category"><%= subcategory.category.name %></span>
+          </div>
+          <%= link_to "Reprendre →", edit_admin_category_subcategory_path(subcategory.category, subcategory), class: "admin-drafts-resume" %>
+        </li>
+      <% end %>
+    </ul>
   </div>
 <% end %>
 

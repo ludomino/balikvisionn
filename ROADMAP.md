@@ -236,10 +236,10 @@
 - [x] Grille mosaïque : `grid-auto-flow: dense` déjà en place, confirmé fonctionnel après résolution du bug de cache CSS (voir note ci-dessous)
 - [x] **Ajout non prévu initialement** : bascule automatique paysage/portrait par tuile (`Photo#landscape?`), une photo paysage en taille 2/3 s'étire en largeur (ratio 8:5 / 12:5) Taille 1 reste toujours 4:5 quelle que soit l'orientation.
 - [x] Aperçus admin : couverture sous-catégorie (grille et formulaire) recadrés en 4:5 (ou carré pour la miniature 72×72 du formulaire, volontairement) ; mosaïque en 4:5/8:5/12:5 selon orientation
-- [ ] Aperçus admin : photo de la page À propos — pattern d'upload unifié, mais recadrage 4:5 pas encore appliqué (reporté avec Axe 8)
-- [ ] Tableau de bord : carte stat « Brouillons en cours » — non fait ; à la place, chaque carte catégorie affiche son propre nombre de brouillons (« · N brouillon(s) »)
-- [ ] Tableau de bord : section « Brouillons en cours » (liste + lien « Reprendre → »)
-- [ ] Tableau de bord : bouton « + Nouveau brouillon »
+- [x] Aperçus admin : photo de la page À propos — **conclusion** : reste en miniature carrée 78×78 (pas de recadrage 4:5), cohérent avec toutes les autres miniatures de formulaire (catégories, sous-catégories), volontairement carrées quel que soit le recadrage final (cf. ligne juste au-dessus) ; pas de vue grille séparée pour la page À propos qui justifierait un traitement différent
+- [x] Tableau de bord : carte stat « Brouillons en cours » — ajoutée en 4e tuile de `.admin-stats-row`, en plus du compteur par carte catégorie déjà existant (« · N brouillon(s) »)
+- [x] Tableau de bord : section « Brouillons en cours » (liste + lien « Reprendre → »)
+- [x] Tableau de bord : bouton « + Nouveau brouillon » — même pattern que le select « + Nouvelle sous-catégorie » déjà en place, intégré à la section ci-dessus
 
 **Tests**
 - [x] Migration `status` : défaut `draft`, transition vers `published`
@@ -250,7 +250,7 @@
 
 **Accessibilité**
 - [x] Alternative clavier au bouton ★ : c'est un lien standard (`link_to`), focusable et activable au clavier (Tab + Entrée) comme n'importe quel lien — champ titre déjà un input standard
-- [ ] Badge brouillon annoncé correctement par les lecteurs d'écran (pas seulement une couleur)
+- [x] Badge brouillon annoncé correctement par les lecteurs d'écran (pas seulement une couleur) — préfixe « Statut : » caché visuellement (`.visually-hidden`)
 
 **Responsive**
 - [ ] Tableau de bord, formulaire sous-catégorie et éditeur mosaïque : adaptation mobile cohérente avec l'existant (Axe 5)

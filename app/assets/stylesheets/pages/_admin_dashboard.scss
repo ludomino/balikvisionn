@@ -82,7 +82,7 @@
 
 .admin-stats-row {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
   margin-bottom: 24px;
 }
@@ -129,6 +129,85 @@
     &:hover {
       color: $accent;
     }
+  }
+}
+
+.admin-drafts-section {
+  background: $bg-card;
+  border: 1px solid $border;
+  border-radius: 8px;
+  padding: 18px 20px;
+  margin-bottom: 24px;
+}
+
+.admin-drafts-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.admin-drafts-title {
+  font-size: 0.95em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: $text-light;
+}
+
+.admin-drafts-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-drafts-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid $border;
+
+  &:first-child {
+    border-top: none;
+  }
+}
+
+.admin-drafts-item-info {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+}
+
+.admin-drafts-name {
+  font-weight: 700;
+  color: $text-light;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-drafts-category {
+  font-size: 0.8em;
+  color: $text-muted;
+  opacity: 0.7;
+  white-space: nowrap;
+}
+
+.admin-drafts-resume {
+  font-size: 0.8em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: $accent;
+  white-space: nowrap;
+
+  &:hover {
+    opacity: 0.7;
   }
 }
 
@@ -185,6 +264,17 @@
   .admin-stat-label {
     font-size: 0.8em;
     text-align: right;
+  }
+
+  .admin-drafts-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .admin-drafts-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
   }
 
   .admin-shortcuts-row {

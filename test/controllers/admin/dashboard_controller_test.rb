@@ -49,8 +49,8 @@ class Admin::DashboardControllerTest < ActionDispatch::IntegrationTest
     sign_in_as @user
     get admin_root_path
 
-    assert_select ".admin-stats-row .admin-stat-tile", count: 3
-    assert_select ".admin-stat-value", text: "1", count: 2 # 1 catégorie, 1 sous-catégorie
+    assert_select ".admin-stats-row .admin-stat-tile", count: 4
+    assert_select ".admin-stat-value", text: "1", count: 3 # 1 catégorie, 1 sous-catégorie, 1 brouillon (statut par défaut)
     assert_select ".admin-stat-value", text: "0" # 0 photo publiée
   end
 
@@ -104,5 +104,38 @@ class Admin::DashboardControllerTest < ActionDispatch::IntegrationTest
     get admin_root_path
 
     assert_select ".admin-category-card-count", text: /brouillon/, count: 0
+  end
+
+  test "index displays the drafts-in-progress section with a resume link" do
+    category = Category.create!(name: "Concerts")
+    subcategory = Subcategory.create!(name: "Boiler Room", description: "Session live", category: category, status: "draft")
+
+    sign_in_as @user
+    get admin_root_path
+
+    assert_select ".admin-drafts-section" do
+      assert_select ".admin-drafts-item", text: /Boiler Room/
+      assert_select "a[href='#{edit_admin_category_subcategory_path(category, subcategory)}']", text: "Reprendre →"
+    end
+  end
+
+  test "index hides the drafts-in-progress section when there are no drafts" do
+    category = Category.create!(name: "Concerts")
+    Subcategory.create!(name: "Boiler Room", description: "Session live", category: category, status: "published")
+
+    sign_in_as @user
+    get admin_root_path
+
+    assert_select ".admin-drafts-section", false
+  end
+
+  test "index displays a shortcut to start a new draft for each category" do
+    category = Category.create!(name: "Concerts")
+    Subcategory.create!(name: "Autre", description: "x", category: category, status: "draft")
+
+    sign_in_as @user
+    get admin_root_path
+
+    assert_select ".admin-drafts-section option[value='#{new_admin_category_subcategory_path(category)}']", text: "Concerts"
   end
 end
