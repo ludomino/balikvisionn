@@ -11,9 +11,14 @@
     <% end %>
   </div>
 
-  <h1 class="admin-form-title">
-    <%= @category.persisted? ? "Modifier la catégorie" : "Nouvelle catégorie" %>
-  </h1>
+  <div class="admin-form-title-row">
+    <h1 class="admin-form-title">
+      <%= @category.persisted? ? "Modifier la catégorie" : "Nouvelle catégorie" %>
+    </h1>
+    <% if @category.persisted? && @category.draft? %>
+      <span class="admin-badge admin-badge-warning"><span class="visually-hidden">Statut : </span>Brouillon</span>
+    <% end %>
+  </div>
 
   <div class="admin-form-card">
     <%= simple_form_for [:admin, @category], html: { multipart: true, class: "admin-form" } do |f| %>
@@ -46,7 +51,11 @@
                             data: { photo_preview_target: "input", action: "change->photo-preview#show" } } %>
       </div>
       <div class="admin-form-actions">
-        <%= f.submit(@category.persisted? ? "Enregistrer" : "Créer la catégorie", class: "btn-admin-accent") %>
+        <%= button_tag(@category.persisted? ? "Enregistrer" : "Créer et publier", type: "submit", name: "category[status]", value: "published", class: "btn-admin-accent") %>
+        <%= button_tag "Brouillon", type: "submit", name: "category[status]", value: "draft", class: "btn-admin-outline" %>
+        <% if @category.persisted? && @category.subcategories.published.any? %>
+          <p class="admin-form-hint">Repasser cette catégorie en brouillon mettra aussi ses <%= pluralize(@category.subcategories.published.count, "sous-catégorie publiée", plural: "sous-catégories publiées") %> en brouillon.</p>
+        <% end %>
         <%= link_to "Annuler", @category.persisted? ? admin_category_path(@category) : admin_root_path, class: "btn-admin-outline" %>
       </div>
     <% end %>

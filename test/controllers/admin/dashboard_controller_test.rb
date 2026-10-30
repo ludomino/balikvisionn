@@ -49,9 +49,9 @@ class Admin::DashboardControllerTest < ActionDispatch::IntegrationTest
     sign_in_as @user
     get admin_root_path
 
-    assert_select ".admin-stats-row .admin-stat-tile", count: 4
-    assert_select ".admin-stat-value", text: "1", count: 3 # 1 catégorie, 1 sous-catégorie, 1 brouillon (statut par défaut)
-    assert_select ".admin-stat-value", text: "0" # 0 photo publiée
+    assert_select ".admin-stats-row .admin-stat-tile", count: 5
+    assert_select ".admin-stat-value", text: "1", count: 3 # 1 catégorie, 1 sous-catégorie, 1 brouillon de sous-catégorie (statut par défaut)
+    assert_select ".admin-stat-value", text: "0" # 0 photo publiée, 0 catégorie en brouillon
   end
 
   test "index displays an alert banner listing categories without a cover" do
@@ -137,5 +137,26 @@ class Admin::DashboardControllerTest < ActionDispatch::IntegrationTest
     get admin_root_path
 
     assert_select ".admin-drafts-section option[value='#{new_admin_category_subcategory_path(category)}']", text: "Concerts"
+  end
+
+  test "index displays the draft-categories section with a resume link" do
+    category = Category.create!(name: "Concerts", status: "draft")
+
+    sign_in_as @user
+    get admin_root_path
+
+    assert_select "#admin-draft-categories-section" do
+      assert_select ".admin-drafts-item", text: /Concerts/
+      assert_select "a[href='#{edit_admin_category_path(category)}']", text: "Reprendre →"
+    end
+  end
+
+  test "index hides the draft-categories section when there are no draft categories" do
+    Category.create!(name: "Concerts", status: "published")
+
+    sign_in_as @user
+    get admin_root_path
+
+    assert_select "#admin-draft-categories-section", false
   end
 end

@@ -45,7 +45,7 @@ module Admin
     private
 
     def category_params
-      params.require(:category).permit(:name, :cover)
+      params.require(:category).permit(:name, :cover, :status)
     end
   end
 end

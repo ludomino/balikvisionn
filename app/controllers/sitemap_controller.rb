@@ -1,6 +1,6 @@
 class SitemapController < ApplicationController
   def index
-    @categories = Category.all
+    @categories = Category.published
     @subcategories = Subcategory.published.includes(:category)
 
     respond_to do |format|

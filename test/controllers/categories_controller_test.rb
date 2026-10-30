@@ -66,4 +66,16 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     get category_path(@category)
     assert_select ".card-category", count: 0
   end
+
+  test "index excludes draft categories" do
+    draft = Category.create!(name: "Brouillon", status: "draft")
+    get categories_path
+    assert_select ".accueil-photos a[href='#{category_path(draft)}']", count: 0
+  end
+
+  test "show renders a 404 for a draft category accessed directly" do
+    draft = Category.create!(name: "Brouillon", status: "draft")
+    get category_path(draft)
+    assert_response :not_found
+  end
 end

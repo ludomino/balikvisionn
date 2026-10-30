@@ -50,4 +50,34 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     get root_path
     assert_select "a.home-feature-tile[href='#{category_subcategory_path(@category, subcategory)}']", count: 1
   end
+
+  test "does not display a featured draft category" do
+    draft = Category.create!(name: "Brouillon", status: "draft")
+    HomeFeature.create!(featurable: draft)
+    get root_path
+    assert_select ".home-feature-tile", count: 0
+  end
+
+  test "does not display a featured subcategory whose parent category is a draft" do
+    draft_category = Category.create!(name: "Brouillon", status: "draft")
+    subcategory = draft_category.subcategories.create!(name: "Maroc", status: "published")
+    HomeFeature.create!(featurable: subcategory)
+    get root_path
+    assert_select ".home-feature-tile", count: 0
+  end
+
+  test "does not display a featured draft subcategory even if its category is published" do
+    subcategory = Subcategory.create!(name: "Brouillon", category: @category, status: "draft")
+    HomeFeature.create!(featurable: subcategory)
+    get root_path
+    assert_select ".home-feature-tile", count: 0
+  end
+
+  test "does not display a featured photo belonging to a draft subcategory" do
+    subcategory = Subcategory.create!(name: "Brouillon", category: @category, status: "draft")
+    photo = Photo.create!(subcategory: subcategory, colspan: 1, position: 0)
+    HomeFeature.create!(featurable: photo)
+    get root_path
+    assert_select ".home-feature-tile", count: 0
+  end
 end

@@ -36,4 +36,11 @@ class SubcategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_select ".sidebar a[href='#{category_subcategory_path(@category, @subcategory)}'][aria-current='page']", count: 1
     assert_select ".sidebar a[href='#{category_subcategory_path(@category, other)}'][aria-current]", count: 0
   end
+
+  test "show renders a 404 when the parent category is a draft, even if the subcategory itself is published" do
+    draft_category = Category.create!(name: "Brouillon", status: "draft")
+    subcategory = draft_category.subcategories.create!(name: "Maroc", status: "published")
+    get category_subcategory_path(draft_category, subcategory)
+    assert_response :not_found
+  end
 end

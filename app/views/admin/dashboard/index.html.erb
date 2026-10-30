@@ -15,6 +15,10 @@
     <div class="admin-stat-value"><%= @draft_subcategories.size %></div>
     <div class="admin-stat-label"><%= @draft_subcategories.size == 1 ? "brouillon en cours" : "brouillons en cours" %></div>
   </div>
+  <div class="admin-stat-tile">
+    <div class="admin-stat-value"><%= @draft_categories.size %></div>
+    <div class="admin-stat-label"><%= @draft_categories.size == 1 ? "catégorie en brouillon" : "catégories en brouillon" %></div>
+  </div>
 </div>
 
 <% if @categories_missing_cover.any? %>
@@ -48,6 +52,24 @@
             <span class="admin-drafts-category"><%= subcategory.category.name %></span>
           </div>
           <%= link_to "Reprendre →", edit_admin_category_subcategory_path(subcategory.category, subcategory), class: "admin-drafts-resume" %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<% if @draft_categories.any? %>
+  <div class="admin-drafts-section" id="admin-draft-categories-section">
+    <div class="admin-drafts-header">
+      <h2 class="admin-drafts-title">Catégories en brouillon</h2>
+    </div>
+    <ul class="admin-drafts-list">
+      <% @draft_categories.each do |category| %>
+        <li class="admin-drafts-item">
+          <div class="admin-drafts-item-info">
+            <span class="admin-drafts-name"><%= category.name %></span>
+          </div>
+          <%= link_to "Reprendre →", edit_admin_category_path(category), class: "admin-drafts-resume" %>
         </li>
       <% end %>
     </ul>

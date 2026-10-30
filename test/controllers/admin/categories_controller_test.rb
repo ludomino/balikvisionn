@@ -142,4 +142,23 @@ class Admin::CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_select "label[for='category_cover']", text: "Remplacer l'image"
     assert_select ".admin-form-cover-filename", text: "test_photo.png"
   end
+
+  test "create with the brouillon button creates a draft category" do
+    sign_in_as @user
+    post admin_categories_path, params: { category: { name: "Portraits", status: "draft" } }
+    assert Category.find_by(name: "Portraits").draft?
+  end
+
+  test "create with the publier button creates a published category" do
+    sign_in_as @user
+    post admin_categories_path, params: { category: { name: "Portraits", status: "published" } }
+    assert Category.find_by(name: "Portraits").published?
+  end
+
+  test "show displays an accessible draft badge for a draft category" do
+    @category.update!(status: "draft")
+    sign_in_as @user
+    get admin_category_path(@category)
+    assert_select ".admin-badge.admin-badge-warning", text: "Statut : Brouillon"
+  end
 end

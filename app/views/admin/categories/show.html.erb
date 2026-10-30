@@ -11,6 +11,9 @@
       <% if @category.missing_cover? %>
         <span class="admin-badge admin-badge-warning">Sans couverture</span>
       <% end %>
+      <% if @category.draft? %>
+        <span class="admin-badge admin-badge-warning"><span class="visually-hidden">Statut : </span>Brouillon</span>
+      <% end %>
     </div>
     <div class="admin-category-head-actions">
       <%= link_to "Modifier la catégorie", edit_admin_category_path(@category), class: "btn-admin-outline" %>

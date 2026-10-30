@@ -19,4 +19,14 @@ class SitemapControllerTest < ActionDispatch::IntegrationTest
     assert_includes response.body, category_subcategory_url(@category, published)
     assert_not_includes response.body, category_subcategory_url(@category, draft)
   end
+
+  test "includes published categories, excludes drafts" do
+    published = Category.create!(name: "Portraits", status: "published")
+    draft = Category.create!(name: "Brouillon", status: "draft")
+
+    get sitemap_url
+
+    assert_includes response.body, category_url(published)
+    assert_not_includes response.body, category_url(draft)
+  end
 end
