@@ -24,7 +24,7 @@
         <% end %>
 
         <div class="admin-mosaic-overlay-top-left">
-          <span class="admin-mosaic-handle" title="Glisser pour réordonner"><i class="fa-solid fa-grip-vertical"></i></span>
+          <button type="button" class="admin-mosaic-handle" title="Glisser pour réordonner, ou flèches haut/bas" aria-label="Réordonner <%= home_feature.label %> — flèches haut/bas pour déplacer"><i class="fa-solid fa-grip-vertical" aria-hidden="true"></i></button>
           <div class="admin-mosaic-sizes">
             <% [1, 2, 3].each do |size| %>
               <%= link_to size, colspan_admin_home_feature_path(home_feature, colspan: size),

@@ -280,7 +280,7 @@
 - [x] Suppression d'une catégorie/sous-catégorie/photo favorite : le favori disparaît proprement (`dependent: :destroy`)
 
 **Accessibilité**
-- [ ] Alternative clavier au glisser-déposer de l'écran « Favoris de la home ». La mention d'origine (« même pattern que l'éditeur mosaïque : monter/descendre ») n'est plus valable : ces boutons monter/descendre ont été retirés de l'éditeur mosaïque ce sprint (repositionnement des icônes) — à redéfinir entièrement
+- [x] Alternative clavier au glisser-déposer de l'écran « Favoris de la home » — **pas de nouveaux boutons** (la mosaïque avait justement retiré les boutons monter/descendre par manque de place ET parce que le pattern lui-même n'était pas le bon) : la poignée de glisser-déposer existante devient un bouton focusable, Flèche haut/bas la déplace d'une position, zone aria-live pour annoncer le changement
 
 **Responsive**
 - [ ] Pas vérifié ce sprint
