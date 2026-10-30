@@ -195,7 +195,7 @@
 - [x] `categories#show` devient la page « liste des sous-catégories » : grille de cards ratio 4:5 (nom centré, pas de compteur de photos)
 - [x] Nouvelle page sous-catégorie : reprend la mosaïque actuelle, retire la bannière cover et le `border-radius`, chaque tuile en ratio 4:5 (cf. principe transverse n°4)
 - [x] Page d'accueil : remplacée par la sélection de favoris — voir Axe 10 (fait), ne pas implémenter de grille « 6 catégories » fixe
-- [x] Lightbox : ajouter `title` + description, cadrage photo en 4:5 — **déviation** : paysage en `object-fit: contain` plutôt qu'un cadrage forcé en 4:5 (une vraie photo paysage écrasée en 4:5 était visuellement mauvaise) ; compteur `"X / Y"` plutôt que « X sur Y photos » (préférence explicite) ; bouton « Fermer » remplacé par un simple ✕ ; texte de la légende gardé en blanc plutôt qu'en `#151818` (charte 4.1) — fond de la visionneuse quasi-noir (`rgba(0,0,0,0.92)`), du texte sombre y serait illisible, confirmé avec le client le 2026-10-30
+- [x] Lightbox : ajouter `title` + description, cadrage photo en 4:5 — **déviation** : paysage en `object-fit: contain` plutôt qu'un cadrage forcé en 4:5 (une vraie photo paysage écrasée en 4:5 était visuellement mauvaise) ; compteur `"X / Y"` plutôt que « X sur Y photos » (préférence explicite) ; bouton « Fermer » remplacé par un simple ✕ ; texte de la légende gardé en blanc plutôt qu'en `#151818` (charte 4.1) — fond de la visionneuse quasi-noir (`rgba(0,0,0,0.92)`), du texte sombre y serait illisible, confirmé avec le client le 2026-10-30 ; **affinement du 30/10** : légende sortie de la photo — plus de superposition texte/image (ni dégradé, ni carré noir) ; bloc de texte en dessous de la photo, aligné à gauche (flush avec le bord de l'image), photo réduite à 75vh (au lieu de 85vh) pour lui laisser la place
 - [x] Page À propos : photo recadrée en ratio 4:5, remplace l'avatar circulaire actuel (public uniquement — l'avatar admin reste inchangé, non demandé)
 - [x] Filtrer les sous-catégories en statut brouillon hors des pages publiques (listings + sitemap)
 - [x] **Ajout non prévu initialement** : fix `mosaic_crop_ratio` colspan 3 paysage (`6:5` → `12:5`) — ne correspondait pas au ratio CSS réel du conteneur (`12/5`), causait un recadrage Cloudinary trop serré par rapport à l'affichage (bug déjà présent en admin depuis l'Axe 9, découvert et corrigé ici)
@@ -240,6 +240,8 @@
 - [x] Tableau de bord : carte stat « Brouillons en cours » — ajoutée en 4e tuile de `.admin-stats-row`, en plus du compteur par carte catégorie déjà existant (« · N brouillon(s) »)
 - [x] Tableau de bord : section « Brouillons en cours » (liste + lien « Reprendre → »)
 - [x] Tableau de bord : bouton « + Nouveau brouillon » — même pattern que le select « + Nouvelle sous-catégorie » déjà en place, intégré à la section ci-dessus
+- [x] **Ajout non prévu initialement** (29-30/10) : menu de navigation admin (burger), accessible depuis toutes les pages du back-office — ★ Favoris de la home, Toutes les catégories, Brouillons en cours (ancre vers le tableau de bord), À propos ; réutilise `sidebar_controller.js` tel quel (focus trap, Échap, restitution du focus déjà couverts côté public, Axe 8) ; retire en conséquence les boutons « Modifier la page À propos » devenus redondants sur le tableau de bord et `/admin/categories`
+- [x] **Ajout non prévu initialement** (30/10) : éditeur mosaïque, bouton ✕ dédié pour refermer le panneau titre/description/texte alternatif — le panneau ouvert recouvrait jusqu'ici le bouton crayon qui l'avait ouvert, aucun moyen de le refermer autrement qu'en rechargeant la page
 
 **Tests**
 - [x] Migration `status` : défaut `draft`, transition vers `published`
@@ -253,7 +255,7 @@
 - [x] Badge brouillon annoncé correctement par les lecteurs d'écran (pas seulement une couleur) — préfixe « Statut : » caché visuellement (`.visually-hidden`)
 
 **Responsive**
-- [ ] Tableau de bord, formulaire sous-catégorie et éditeur mosaïque : adaptation mobile cohérente avec l'existant (Axe 5)
+- [x] Tableau de bord, formulaire sous-catégorie et éditeur mosaïque : adaptation mobile cohérente avec l'existant (Axe 5) — vérifié en direct (375px) ; a révélé un vrai bug de grille CSS sur l'éditeur mosaïque (pistes `grid-template-columns` dégénérées à 0px en ≤640px, dû au mélange `aspect-ratio` + spans 1/2/3 + `grid-auto-flow: dense`), corrigé en même temps que l'écran « Favoris de la home » (Axe 10, CSS partagé) : la mosaïque bascule désormais en liste empilée 1 colonne sur mobile
 
 
 ---
@@ -283,7 +285,7 @@
 - [x] Alternative clavier au glisser-déposer de l'écran « Favoris de la home » — **pas de nouveaux boutons** (la mosaïque avait justement retiré les boutons monter/descendre par manque de place ET parce que le pattern lui-même n'était pas le bon) : la poignée de glisser-déposer existante devient un bouton focusable, Flèche haut/bas la déplace d'une position, zone aria-live pour annoncer le changement
 
 **Responsive**
-- [ ] Pas vérifié ce sprint
+- [x] Vérifié en direct (375px) sur « Favoris de la home » — a révélé le même bug de grille CSS que l'éditeur mosaïque (Axe 9, ci-dessus), corrigé pour les deux écrans (CSS partagé)
 
 ---
 
