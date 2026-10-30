@@ -1,3 +1,8 @@
-// Police unique du site : Archivo (chargée en 400 et 700 via Google Fonts, cf. layout)
+// Admin + pages de connexion : police historique, inchangée (la charte
+// graphique du client ne documente que les pages publiques listées ci-dessous)
 $body-font: "Archivo", sans-serif;
 $headers-font: "Archivo", sans-serif;
+
+// Site public (Axe 8) — nouvelle charte graphique fournie par le client
+$public-headers-font: "Host Grotesk", sans-serif; // titres (ExtraBold 800 / SemiBold 600 / Light 300)
+$public-body-font: "DM Sans", sans-serif;          // texte courant (Regular 400)

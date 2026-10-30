@@ -191,21 +191,22 @@
 - [ ] Nouveau composant menu latéral fixe (desktop) : toutes les catégories + sous-catégories toujours dépliées, « À propos » et réseaux sociaux inclus
 - [ ] Version mobile : menu hors-écran (off-canvas) déclenché par un burger, même contenu que desktop
 - [ ] Retirer le `header nav` centré actuel (`_navbar.scss`, `layouts/application.html.erb`) au profit du layout sidebar + contenu
-- [ ] Nouvelle route + vue publique pour une sous-catégorie unique (`GET /categories/:category_id/subcategories/:id`), extraite de l'actuel `categories#show`
-- [ ] `categories#show` devient la page « liste des sous-catégories » : grille de cards ratio 4:5 (nom centré, pas de compteur de photos)
-- [ ] Nouvelle page sous-catégorie : reprend la mosaïque actuelle, retire la bannière cover et le `border-radius`, chaque tuile en ratio 4:5 (cf. principe transverse n°4)
-- [ ] Page d'accueil : remplacée par la sélection de favoris — voir Axe 10, ne pas implémenter de grille « 6 catégories » fixe
-- [ ] Lightbox : ajouter `title` + description en bas à gauche, cadrage photo en 4:5
+- [x] Nouvelle route + vue publique pour une sous-catégorie unique (`GET /categories/:category_id/subcategories/:id`), extraite de l'actuel `categories#show`
+- [x] `categories#show` devient la page « liste des sous-catégories » : grille de cards ratio 4:5 (nom centré, pas de compteur de photos)
+- [x] Nouvelle page sous-catégorie : reprend la mosaïque actuelle, retire la bannière cover et le `border-radius`, chaque tuile en ratio 4:5 (cf. principe transverse n°4)
+- [x] Page d'accueil : remplacée par la sélection de favoris — voir Axe 10 (fait), ne pas implémenter de grille « 6 catégories » fixe
+- [x] Lightbox : ajouter `title` + description, cadrage photo en 4:5 — **déviation** : paysage en `object-fit: contain` plutôt qu'un cadrage forcé en 4:5 (une vraie photo paysage écrasée en 4:5 était visuellement mauvaise) ; compteur `"X / Y"` plutôt que « X sur Y photos » (préférence explicite) ; bouton « Fermer » remplacé par un simple ✕
 - [ ] Page À propos : photo recadrée en ratio 4:5, remplace l'avatar circulaire actuel (public ET admin)
-- [ ] Filtrer les sous-catégories en statut brouillon hors des pages publiques (listings + sitemap)
+- [x] Filtrer les sous-catégories en statut brouillon hors des pages publiques (listings + sitemap)
+- [x] **Ajout non prévu initialement** : fix `mosaic_crop_ratio` colspan 3 paysage (`6:5` → `12:5`) — ne correspondait pas au ratio CSS réel du conteneur (`12/5`), causait un recadrage Cloudinary trop serré par rapport à l'affichage (bug déjà présent en admin depuis l'Axe 9, découvert et corrigé ici)
 
 **Tests**
-- [ ] Rendu de la page catégorie (grille de cards, lien vers chaque sous-catégorie)
-- [ ] Rendu de la nouvelle page sous-catégorie (mosaïque, pas de bannière)
-- [ ] Sous-catégorie en brouillon : inaccessible par URL directe, absente des listings
+- [x] Rendu de la page catégorie (grille de cards, lien vers chaque sous-catégorie)
+- [x] Rendu de la nouvelle page sous-catégorie (mosaïque, pas de bannière)
+- [x] Sous-catégorie en brouillon : inaccessible par URL directe, absente des listings
 - [ ] Menu latéral : présence de toutes les catégories/sous-catégories, lien À propos, liens réseaux sociaux
-- [ ] `sitemap.xml` exclut les sous-catégories brouillon
-- [ ] Rendu en 4:5 sans déformation sur chaque composant image public (cards, mosaïque, lightbox)
+- [x] `sitemap.xml` exclut les sous-catégories brouillon
+- [x] Rendu en 4:5 sans déformation sur chaque composant image public (cards, mosaïque, lightbox) — couvre aussi `mosaic_crop_ratio` colspan 2/3 paysage
 
 **Accessibilité**
 - [ ] Menu latéral : navigation clavier complète, focus visible, `aria-current` sur l'élément actif

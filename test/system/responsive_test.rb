@@ -22,7 +22,7 @@ class ResponsiveTest < ApplicationSystemTestCase
   end
 
   test "le libellé de catégorie reste visible sans survol possible (tactile)" do
-    Capybara.using_driver(:selenium_chrome_mobile) do
+    using_mobile_driver do
       visit categories_path
       opacity = page.evaluate_script(
         "getComputedStyle(document.querySelector('.card-category-text')).opacity"

@@ -1,0 +1,51 @@
+// Thème clair du site public (Axe 8) — nouvelle charte graphique fournie
+// par le client. Tout vit sous .public-body (posé sur <body> du layout
+// public) pour ne jamais affecter l'admin ni les pages de connexion, qui
+// gardent leur thème sombre existant sans qu'on ait eu à y toucher : une
+// classe a une spécificité CSS plus forte qu'un sélecteur d'élément seul
+// (body, a, h1...), donc ce bloc prend le dessus uniquement là où il
+// s'applique.
+//
+// La charte ne donne qu'une seule couleur de texte (#151818, $public-text)
+// pour tous les éléments listés — la hiérarchie visuelle vient du poids de
+// police (ExtraBold/SemiBold/Light), pas d'une palette de gris. Le client
+// n'a pas fourni de couleur d'accent : les états hover/actif passent donc
+// par l'opacité, jamais par une teinte différente.
+.public-body {
+  background-color: $public-bg;
+  color: $public-text;
+  font-family: $public-body-font;
+
+  h1,
+  h2,
+  h3 {
+    font-family: $public-headers-font;
+    color: $public-text;
+  }
+
+  a {
+    color: $public-text;
+
+    &:hover {
+      color: $public-text;
+      opacity: 0.6;
+    }
+  }
+
+  p,
+  li {
+    color: $public-text;
+  }
+
+  header,
+  footer {
+    background-color: $public-bg;
+  }
+}
+
+// html est hors de <body>, donc pas atteignable par une classe posée sur
+// body avec un sélecteur classique : :has() cible la zone de rebond iOS en
+// overscroll pour qu'elle suive le même thème que le contenu.
+html:has(body.public-body) {
+  background-color: $public-bg;
+}

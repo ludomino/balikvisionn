@@ -2,24 +2,23 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin: 20px 0 0 40px;
+  margin-top: 20px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 700;
   font-size: 0.85em;
-
-  &:hover {
-    color: $accent;
-  }
 }
 
 .category-title {
   padding: 20px 40px 0;
   margin: 0;
+  font-weight: 600; // SemiBold — charte 2.1
+  font-size: 30px;
+  text-transform: uppercase;
 }
 
 .subcategories-grid {
-  background-color: $bg-dark;
+  background-color: $public-bg;
   padding: 2% 40px;
   display: flex;
   flex-direction: row;
@@ -29,22 +28,22 @@
 }
 
 .subcategory-header {
-  padding: 20px 40px 0;
+  padding-top: 20px;
 
   h1 {
     text-transform: uppercase;
     margin-bottom: 8px;
+    font-weight: 600; // SemiBold — charte 3.1
+    font-size: 24px;
   }
 
   p {
-    color: $text-muted;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-size: 0.85em;
+    color: $public-text;
+    font-size: 14px; // charte 3.2 — pas de majuscules forcées (Majuscules: Non)
   }
 }
 
 .subcategory-photos {
-  background-color: $bg-dark;
+  background-color: $public-bg;
   padding: 20px 0 80px; // la section n'hérite plus du padding global de 80px sur les côtés : mosaïque bord à bord
 }

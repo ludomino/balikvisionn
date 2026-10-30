@@ -13,48 +13,33 @@
     <meta property="og:title" content="<%= content_for(:title) || "Balikvision Photographie" %>">
     <meta property="og:description" content="<%= content_for(:meta_description) || "Portfolio photographique de Balikvision : parcourez les catégories et découvrez les séries les plus récentes." %>">
     <meta property="og:url" content="<%= request.original_url %>">
-    <meta property="og:image" content="<%= content_for(:og_image) || image_url("00Logo_BALIKVISION_.png") %>">
+    <meta property="og:image" content="<%= content_for(:og_image) || image_url("Logo_BALIKVISION_dark.png") %>">
     <%= csp_meta_tag %>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,700;0,900;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@300;600;800&family=DM+Sans:wght@400&display=swap" rel="stylesheet">
   </head>
-  <body>
-    <header>
-      <nav>
-        <div class="nav-left"></div>
-        <%= link_to root_path, class: "lien-icone nav-logo" do %>
-          <%= image_tag("00Logo_BALIKVISION_.png", alt: "Logo Balikvision") %>
-        <% end %>
-        <div class="nav-right">
-          <%= link_to about_path, class: "nav-about-link", "aria-label": "À propos" do %>
-            <span class="nav-about-text">À propos</span>
-            <i class="fa-solid fa-circle-info nav-about-icon" aria-hidden="true"></i>
-          <% end %>
-        </div>
-      </nav>
-    </header>
-    <main>
-      <%= yield %>
-    </main>
+  <body class="public-body" data-controller="sidebar">
+    <div class="site-topbar">
+      <button type="button" class="topbar-burger" aria-label="Ouvrir le menu" data-action="click->sidebar#open">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+      </button>
+      <%= link_to root_path, class: "topbar-logo" do %>
+        <%= image_tag("Logo_BALIKVISION_dark.png", alt: "Logo Balikvision") %>
+      <% end %>
+    </div>
 
-    <footer>
-      <div class="icone-contact">
-        <%= link_to "https://x.com/balik_vision", target: "_blank", class: "lien-icone", "aria-label": "Twitter/X" do %>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#ffffff">
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
-          </svg>
-        <% end %>
-        <%= link_to "https://www.instagram.com/balik_vision", target: "_blank", class: "lien-icone", "aria-label": "Instagram" do %>
-          <i class="fa-brands fa-instagram fa-lg" style="color: #ffffff;"></i>
-        <% end %>
-        <%= link_to "mailto:balik.vision.contact@gmail.com", class: "lien-icone", "aria-label": "Contact par e-mail" do %>
-          <i class="fa-solid fa-envelope fa-lg" style="color: #ffffff;"></i>
-        <% end %>
-      </div>
-    </footer>
+    <div class="sidebar-backdrop" data-sidebar-target="backdrop" data-action="click->sidebar#close"></div>
+
+    <div class="layout-shell">
+      <%= render "shared/sidebar" %>
+
+      <main>
+        <%= yield %>
+      </main>
+    </div>
   </body>
 </html>

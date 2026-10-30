@@ -6,9 +6,9 @@ module HomeFeaturesHelper
     when Category
       category_path(featurable)
     when Subcategory
-      category_path(featurable.category)
+      category_subcategory_path(featurable.category, featurable)
     when Photo
-      category_path(featurable.subcategory.category)
+      category_subcategory_path(featurable.subcategory.category, featurable.subcategory)
     end
   end
 end

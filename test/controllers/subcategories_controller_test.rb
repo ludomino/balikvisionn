@@ -28,4 +28,12 @@ class SubcategoriesControllerTest < ActionDispatch::IntegrationTest
     get category_subcategory_path(@category, @subcategory)
     assert_select ".mosaic-photo", count: 2
   end
+
+  test "sidebar marks the current subcategory with aria-current and no other" do
+    other = @category.subcategories.create!(name: "Maroc", status: "published")
+    get category_subcategory_path(@category, @subcategory)
+
+    assert_select ".sidebar a[href='#{category_subcategory_path(@category, @subcategory)}'][aria-current='page']", count: 1
+    assert_select ".sidebar a[href='#{category_subcategory_path(@category, other)}'][aria-current]", count: 0
+  end
 end

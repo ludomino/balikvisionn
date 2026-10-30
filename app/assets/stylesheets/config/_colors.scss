@@ -15,3 +15,19 @@ $danger: #ff8080;        // messages d'erreur
 
 // Repères de mise en page partagés
 $header-height: 70px;
+
+// Site public (Axe 8) — thème clair imposé par la nouvelle charte
+// graphique fournie par le client. Une seule couleur de texte dans la
+// charte (#151818) pour tous les éléments listés : la hiérarchie vient du
+// poids de police (ExtraBold/SemiBold/Light), pas d'une palette de gris.
+// Aucune couleur d'accent fournie non plus : les états hover/actif
+// passeront par l'opacité (même principe que .icone-contact), jamais par
+// une teinte différente.
+$public-bg: #ffffff;
+$public-text: #151818;
+
+// Pas fourni par la charte : nécessaire pour que les champs de
+// formulaire (fond blanc) restent visibles sans couleur de texte à
+// part — même rôle que $border côté thème sombre.
+$public-border: #d9d9d9;
+

@@ -10,6 +10,18 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     click_button "Se connecter"
     assert_current_path admin_root_path # attend la fin de la navigation Turbo avant de continuer
   end
+
+  # Capybara met en cache UNE session par pilote (:selenium_chrome_mobile
+  # compris), partagée entre toutes les méthodes de test qui l'utilisent —
+  # y compris d'un fichier à l'autre (sidebar_test.rb ET responsive_test.rb
+  # l'utilisent tous les deux). Un nom de session unique à chaque appel
+  # force une fenêtre de navigateur neuve à chaque fois, pour qu'aucun état
+  # (focus, overflow, classes CSS) ne puisse fuiter d'un test au suivant.
+  def using_mobile_driver(&block)
+    Capybara.using_session("mobile-#{SecureRandom.hex(4)}") do
+      Capybara.using_driver(:selenium_chrome_mobile, &block)
+    end
+  end
 end
 
 Capybara.register_driver :selenium_chrome_mobile do |app|

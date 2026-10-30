@@ -36,18 +36,18 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_select "a.home-feature-tile[href='#{category_path(@category)}']", count: 1
   end
 
-  test "links a featured subcategory to its parent category's page" do
+  test "links a featured subcategory to its own page" do
     subcategory = Subcategory.create!(name: "Portugal", category: @category, status: "published")
     HomeFeature.create!(featurable: subcategory)
     get root_path
-    assert_select "a.home-feature-tile[href='#{category_path(@category)}']", count: 1
+    assert_select "a.home-feature-tile[href='#{category_subcategory_path(@category, subcategory)}']", count: 1
   end
 
-  test "links a featured photo to its subcategory's parent category page" do
+  test "links a featured photo to its own subcategory's page" do
     subcategory = Subcategory.create!(name: "Portugal", category: @category, status: "published")
     photo = Photo.create!(subcategory: subcategory, colspan: 1, position: 0)
     HomeFeature.create!(featurable: photo)
     get root_path
-    assert_select "a.home-feature-tile[href='#{category_path(@category)}']", count: 1
+    assert_select "a.home-feature-tile[href='#{category_subcategory_path(@category, subcategory)}']", count: 1
   end
 end

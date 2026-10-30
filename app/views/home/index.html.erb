@@ -15,7 +15,6 @@
             <%= cloudinary_image_tag home_feature.cover_attachment, alt: home_feature.label,
                   width: home_feature.colspan * 500, aspect_ratio: "4:5", crop: :fill, gravity: :auto, protected: true %>
           <% end %>
-          <span class="home-feature-tile-label"><%= home_feature.label %></span>
         <% end %>
       <% end %>
     </div>

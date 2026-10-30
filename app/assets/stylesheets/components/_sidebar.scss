@@ -1,0 +1,159 @@
+// Sidebar de navigation publique (Axe 8). Un seul balisage sert de sidebar
+// fixe en desktop et de panneau off-canvas en mobile (cf. sidebar_controller.js).
+
+.layout-shell {
+  display: flex;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.sidebar {
+  width: 280px;
+  flex: 0 0 280px;
+  box-sizing: border-box;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+  min-height: calc(100vh - #{$header-height});
+  min-height: calc(100dvh - #{$header-height});
+  position: sticky;
+  top: $header-height;
+}
+
+.sidebar-close {
+  display: none; // utile seulement en mobile, cf. media query plus bas
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.sidebar-category-title {
+  font-family: $public-headers-font;
+  font-weight: 800; // ExtraBold — charte 0.1
+  font-size: 18px;
+  text-transform: uppercase;
+  color: $public-text;
+  margin-bottom: 10px;
+}
+
+.sidebar-subcategory-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    margin: 0;
+  }
+}
+
+.sidebar-subcategory-link {
+  display: block;
+  padding: 4px 0 4px 14px;
+  font-family: $public-headers-font;
+  font-weight: 300; // Light — charte 0.2, sous-catégorie non sélectionnée
+  font-size: 14px;
+  color: $public-text;
+
+  &:hover {
+    opacity: 0.6;
+  }
+
+  &.is-current {
+    font-weight: 600; // SemiBold — charte 0.2, sous-catégorie sélectionnée (page courante)
+  }
+}
+
+.sidebar-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 20px;
+}
+
+.sidebar-about-link {
+  font-family: $public-headers-font;
+  font-weight: 800;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $public-text;
+}
+
+.sidebar-socials {
+  display: flex;
+
+  .lien-icone {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    margin-left: -6px; // compense le padding du bouton pour rester aligné avec "À propos"
+    color: $public-text;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+}
+
+.sidebar-backdrop {
+  display: none; // uniquement utilisé en mobile (panneau off-canvas)
+}
+
+@media screen and (max-width: 640px) {
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: 280px;
+    max-width: 85vw;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background-color: $public-bg;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    z-index: 200;
+    padding-top: 70px; // dégage le bouton de fermeture en haut
+
+    &.is-open {
+      transform: translateX(0);
+    }
+  }
+
+  .sidebar-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    color: $public-text;
+    font-size: 1.2em;
+    cursor: pointer;
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 150;
+
+    &.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+}
