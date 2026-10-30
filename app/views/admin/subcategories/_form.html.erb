@@ -114,6 +114,9 @@
                 <%= link_to raw('<i class="fa-solid fa-trash"></i>'), admin_category_subcategory_photo_path(@category, @subcategory, photo), data: { turbo_method: :delete, turbo_confirm: "Supprimer cette photo ?" }, class: "admin-mosaic-icon-btn admin-mosaic-delete-btn", title: "Supprimer" %>
               </div>
               <div class="admin-mosaic-overlay-bottom" data-mosaic-card-target="altPanel" hidden>
+                <button type="button" class="admin-mosaic-alt-close" aria-label="Fermer" data-action="click->mosaic-card#toggleAlt">
+                  <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
                 <%= photo_f.input :title, label: false, placeholder: "Titre…", input_html: { class: "field-input" }, wrapper_html: { class: "admin-mosaic-alt-field" } %>
                 <%= photo_f.input :description, label: false, as: :text, placeholder: "Description…", input_html: { class: "field-input", rows: 2 }, wrapper_html: { class: "admin-mosaic-alt-field" } %>
                 <%= photo_f.input :alt_text, label: false, placeholder: "Texte alternatif…", input_html: { class: "field-input" }, wrapper_html: { class: "admin-mosaic-alt-field" } %>
