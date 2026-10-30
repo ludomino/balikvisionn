@@ -42,17 +42,13 @@
   }
 
   .card-category-text {
-    color: white;
-    font-size: 22px;
-    font-weight: 700;               // était "bold" (identique en valeur, juste explicite via variable de graisse cohérente)
+    color: $public-text;            // #151818 — charte 2.2
+    font-family: $public-headers-font; // Host Grotesk — charte 2.2 (simple <div>, pas un h1-h3 : pas hérité de .public-body)
+    font-size: 18px;                // charte 2.2
+    font-weight: 600;               // SemiBold — charte 2.2
     text-transform: uppercase;
     letter-spacing: 0.08em;         // Avant : texte serré / Après : espacement large, même logique que les libellés de catégorie BAPE (HOMMES, FEMMES...)
-    text-shadow:
-      0 1px 3px rgba(0, 0, 0, 0.9),
-      0 -1px 3px rgba(0, 0, 0, 0.9),
-      1px 0 3px rgba(0, 0, 0, 0.9),
-      -1px 0 3px rgba(0, 0, 0, 0.9);
-    background: rgba(0, 0, 0, 0.35);
+    background: rgba(255, 255, 255, 0.75); // texte sombre désormais (charte 2.2) : voile clair plutôt que sombre pour rester lisible sur n'importe quelle photo ; remplace l'ombre portée, devenue inutile
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
     position: absolute;

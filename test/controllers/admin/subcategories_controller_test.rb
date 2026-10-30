@@ -233,7 +233,7 @@ class Admin::SubcategoriesControllerTest < ActionDispatch::IntegrationTest
 
     get edit_admin_category_subcategory_path(@category, @subcategory)
 
-    assert_select ".admin-badge.admin-badge-warning", text: "Brouillon"
+    assert_select ".admin-badge.admin-badge-warning", text: "Statut : Brouillon"
   end
 
   test "edit form does not display a draft badge when the subcategory is published" do
@@ -242,7 +242,7 @@ class Admin::SubcategoriesControllerTest < ActionDispatch::IntegrationTest
 
     get edit_admin_category_subcategory_path(@category, @subcategory)
 
-    assert_select ".admin-badge.admin-badge-warning", text: "Brouillon", count: 0
+    assert_select ".admin-badge.admin-badge-warning", text: "Statut : Brouillon", count: 0
   end
 
   test "update saves description for an existing photo via nested attributes" do

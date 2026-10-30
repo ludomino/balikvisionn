@@ -81,6 +81,13 @@ class Admin::CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_select ".admin-badge-warning", false
   end
 
+  test "show displays an accessible draft badge for a draft subcategory" do
+    Subcategory.create!(name: "Boiler Room", description: "Session live", category: @category, status: "draft")
+    sign_in_as @user
+    get admin_category_path(@category)
+    assert_select ".admin-badge.admin-badge-warning", text: "Statut : Brouillon"
+  end
+
   test "show lists subcategories with their photo count" do
     subcategory = Subcategory.create!(name: "Boiler Room", description: "Session live", category: @category)
     photo = Photo.create!(subcategory: subcategory, colspan: 1, position: 0)

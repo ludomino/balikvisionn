@@ -1,7 +1,8 @@
-// Admin + pages de connexion : police historique, inchangée (la charte
-// graphique du client ne documente que les pages publiques listées ci-dessous)
-$body-font: "Archivo", sans-serif;
-$headers-font: "Archivo", sans-serif;
+// Admin + pages de connexion : alignées sur la nouvelle charte graphique
+// (mêmes polices que le site public) — seule la typographie change ici,
+// la couleur de marque reste le vert kaki ($accent, cf. _colors.scss)
+$body-font: "DM Sans", sans-serif;
+$headers-font: "Host Grotesk", sans-serif; // le poids le plus élevé disponible est ExtraBold (800) : les `font-weight: 900` existants (h1, stats, titres admin) retombent automatiquement sur 800, Host Grotesk n'a pas de graisse Black contrairement à l'ancien Archivo
 
 // Site public (Axe 8) — nouvelle charte graphique fournie par le client
 $public-headers-font: "Host Grotesk", sans-serif; // titres (ExtraBold 800 / SemiBold 600 / Light 300)

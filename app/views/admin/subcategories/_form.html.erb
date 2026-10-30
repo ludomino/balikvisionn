@@ -9,7 +9,7 @@
       <%= @subcategory.persisted? ? "Modifier #{@subcategory.name}" : "Nouvelle sous-catégorie" %>
     </h1>
     <% if @subcategory.persisted? && @subcategory.draft? %>
-      <span class="admin-badge admin-badge-warning">Brouillon</span>
+      <span class="admin-badge admin-badge-warning"><span class="visually-hidden">Statut : </span>Brouillon</span>
     <% end %>
   </div>
   <%= simple_form_for [:admin, @category, @subcategory], html: { multipart: true, class: "admin-form-split", data: { controller: "photo-preview" } } do |f| %>
