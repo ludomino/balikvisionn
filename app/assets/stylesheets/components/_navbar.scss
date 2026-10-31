@@ -28,17 +28,17 @@
 .topbar-logo {
   img {
     width: auto;
-    max-height: 75px;
+    max-height: 52px;
   }
 }
 
 @media screen and (max-width: 640px) {
   .site-topbar {
-    padding: 16px 20px;
+    padding: 10px 20px;
   }
 
   .topbar-logo img {
-    max-height: 48px;
+    max-height: 36px;
   }
 
   .topbar-burger {

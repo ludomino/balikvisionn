@@ -35,6 +35,29 @@ export default class extends Controller {
     this.showCurrentPhoto()
   }
 
+  // Avant : navigation clavier/souris uniquement, aucun geste tactile / Après :
+  // swipe horizontal (seuil 50px, on ignore un geste surtout vertical pour ne
+  // pas interférer avec un défilement accidentel)
+  touchStart(event) {
+    this.touchStartX = event.changedTouches[0].clientX
+    this.touchStartY = event.changedTouches[0].clientY
+  }
+
+  touchEnd(event) {
+    if (this.touchStartX === undefined) return
+
+    const deltaX = event.changedTouches[0].clientX - this.touchStartX
+    const deltaY = event.changedTouches[0].clientY - this.touchStartY
+    const SWIPE_THRESHOLD = 50
+
+    if (Math.abs(deltaX) > SWIPE_THRESHOLD && Math.abs(deltaX) > Math.abs(deltaY)) {
+      deltaX < 0 ? this.next() : this.previous()
+    }
+
+    this.touchStartX = undefined
+    this.touchStartY = undefined
+  }
+
   showCurrentPhoto() {
     const photo = this.photosValue[this.indexValue]
     this.imageTarget.src = photo.url

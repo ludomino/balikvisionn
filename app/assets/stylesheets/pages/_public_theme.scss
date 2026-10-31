@@ -35,6 +35,7 @@
   p,
   li {
     color: $public-text;
+    // font-size: 1em; // écrase le 1.1em global (application.scss, pensé pour le thème sombre admin) — jugé trop grand sur le site public
   }
 
   header,

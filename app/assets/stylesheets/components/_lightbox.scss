@@ -2,7 +2,7 @@
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.92);
+  background: #000; // Avant : rgba(0,0,0,0.92), laissait un peu transparaître / Après : noir plein
   z-index: 1000;
   align-items: center;
   justify-content: center;
@@ -72,6 +72,7 @@
 
   button {
     position: absolute;
+    z-index: 2; // Avant : égal à .lightbox-photo (z-index auto) → en mobile, la photo quasi pleine largeur passait par-dessus et rendait la flèche gauche inatteignable / Après : toujours au-dessus de la photo
     background: none;
     border: none;
     color: white;

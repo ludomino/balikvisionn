@@ -3,10 +3,6 @@
 <% first_cover = @subcategories.find { |s| s.cover.attached? }&.cover %>
 <% content_for :og_image, first_cover.url(quality: :auto, fetch_format: :auto) if first_cover %>
 
-<%= link_to root_path, class: "page-back-link" do %>
-  <i class="fa-solid fa-arrow-left"></i> Retour à l'accueil
-<% end %>
-
 <h1 class="category-title"><%= @category.name %></h1>
 
 <section class="subcategories-grid">

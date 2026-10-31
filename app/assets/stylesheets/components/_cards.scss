@@ -48,7 +48,7 @@
     font-weight: 600;               // SemiBold — charte 2.2
     text-transform: uppercase;
     letter-spacing: 0.08em;         // Avant : texte serré / Après : espacement large, même logique que les libellés de catégorie BAPE (HOMMES, FEMMES...)
-    background: rgba(255, 255, 255, 0.75); // texte sombre désormais (charte 2.2) : voile clair plutôt que sombre pour rester lisible sur n'importe quelle photo ; remplace l'ombre portée, devenue inutile
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9), 0 0 14px rgba(255, 255, 255, 0.6); // Avant : voile blanc plein derrière le texte (masquait la photo, desktop ET mobile) / Après : halo blanc autour du texte seul, la photo reste visible
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
     position: absolute;

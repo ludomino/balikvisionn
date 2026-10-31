@@ -109,4 +109,45 @@ class LightboxTest < ApplicationSystemTestCase
       assert_selector ".lightbox-photo.is-landscape"
     end
   end
+
+  test "la flèche précédente reste cliquable en mobile (pas cachée sous la photo)" do
+    using_mobile_driver do
+      visit category_subcategory_path(@category, @subcategory)
+      first(".mosaic-photo").click
+
+      find(".lightbox-next").click
+      assert_selector "[data-lightbox-target='overlay'] img[alt='Photo numéro 2']"
+
+      find(".lightbox-prev").click
+      assert_selector "[data-lightbox-target='overlay'] img[alt='Photo numéro 1']"
+    end
+  end
+
+  test "le swipe tactile navigue entre les photos en mobile" do
+    using_mobile_driver do
+      visit category_subcategory_path(@category, @subcategory)
+      first(".mosaic-photo").click
+
+      swipe_horizontal(-80)
+      assert_selector "[data-lightbox-target='overlay'] img[alt='Photo numéro 2']"
+
+      swipe_horizontal(80)
+      assert_selector "[data-lightbox-target='overlay'] img[alt='Photo numéro 1']"
+    end
+  end
+
+  private
+
+  # Simule un geste tactile horizontal : Selenium n'a pas d'API "swipe" native,
+  # on déclenche directement les événements touchstart/touchend écoutés par lightbox_controller.js
+  def swipe_horizontal(delta_x)
+    page.execute_script(<<~JS, delta_x)
+      const overlay = document.querySelector("[data-lightbox-target='overlay']")
+      const y = 400
+      const startX = 200
+      const touch = (x) => new Touch({ identifier: Date.now(), target: overlay, clientX: x, clientY: y })
+      overlay.dispatchEvent(new TouchEvent("touchstart", { changedTouches: [touch(startX)], bubbles: true }))
+      overlay.dispatchEvent(new TouchEvent("touchend", { changedTouches: [touch(startX + arguments[0])], bubbles: true }))
+    JS
+  end
 end

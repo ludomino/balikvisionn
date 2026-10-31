@@ -37,12 +37,31 @@
     align-self: start;
   }
 
+  // Avant : grille à 2 colonnes avec des tuiles span-2/span-3 + aspect-ratio +
+  // grid-auto-flow: dense → CSS Grid produisait des colonnes à 0px de large
+  // (même bug que l'éditeur mosaïque admin, cf. _admin_photo_editor.scss).
+  // Après : liste empilée à 1 colonne, chaque tuile occupe sa propre ligne.
   @media screen and (max-width: 640px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+    padding: 0 20px; // Avant : bord à bord comme en desktop / Après : en 1 colonne, la mosaïque a besoin d'une marge latérale
 
+    .mosaic-photo--span-1,
+    .mosaic-photo--span-2,
     .mosaic-photo--span-3 {
-      grid-column: span 2;
-      grid-row: span 2;
+      grid-column: span 1;
+      grid-row: span 1;
+      aspect-ratio: 4 / 5;
+    }
+
+    // Formats paysage : seul le placement dans la grille change (span 1
+    // partout, pour éviter que la grille recrée des colonnes implicites
+    // et retombe dans le bug des 0px) — le ratio 8/5 ou 12/5 défini plus
+    // haut n'est volontairement pas touché, sinon la photo est recadrée
+    // en portrait.
+    .mosaic-photo--span-2.mosaic-photo--landscape,
+    .mosaic-photo--span-3.mosaic-photo--landscape {
+      grid-column: span 1;
+      grid-row: span 1;
     }
   }
 }
