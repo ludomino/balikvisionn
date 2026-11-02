@@ -1,6 +1,6 @@
 # Feuille de route — Balikvisionn
 
-*Dernière mise à jour : 2026-10-23*
+*Dernière mise à jour : 2026-11-02*
 
 ## État actuel
 
@@ -15,7 +15,7 @@
 1. **TDD strict** : chaque fonctionnalité (ou correctif) s'accompagne de son test écrit *au moment* où elle est développée — jamais reporté à la fin. Pour un bug, le test qui le reproduit s'écrit avant le correctif.
 2. **Accessibilité (a11y)** : sémantique HTML stricte, ARIA, alt text sur toutes les photos, navigation clavier complète.
 3. **Protection des images** : mesures dissuasives (anti clic-droit, anti-glisser, anti-hotlink) — à noter : aucune de ces mesures n'est infranchissable pour un utilisateur déterminé (devtools, capture d'écran) ; un filigrane Cloudinary reste la seule protection réellement robuste si nécessaire.
-4. **Ratio 4:5 sur toute photo portrait affichée** (ajouté le 2026-10-23, affiné le 2026-10-30) : une photo portrait n'est jamais présentée hors de son ratio natif 4:5 — `aspect-ratio: 4/5` + `object-fit: cover` (cards, couvertures, mosaïque, lightbox, aperçus admin). Une photo paysage bascule vers un affichage adapté à son orientation plutôt que d'être forcée en 4:5 : tuile élargie en mosaïque (8:5/12:5), affichage sans recadrage dans la lightbox.
+4. **Ratio 4:5 sur toute photo portrait affichée** (ajouté le 2026-10-23, affiné le 2026-10-30) : une photo portrait n'est jamais présentée hors de son ratio natif 4:5 — `aspect-ratio: 4/5` + `object-fit: cover` (cards, couvertures, mosaïque, lightbox, aperçus admin). Une photo paysage bascule vers un affichage adapté à son orientation plutôt que d'être forcée en 4:5 : tuile élargie en mosaïque (8:5/12:5), affichage sans recadrage dans la lightbox. — **précision du 2026-11-01** : le client a transmis un format de livraison officiel distinct (paysage 16:9 à 1920×1080px, portrait 4:5 à 1080×1350px) ; décision actée de garder les ratios internes de mosaïque (8:5/12:5) inchangés, ces deux systèmes répondant à des besoins différents (mise en page du site vs livrables photo).
 
 ---
 
@@ -199,6 +199,13 @@
 - [x] Page À propos : photo recadrée en ratio 4:5, remplace l'avatar circulaire actuel (public uniquement — l'avatar admin reste inchangé, non demandé)
 - [x] Filtrer les sous-catégories en statut brouillon hors des pages publiques (listings + sitemap)
 - [x] **Ajout non prévu initialement** : fix `mosaic_crop_ratio` colspan 3 paysage (`6:5` → `12:5`) — ne correspondait pas au ratio CSS réel du conteneur (`12/5`), causait un recadrage Cloudinary trop serré par rapport à l'affichage (bug déjà présent en admin depuis l'Axe 9, découvert et corrigé ici)
+- [x] **Lot « finitions » du 2026-10-31** (9 retours client, desktop + mobile) : header public réduit (hauteur, logo, padding), liens de retour en arrière supprimés (redondants avec le menu latéral), typographie publique réduite, titres de page catégorie/sous-catégorie harmonisés (même alignement, même taille) ; voile blanc permanent retiré des cards de catégorie en tactile — **et en desktop sur précision du client**, remplacé par un halo de texte ; mobile : filtre retiré sur les pages catégorie et sous-catégorie, bug de grille CSS de la mosaïque publique corrigé (colonnes dégénérées, même famille de bug que l'Axe 9/10 — marge latérale ajoutée, ratios paysage 8:5/12:5 préservés après une première correction trop large qui les écrasait tous en 4:5) ; page À propos : espace réduit avant le titre en mobile ; lightbox mobile : flèche précédente inatteignable corrigée (`z-index` explicite — root cause réelle : ordre de peinture DOM, pas un souci de `position: sticky`), swipe tactile ajouté (gauche/droite), overlay repassé en noir plein (`#000`, plus de transparence résiduelle)
+- [x] **Révision du 2026-11-01** : lien « Toutes les catégories » retiré de la sidebar (décision Axe 8 du 29/10 annulée) — la navigation entre catégories se fait désormais uniquement via la liste de catégories de la sidebar elle-même
+- [x] **Révision du 2026-11-01** : sous-catégories de la sidebar repassées de « toujours dépliées » (décision initiale de l'Axe 8) à **visibles seulement pour la catégorie en cours de consultation** (`@category == category`) — pas d'accordéon JS, logique serveur simple (pas de préférence exprimée entre les deux approches)
+- [x] **Révision du 2026-11-01** : page catégorie — titre `<h1>` retiré, cards de sous-catégories alignées à gauche (`justify-content: flex-start`, au lieu de centrées) ; libellé au survol des cards : espacement resserré, blanc et gras (même poids que les titres de la sidebar), halo de texte repassé en sombre pour rester lisible sur une photo claire (l'ancien halo blanc était devenu inutile une fois le texte passé en blanc)
+- [x] **Révision du 2026-11-01** : logo déplacé dans la sidebar (taille alignée sur le logo admin, 36px), header desktop entièrement retiré (`display: none` ≥641px) — le mobile garde son header actuel inchangé (logo centré + burger) ; sidebar repassée `position: sticky` après vérification en direct (un premier essai sans sticky, demandé puis revu après avoir vu le rendu réel), largeur réduite de 280px à 240px
+- [x] **Révision du 2026-11-01** : réseaux sociaux de la sidebar réordonnés (mail → Instagram → Twitter, au lieu de Twitter → Instagram → mail) ; icône mail renvoie désormais vers le formulaire de contact (`/a-propos#contact`) plutôt qu'un lien `mailto:`
+- [x] **Révision du 2026-11-01** : lightbox — légende repositionnée en bas à droite de la photo sur desktop (`position: absolute`, hors du flux : la photo reste centrée à l'écran, seule la légende déborde), inchangée sous la photo en mobile où sa largeur a été corrigée (`width: 90vw` explicite — `max-width` seul ne suffisait pas, le parent flex réduisait la légende à la largeur de son texte)
 
 **Tests**
 - [x] Rendu de la page catégorie (grille de cards, lien vers chaque sous-catégorie)

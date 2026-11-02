@@ -43,6 +43,7 @@
   // est légèrement réduite (75vh au lieu de 85vh) pour lui laisser la place
   // sans dépasser l'écran.
   .lightbox-caption {
+    width: 90vw; // avant : max-width seul ne suffit pas, le parent flex (align-items: flex-start) réduisait la légende à la largeur de son texte
     max-width: 90vw;
     text-align: left;
   }
@@ -58,6 +59,20 @@
   .lightbox-caption-description {
     color: rgba(255, 255, 255, 0.85); // déviation charte 4.1 (#151818) : fond de la visionneuse quasi-noir, du texte sombre y serait illisible — voir ROADMAP Axe 8
     font-size: 0.9em;
+  }
+
+  // Desktop : légende ancrée en bas à droite de la photo, hors du flux
+  // (position: absolute) — la photo reste seule à définir le centrage de
+  // l'ensemble, comme avant ; seule la légende déborde sur la droite.
+  // Mobile inchangé (légende sous la photo, dans le flux normal).
+  @media screen and (min-width: 641px) {
+    .lightbox-caption {
+      position: absolute;
+      left: 100%;
+      bottom: 0;
+      margin-left: 32px;
+      max-width: 280px;
+    }
   }
 
   .lightbox-counter {

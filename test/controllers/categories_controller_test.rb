@@ -20,11 +20,6 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "show has a single top-level heading with the category name" do
-    get category_path(@category)
-    assert_select "h1", text: @category.name, count: 1
-  end
-
   test "show displays a card linking to each published subcategory" do
     subcategory = Subcategory.create!(name: "Portugal", category: @category, status: "published")
     get category_path(@category)
@@ -50,15 +45,6 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     get categories_path
     assert_select ".sidebar a[href='#{about_path}']"
     assert_select ".sidebar-socials .lien-icone", count: 3
-  end
-
-  test "sidebar links to the categories index, marked current only there" do
-    get categories_path
-    assert_select ".sidebar a[href='#{categories_path}'][aria-current='page']", count: 1
-
-    get category_path(@category)
-    assert_select ".sidebar a[href='#{categories_path}']", count: 1
-    assert_select ".sidebar a[href='#{categories_path}'][aria-current]", count: 0
   end
 
   test "show does not display draft subcategories" do

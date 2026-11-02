@@ -47,3 +47,9 @@
     justify-content: center;
   }
 }
+
+@media screen and (min-width: 641px) {
+  .site-topbar {
+    display: none; // demande explicite : plus de header en desktop, le logo vit désormais dans la sidebar (.sidebar-logo)
+  }
+}

@@ -1,16 +1,8 @@
 // Les deux titres de page (catégorie, sous-catégorie) partagent désormais
 // le même alignement et la même taille — avant : 40px/30px sur l'une,
 // 0px/24px sur l'autre, incohérent en passant de l'une à l'autre.
-.category-title,
 .subcategory-header {
   padding-top: 24px;
-}
-
-.category-title {
-  margin: 0;
-  font-weight: 600; // SemiBold — charte 2.1
-  font-size: 26px;
-  text-transform: uppercase;
 }
 
 .subcategories-grid {
@@ -19,7 +11,7 @@
   display: flex;
   flex-direction: row;
   gap: 10px;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
 }
 
@@ -43,7 +35,6 @@
 }
 
 @media screen and (max-width: 640px) {
-  .category-title,
   .subcategory-header {
     padding-left: 20px;
     padding-right: 20px;

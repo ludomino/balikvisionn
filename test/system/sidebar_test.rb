@@ -6,10 +6,12 @@ class SidebarTest < ApplicationSystemTestCase
     @subcategory = Subcategory.create!(name: "Tokyo", category: @category, status: "published")
   end
 
-  test "en desktop, la sidebar liste les catégories sans interaction" do
+  test "en desktop, la sidebar liste les catégories, sous-catégories affichées seulement pour la catégorie courante" do
     visit categories_path
-
     assert_selector ".sidebar-category-title", text: /rue/i
+    assert_no_selector ".sidebar-subcategory-link"
+
+    visit category_path(@category)
     assert_selector ".sidebar-subcategory-link", text: "Tokyo"
   end
 
