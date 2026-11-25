@@ -10,6 +10,7 @@ module Admin
 
     def destroy
       @photo.destroy
+      @subcategory.enforce_draft_unless_content!
       redirect_to edit_admin_category_subcategory_path(@subcategory.category, @subcategory), notice: "Photo supprimée."
     end
 

@@ -9,6 +9,35 @@ class Admin::PhotosControllerTest < ActionDispatch::IntegrationTest
     @photo_b = Photo.create!(subcategory: @subcategory, colspan: 1, position: 1)
   end
 
+  test "destroy forces the subcategory back to draft when it was the last photo" do
+    sign_in_as @user
+    @subcategory.cover.attach(
+      io: File.open(Rails.root.join("test/fixtures/files/test_photo.png")),
+      filename: "test_photo.png",
+      content_type: "image/png"
+    )
+    @subcategory.update_column(:status, "published")
+    @photo_b.destroy # ne garde qu'un seul photo (@photo_a) avant le test
+
+    delete admin_category_subcategory_photo_path(@category, @subcategory, @photo_a)
+
+    assert @subcategory.reload.draft?
+  end
+
+  test "destroy does not draft the subcategory when another photo remains" do
+    sign_in_as @user
+    @subcategory.cover.attach(
+      io: File.open(Rails.root.join("test/fixtures/files/test_photo.png")),
+      filename: "test_photo.png",
+      content_type: "image/png"
+    )
+    @subcategory.update_column(:status, "published")
+
+    delete admin_category_subcategory_photo_path(@category, @subcategory, @photo_a)
+
+    assert @subcategory.reload.published?
+  end
+
   test "destroy removes the photo and purges its blob" do
     sign_in_as @user
     blob = @photo_a.image.blob rescue nil

@@ -19,6 +19,18 @@ class Category < ApplicationRecord
     !cover.attached?
   end
 
+  # Meme logique que Subcategory#enforce_draft_unless_content! (retour
+  # client 25/11) : une categorie sans couverture et/ou sans aucune
+  # sous-categorie n'a rien a montrer publiquement -- repassee
+  # automatiquement en brouillon tant que l'un des deux manque. update!
+  # (et non update_column) pour que cascade_draft_to_subcategories
+  # ci-dessous s'applique aussi dans ce cas.
+  def enforce_draft_unless_content!
+    return unless published?
+
+    update!(status: :draft) if missing_cover? || subcategories.none?
+  end
+
   private
 
   # Republier la catégorie ne republie pas les sous-catégories dans l'autre

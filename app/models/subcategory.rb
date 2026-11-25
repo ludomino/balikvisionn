@@ -25,6 +25,21 @@ class Subcategory < ApplicationRecord
     !cover.attached?
   end
 
+  # Retour client (25/11) : une sous-categorie publiee sans couverture et/ou
+  # sans aucune photo s'affiche vide/cassee cote public (tuile grise, page
+  # mosaique "Aucune photo"). On la repasse donc automatiquement en
+  # brouillon tant que l'un des deux manque -- jamais l'inverse (on ne
+  # republie jamais tout seul, ca reste une decision admin). Appele
+  # explicitement depuis les controleurs plutot qu'en callback automatique :
+  # a la creation, attach_photos (SubcategoriesController) tourne APRES le
+  # save initial, donc un before_save/after_save verrait toujours 0 photo
+  # meme quand des fichiers sont envoyes dans le meme formulaire.
+  def enforce_draft_unless_content!
+    return unless published?
+
+    update!(status: :draft) if missing_cover? || photos.none?
+  end
+
   private
 
   # Même pattern que HomeFeature#assign_position : position auto-assignée à
