@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   def index
-    @categories = Category.published
+    @categories = Category.published.order(:position)
   end
 
   def show

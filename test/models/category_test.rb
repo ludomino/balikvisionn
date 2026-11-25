@@ -1,6 +1,22 @@
 require "test_helper"
 
 class CategoryTest < ActiveSupport::TestCase
+  test "assigns position automatically on create" do
+    first = Category.create!(name: "Concerts")
+    second = Category.create!(name: "Mariages")
+
+    assert_equal 0, first.position
+    assert_equal 1, second.position
+  end
+
+  test "Category.order(:position) respects a manually changed position" do
+    first = Category.create!(name: "Concerts")
+    second = Category.create!(name: "Mariages")
+    second.update_column(:position, -1)
+
+    assert_equal [second, first], Category.order(:position).where(id: [first.id, second.id]).to_a
+  end
+
   test "missing_cover? is true when no cover is attached" do
     category = Category.create!(name: "Concerts")
     assert category.missing_cover?

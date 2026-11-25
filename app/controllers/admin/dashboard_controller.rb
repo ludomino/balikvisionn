@@ -1,7 +1,7 @@
 module Admin
   class DashboardController < Admin::BaseController
     def index
-      @categories = Category.with_attached_cover.includes(subcategories: :photos)
+      @categories = Category.with_attached_cover.includes(subcategories: :photos).order(:position)
       @category_count = @categories.size
       @subcategory_count = @categories.sum { |c| c.subcategories.size }
       @photo_count = @categories.sum { |c| c.subcategories.sum { |s| s.photos.size } }

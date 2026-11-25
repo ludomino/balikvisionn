@@ -27,8 +27,14 @@ Rails.application.routes.draw do
     end
 
     resources :categories do
+      collection do
+        patch :reorder
+      end
       resource :home_feature, only: [:create, :destroy]
       resources :subcategories do
+        collection do
+          patch :reorder
+        end
         resource :home_feature, only: [:create, :destroy]
         resources :photos, only: [:destroy] do
           resource :home_feature, only: [:create, :destroy]

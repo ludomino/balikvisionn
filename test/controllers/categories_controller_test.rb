@@ -5,6 +5,16 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     @category = Category.create!(name: "Concerts")
   end
 
+  test "index lists categories in position order" do
+    other = Category.create!(name: "Mariages")
+    other.update_column(:position, @category.position - 1)
+
+    get categories_path
+
+    names = css_select(".card-category-text").map(&:text)
+    assert_equal ["Mariages", "Concerts"], names
+  end
+
   test "index is accessible without authentication" do
     get categories_path
     assert_response :success
@@ -57,6 +67,17 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     draft = Category.create!(name: "Brouillon", status: "draft")
     get categories_path
     assert_select ".accueil-photos a[href='#{category_path(draft)}']", count: 0
+  end
+
+  test "show displays subcategory cards in position order" do
+    first = Subcategory.create!(name: "Premiere", category: @category, status: "published")
+    second = Subcategory.create!(name: "Deuxieme", category: @category, status: "published")
+    second.update_column(:position, -1)
+
+    get category_path(@category)
+
+    names = css_select(".card-category-text").map(&:text)
+    assert_equal ["Deuxieme", "Premiere"], names
   end
 
   test "sidebar does not list draft categories" do

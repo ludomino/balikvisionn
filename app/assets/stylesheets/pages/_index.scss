@@ -6,11 +6,11 @@
 }
 
 .accueil-photos {
-  padding: 2%;
+  padding: 24px;
   display: flex;
   flex-direction: row;
   gap: 10px;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
 
   h2 {
