@@ -202,10 +202,39 @@ class Admin::CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert Category.find_by(name: "Portraits").draft?
   end
 
-  test "create with the publier button creates a published category" do
+  test "create always drafts a brand-new category even via the publier button, since it has no subcategory yet" do
     sign_in_as @user
     post admin_categories_path, params: { category: { name: "Portraits", status: "published" } }
-    assert Category.find_by(name: "Portraits").published?
+    assert Category.find_by(name: "Portraits").draft?
+  end
+
+  test "update keeps a category published once it has a cover and a subcategory" do
+    sign_in_as @user
+    @category.subcategories.create!(name: "Boiler Room")
+
+    patch admin_category_path(@category), params: {
+      category: {
+        name: @category.name,
+        status: "published",
+        cover: fixture_file_upload("test_photo.png", "image/png")
+      }
+    }
+
+    assert @category.reload.published?
+  end
+
+  test "update forces a category back to draft when it has no subcategory left" do
+    sign_in_as @user
+    @category.cover.attach(
+      io: File.open(Rails.root.join("test/fixtures/files/test_photo.png")),
+      filename: "test_photo.png",
+      content_type: "image/png"
+    )
+    # @category (setup) est déjà publiée par défaut et n'a aucune sous-catégorie
+
+    patch admin_category_path(@category), params: { category: { name: @category.name, status: "published" } }
+
+    assert @category.reload.draft?
   end
 
   test "show displays an accessible draft badge for a draft category" do

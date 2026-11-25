@@ -49,19 +49,62 @@ class Admin::SubcategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Nouveau nom", @subcategory.name
   end
 
-  test "update saves the status of a subcategory" do
+  test "update saves the status of a subcategory when it has a cover and a photo" do
     sign_in_as @user
 
     patch admin_category_subcategory_path(@category, @subcategory), params: {
       subcategory: {
         name: @subcategory.name,
         description: @subcategory.description,
-        status: "published"
+        status: "published",
+        cover: fixture_file_upload("test_photo.png", "image/png")
       }
     }
 
     assert_redirected_to admin_category_path(@category)
     assert_equal "published", @subcategory.reload.status
+  end
+
+  test "create forces draft even via the publier button when no cover or photo is provided" do
+    sign_in_as @user
+
+    post admin_category_subcategories_path(@category), params: {
+      subcategory: {
+        name: "Sous-catégorie vide",
+        status: "published"
+      }
+    }
+
+    assert Subcategory.find_by(name: "Sous-catégorie vide").draft?
+  end
+
+  test "create stays published via the publier button when a cover and a photo are both provided in the same request" do
+    sign_in_as @user
+
+    post admin_category_subcategories_path(@category), params: {
+      subcategory: {
+        name: "Sous-catégorie complète",
+        status: "published",
+        cover: fixture_file_upload("test_photo.png", "image/png"),
+        photos: [fixture_file_upload("test_photo.png", "image/png")]
+      }
+    }
+
+    assert Subcategory.find_by(name: "Sous-catégorie complète").published?
+  end
+
+  test "destroy forces the parent category back to draft when it was the last subcategory" do
+    sign_in_as @user
+    @category.cover.attach(
+      io: File.open(Rails.root.join("test/fixtures/files/test_photo.png")),
+      filename: "test_photo.png",
+      content_type: "image/png"
+    )
+    # @category (setup) est déjà publiée par défaut
+
+    delete admin_category_subcategory_path(@category, @subcategory)
+
+    assert @category.reload.draft?
   end
 
   # Vérifie qu'un upload réel crée un Photo avec image attachée

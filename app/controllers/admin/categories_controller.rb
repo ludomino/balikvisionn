@@ -17,6 +17,7 @@ module Admin
     def create
       @category = Category.new(category_params)
       if @category.save
+        @category.enforce_draft_unless_content!
         redirect_to admin_category_path(@category), notice: 'Catégorie créée avec succès.'
       else
         render :new, status: :unprocessable_entity
@@ -30,6 +31,7 @@ module Admin
     def update
       @category = Category.find(params[:id])
       if @category.update(category_params)
+        @category.enforce_draft_unless_content!
         redirect_to admin_category_path(@category), notice: 'Catégorie mise à jour avec succès.'
       else
         render :edit

@@ -73,6 +73,64 @@ class SubcategoryTest < ActiveSupport::TestCase
     assert_not @subcategory.missing_cover?
   end
 
+  test "enforce_draft_unless_content! drafts a published subcategory with no cover and no photo" do
+    @subcategory.update!(status: "published")
+
+    @subcategory.enforce_draft_unless_content!
+
+    assert @subcategory.draft?
+  end
+
+  test "enforce_draft_unless_content! drafts a published subcategory with a cover but no photo" do
+    @subcategory.cover.attach(
+      io: File.open(Rails.root.join("test/fixtures/files/test_photo.png")),
+      filename: "test_photo.png",
+      content_type: "image/png"
+    )
+    @subcategory.update!(status: "published")
+
+    @subcategory.enforce_draft_unless_content!
+
+    assert @subcategory.draft?
+  end
+
+  test "enforce_draft_unless_content! drafts a published subcategory with a photo but no cover" do
+    Photo.create!(subcategory: @subcategory, colspan: 1, position: 0)
+    @subcategory.update!(status: "published")
+
+    @subcategory.enforce_draft_unless_content!
+
+    assert @subcategory.draft?
+  end
+
+  test "enforce_draft_unless_content! leaves a published subcategory alone once it has a cover and a photo" do
+    @subcategory.cover.attach(
+      io: File.open(Rails.root.join("test/fixtures/files/test_photo.png")),
+      filename: "test_photo.png",
+      content_type: "image/png"
+    )
+    Photo.create!(subcategory: @subcategory, colspan: 1, position: 0)
+    @subcategory.update!(status: "published")
+
+    @subcategory.enforce_draft_unless_content!
+
+    assert @subcategory.published?
+  end
+
+  test "enforce_draft_unless_content! never republishes a draft subcategory" do
+    @subcategory.cover.attach(
+      io: File.open(Rails.root.join("test/fixtures/files/test_photo.png")),
+      filename: "test_photo.png",
+      content_type: "image/png"
+    )
+    Photo.create!(subcategory: @subcategory, colspan: 1, position: 0)
+    assert @subcategory.draft? # statut par défaut (enum), inchangé ici
+
+    @subcategory.enforce_draft_unless_content!
+
+    assert @subcategory.draft?
+  end
+
   test "valid without a description" do
     subcategory = Subcategory.new(name: "Test", category: @category)
     assert subcategory.valid?
