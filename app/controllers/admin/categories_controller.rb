@@ -1,7 +1,7 @@
 module Admin
   class CategoriesController < Admin::BaseController
     def index
-      @categories = Category.with_attached_cover.includes(subcategories: :photos)
+      @categories = Category.with_attached_cover.includes(subcategories: :photos).order(:position)
     end
 
     def show
@@ -40,6 +40,14 @@ module Admin
       @category = Category.find(params[:id])
       @category.destroy
       redirect_to admin_categories_path, status: :see_other, notice: 'Catégorie supprimée avec succès.'
+    end
+
+    # Persiste le nouvel ordre après un glisser-déposer sur la grille des catégories
+    def reorder
+      params[:category_ids].each_with_index do |id, index|
+        Category.where(id: id).update_all(position: index)
+      end
+      head :ok
     end
 
     private

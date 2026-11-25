@@ -7,6 +7,15 @@ module Admin
       redirect_to admin_category_path(@category), notice: 'Sous-catégorie supprimée avec succès.'
     end
 
+    # Persiste le nouvel ordre après un glisser-déposer sur la grille des sous-catégories
+    def reorder
+      @category = Category.find(params[:category_id])
+      params[:subcategory_ids].each_with_index do |id, index|
+        @category.subcategories.where(id: id).update_all(position: index)
+      end
+      head :ok
+    end
+
     def edit
       @category = Category.find(params[:category_id])
       @subcategory = @category.subcategories.find(params[:id])

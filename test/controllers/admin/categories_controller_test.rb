@@ -6,6 +6,28 @@ class Admin::CategoriesControllerTest < ActionDispatch::IntegrationTest
     @category = Category.create!(name: "Concerts")
   end
 
+  test "reorder updates position for each category according to submitted order" do
+    sign_in_as @user
+    other = Category.create!(name: "Mariages")
+
+    patch reorder_admin_categories_path, params: { category_ids: [other.id, @category.id] }
+
+    assert_response :success
+    assert_equal 0, other.reload.position
+    assert_equal 1, @category.reload.position
+  end
+
+  test "index lists categories in position order" do
+    other = Category.create!(name: "Mariages")
+    other.update_column(:position, @category.position - 1)
+
+    sign_in_as @user
+    get admin_categories_path
+
+    names = css_select(".admin-category-card-name").map(&:text)
+    assert_equal ["Mariages", "Concerts"], names
+  end
+
   test "new redirects to login when not authenticated" do
     get new_admin_category_path
     assert_redirected_to new_session_path
@@ -88,6 +110,18 @@ class Admin::CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_select ".admin-badge.admin-badge-warning", text: "Statut : Brouillon"
   end
 
+  test "show lists subcategories in position order" do
+    first = Subcategory.create!(name: "Premiere", category: @category)
+    second = Subcategory.create!(name: "Deuxieme", category: @category)
+    second.update_column(:position, -1)
+
+    sign_in_as @user
+    get admin_category_path(@category)
+
+    names = css_select(".admin-subcategory-card-name").map(&:text)
+    assert_equal ["Deuxieme", "Premiere"], names
+  end
+
   test "show lists subcategories with their photo count" do
     subcategory = Subcategory.create!(name: "Boiler Room", description: "Session live", category: @category)
     photo = Photo.create!(subcategory: subcategory, colspan: 1, position: 0)
@@ -102,6 +136,25 @@ class Admin::CategoriesControllerTest < ActionDispatch::IntegrationTest
 
     assert_select ".admin-subcategory-card-name", text: "Boiler Room"
     assert_select ".admin-subcategory-card-count", text: "1 photo"
+  end
+
+  test "show pluralizes photo and sous-catégorie counts correctly (bug : pluralize sans plural: explicite ne fonctionne pas en locale :fr)" do
+    subcategory = Subcategory.create!(name: "Boiler Room", category: @category)
+    2.times do |i|
+      photo = Photo.create!(subcategory: subcategory, colspan: 1, position: i)
+      photo.image.attach(
+        io: File.open(Rails.root.join("test/fixtures/files/test_photo.png")),
+        filename: "test_photo.png",
+        content_type: "image/png"
+      )
+    end
+    Subcategory.create!(name: "Autre", category: @category)
+
+    sign_in_as @user
+    get admin_category_path(@category)
+
+    assert_select ".admin-category-head-meta", text: /2 sous-catégories/
+    assert_select ".admin-subcategory-card-count", text: "2 photos"
   end
 
   test "index displays a missing-cover badge for categories without a cover" do

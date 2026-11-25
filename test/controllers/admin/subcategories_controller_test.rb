@@ -19,6 +19,17 @@ class Admin::SubcategoriesControllerTest < ActionDispatch::IntegrationTest
     )
   end
 
+  test "reorder updates position for each subcategory according to submitted order" do
+    sign_in_as @user
+    second = Subcategory.create!(name: "Autre set", category: @category)
+
+    patch reorder_admin_category_subcategories_path(@category), params: { subcategory_ids: [second.id, @subcategory.id] }
+
+    assert_response :success
+    assert_equal 0, second.reload.position
+    assert_equal 1, @subcategory.reload.position
+  end
+
   test "update redirects to login when not authenticated" do
     patch admin_category_subcategory_path(@category, @subcategory), params: {
       subcategory: { name: "Nouveau nom" }

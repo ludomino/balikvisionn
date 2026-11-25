@@ -1,6 +1,9 @@
-<div class="admin-category-grid">
+<div class="admin-category-grid" data-controller="sortable"
+    data-sortable-url-value="<%= reorder_admin_categories_path %>"
+    data-sortable-ids-param-value="category_ids"
+    data-sortable-handle-value=".admin-category-handle">
   <% @categories.each do |category| %>
-    <div class="admin-category-card">
+    <div class="admin-category-card" data-id="<%= category.id %>">
       <%= link_to admin_category_path(category), class: "admin-category-card-cover" do %>
         <% if category.cover.attached? %>
           <%= cloudinary_image_tag category.cover, alt: "", width: 400, height: 220, crop: :fill %>
@@ -17,6 +20,7 @@
       <% end %>
 
       <div class="admin-category-card-icons">
+        <button type="button" class="admin-icon-btn admin-category-handle" title="Glisser pour réordonner, ou flèches haut/bas" aria-label="Réordonner <%= category.name %> — flèches haut/bas pour déplacer"><i class="fa-solid fa-grip-vertical" aria-hidden="true"></i></button>
         <% if category.home_feature.present? %>
           <%= link_to raw('<i class="fa-solid fa-star"></i>'), admin_category_home_feature_path(category), data: { turbo_method: :delete }, class: "admin-icon-btn", title: "Retirer des favoris à la une" %>
         <% else %>

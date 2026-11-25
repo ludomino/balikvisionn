@@ -8,6 +8,8 @@ class Subcategory < ApplicationRecord
 
   enum :status, { draft: "draft", published: "published" }, default: :draft
 
+  before_validation :assign_position, on: :create
+
   # Édition d'alt_text depuis le formulaire ; reject_if bloque toute création
   # de Photo via ce canal (seul attach_photos peut en créer)
   accepts_nested_attributes_for :photos, reject_if: proc { |attrs| attrs["id"].blank? }
@@ -21,5 +23,13 @@ class Subcategory < ApplicationRecord
 
   def missing_cover?
     !cover.attached?
+  end
+
+  private
+
+  # Même pattern que HomeFeature#assign_position : position auto-assignée à
+  # la création, scopée par catégorie (pilote l'ordre d'affichage admin + public).
+  def assign_position
+    self.position = (category.subcategories.maximum(:position) || -1) + 1
   end
 end

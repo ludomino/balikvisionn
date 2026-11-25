@@ -13,6 +13,22 @@ class SubcategoryTest < ActiveSupport::TestCase
     assert_equal [photo_a, photo_b], @subcategory.photos.to_a
   end
 
+  test "assigns position automatically on create, scoped per category" do
+    other_category = Category.create!(name: "Mariages")
+    second = Subcategory.create!(name: "Deuxieme", category: @category)
+    other = Subcategory.create!(name: "Autre categorie", category: other_category)
+
+    assert_equal 1, second.position # @subcategory (setup) a déjà pris la position 0
+    assert_equal 0, other.position
+  end
+
+  test "subcategories are returned ordered by position" do
+    second = Subcategory.create!(name: "B", category: @category)
+    second.update_column(:position, -1) # passe devant @subcategory sans redéclencher l'auto-assignation
+
+    assert_equal [second, @subcategory], @category.subcategories.to_a
+  end
+
   test "destroying a subcategory destroys its photos" do
     Photo.create!(subcategory: @subcategory, colspan: 1, position: 0)
 

@@ -8,8 +8,8 @@
 }
 
 .sidebar {
-  width: 240px; // avant : 280px, un peu trop large
-  flex: 0 0 240px;
+  width: 220px; // avant : 240px -- retour client (25/11) : encore un peu large a 1920px
+  flex: 0 0 220px;
   box-sizing: border-box;
   padding: 40px 24px;
   display: flex;
@@ -45,6 +45,11 @@
   display: flex;
   flex-direction: column;
   gap: 28px;
+}
+
+
+.sidebar-logo + .sidebar-category {
+  margin-top: 24px;
 }
 
 .sidebar-category-title {
